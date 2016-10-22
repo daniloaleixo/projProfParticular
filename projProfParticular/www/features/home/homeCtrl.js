@@ -5,10 +5,24 @@ appProf
 function ($scope, $stateParams) {
 	var homeCtrl = this;
 
-	homeCtrl.showChoices = true;
+	var database = firebase.database();
+	homeCtrl.materias = new Array();
+
+	homeCtrl.showChoicesNivel = true;
 	homeCtrl.nivel = '';
+	homeCtrl.showChoicesMaterias = false;
+	homeCtrl.materia = '';
 	
 	//console.log("home Ctrl:");
 	console.log("HomeCtrl| : email: " + user.email);
+
+	homeCtrl.getMaterias = function(){
+
+		if(homeCtrl.nivel != ''){
+			console.log("HomeCtrl| vou pegar infos do database");
+		} else {
+			console.log("HomeCtrl| primeiro precisa escolhjer o nivel");
+		}
+	}
 
 }])

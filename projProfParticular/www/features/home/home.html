@@ -5,15 +5,30 @@
     	<div class='mdl-list'>
     		<ion-item class='item item-icon-right'>
     		    {{homeCtrl.nivel || 'Escolha seu nível:' }}
-    			<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoices' 
-    			ng-click="homeCtrl.showChoices = !homeCtrl.showChoices"></i>
-    			<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoices' 
-    			ng-click="homeCtrl.showChoices = !homeCtrl.showChoices"></i>
+    			<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoicesNivel' 
+    			ng-click="homeCtrl.showChoicesNivel = !homeCtrl.showChoicesNivel"></i>
+    			<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoicesNivel' 
+    			ng-click="homeCtrl.showChoicesNivel = !homeCtrl.showChoicesNivel"></i>
     		</ion-item>
-    		<ion-list ng-show='homeCtrl.showChoices'>
+    		<ion-list ng-show='homeCtrl.showChoicesNivel'>
     		  <ion-radio ng-model="homeCtrl.nivel" ng-value="'Fundamental'">Fundamental</ion-radio>
     		  <ion-radio ng-model="homeCtrl.nivel" ng-value="'Médio'">Médio</ion-radio>
     		  <ion-radio ng-model="homeCtrl.nivel" ng-value="'Superior'">Superior</ion-radio>
+    		</ion-list>
+    	</div>
+
+    	<div class='mdl-list' ng-show='homeCtrl.nivel'>
+    		<ion-item class='item item-icon-right'>
+    		    {{homeCtrl.materia || 'Escolha a matéria:' }}
+    			<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoicesMaterias' 
+    			ng-click="homeCtrl.showChoicesMaterias = !homeCtrl.showChoicesMaterias; homeCtrl.getMaterias();"></i>
+    			<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoicesMaterias' 
+    			ng-click="homeCtrl.showChoicesMaterias = !homeCtrl.showChoicesMaterias; homeCtrl.getMaterias();"></i>
+    		</ion-item>
+    		<ion-list ng-show='homeCtrl.showChoicesMaterias'>
+    		  <ion-radio ng-model="homeCtrl.materia" ng-value="'Fundamental'">Matemática</ion-radio>
+    		  <ion-radio ng-model="homeCtrl.materia" ng-value="'Médio'">Física</ion-radio>
+    		  <ion-radio ng-model="homeCtrl.materia" ng-value="'Superior'">História</ion-radio>
     		</ion-list>
     	</div>
 
