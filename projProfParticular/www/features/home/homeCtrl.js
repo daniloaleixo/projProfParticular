@@ -4,6 +4,9 @@ appProf
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
 	var homeCtrl = this;
+
+	homeCtrl.showChoices = true;
+	homeCtrl.nivel = '';
 	
 	//console.log("home Ctrl:");
 	console.log("HomeCtrl| : email: " + user.email);

@@ -7818,12 +7818,12 @@ input[type="checkbox"][readonly] {
 
 .checkbox-calm input:before,
 .checkbox-calm .checkbox-icon:before {
-  border-color: #11c1f3; }
+  border-color: #69F0AE; }
 
 .checkbox-calm input:checked:before,
 .checkbox-calm input:checked + .checkbox-icon:before {
-  background: #11c1f3;
-  border-color: #11c1f3; }
+  background: #69F0AE;
+  border-color: #69F0AE; }
 
 .checkbox-assertive input:before,
 .checkbox-assertive .checkbox-icon:before {

@@ -1,3 +1,24 @@
-<ion-view title="Home" id="page1">
-    <ion-content padding="true" class="has-header"></ion-content>
+<ion-view title="EduCaqui" id="page1">
+    <ion-content padding="true" class="has-header">
+    	<div style="margin-top: 20px;"></div>
+
+    	<div class='mdl-list'>
+    		<ion-item class='item item-icon-right'>
+    		    {{homeCtrl.nivel || 'Escolha seu nível:' }}
+    			<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoices' 
+    			ng-click="homeCtrl.showChoices = !homeCtrl.showChoices"></i>
+    			<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoices' 
+    			ng-click="homeCtrl.showChoices = !homeCtrl.showChoices"></i>
+    		</ion-item>
+    		<ion-list ng-show='homeCtrl.showChoices'>
+    		  <ion-radio ng-model="homeCtrl.nivel" ng-value="'Fundamental'">Fundamental</ion-radio>
+    		  <ion-radio ng-model="homeCtrl.nivel" ng-value="'Médio'">Médio</ion-radio>
+    		  <ion-radio ng-model="homeCtrl.nivel" ng-value="'Superior'">Superior</ion-radio>
+    		</ion-list>
+    	</div>
+
+
+
+
+    </ion-content>
 </ion-view>
