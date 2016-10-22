@@ -16,7 +16,7 @@ angular.module('app.routes', [])
     url: '/home',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/home.html',
+        templateUrl: 'features/home/home.html',
         controller: 'HomeCtrl as homeCtrl',
         resolve: {
           // controller will not be loaded until $requireSignIn resolves
