@@ -142,6 +142,7 @@ function ($scope, $stateParams, $ionicLoading) {
 	homeCtrl.getMaterias = function(){
 		var refNivel = '';
 		homeCtrl.materias = [];
+		homeCtrl.showChoicesNivel = false;
 
 		if(homeCtrl.nivel != ''){
 			showLoading();

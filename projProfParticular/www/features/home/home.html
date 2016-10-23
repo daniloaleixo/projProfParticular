@@ -21,7 +21,7 @@
     				<ion-item class='item item-icon-right' ng-click="homeCtrl.showChoicesMaterias = !homeCtrl.showChoicesMaterias">
     				    {{ homeCtrl.materia || 'Escolha a matéria:' }}
     					<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoicesMaterias' 
-    						ng-click='homeCtrl.getMaterias()'></i>
+    						ng-click='homeCtrl.getMaterias(); '></i>
     					<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoicesMaterias'></i>
     				</ion-item>
     				<ion-list ng-show='homeCtrl.showChoicesMaterias' ng-repeat='materia in homeCtrl.materias'>
