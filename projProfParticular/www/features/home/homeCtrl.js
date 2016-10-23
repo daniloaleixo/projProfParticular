@@ -176,9 +176,9 @@ function ($scope, $stateParams, $ionicLoading, $cordovaToast) {
 		homeCtrl.tempProfessores = [];
 		homeCtrl.semProfessoresMessage = '';
 
-		if(homeCtrl.nivel === '') console.log("HomeCtrl| escolha um  nivel");
+		if(homeCtrl.nivel === '') homeCtrl.showToast("Escolha um nível", 'long', 'bottom');
 		else {
-			if(homeCtrl.materia === '') console.log("HomeCtrl| escolha uma materia");
+			if(homeCtrl.materia === '') homeCtrl.showToast("Escolha uma matéria", 'long', 'bottom');
 			else{
 
 				showLoading();
@@ -235,6 +235,15 @@ function ($scope, $stateParams, $ionicLoading, $cordovaToast) {
 			}
 		}
 
+	}
+
+
+	homeCtrl.showToast = function(message, duration, location) {
+        $cordovaToast.show(message, duration, location).then(function(success) {
+           console.log("The toast was shown");
+        }, function (error) {
+           console.log("The toast was not shown due to " + error);
+        });
 	}
 
 }])
