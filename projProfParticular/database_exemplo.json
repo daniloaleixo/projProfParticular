@@ -6,7 +6,7 @@
 			"photoURL":"",
 			"localizacoes":{
 				"principal":"Rua xyz, 180",
-				"secundararias" : []
+				"secundarias" : []
 			},
 			"agenda": [],
 			"favoritos":[]
@@ -18,9 +18,9 @@
 			"displayName":"Danilo Aleixo",
 			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
 			"materias":{
-				"resumo":["matematica", "fisica"],
-				"fundamental":["matematica", "fisica"],
-				"medio":["matematica", "fisica"],
+				"resumo":["Matemática", "Física"],
+				"fundamental":["Matemática", "Física"],
+				"medio":["Matemática", "Física"],
 				"superior":[]
 			},
 			"localizacoes":{
@@ -30,7 +30,7 @@
 					"estado":"SP",
 					"CEP": "05454555"
 				},
-				"secundararias" : []
+				"secundarias" : []
 			},
 			"curriculo": {
 				"sobre":"Sou muito legal",
@@ -66,9 +66,9 @@
 			"displayName":"Bla  3",
 			"photoURL":"",
 			"materias":{
-				"resumo":["historia", "geografia"],
-				"fundamental":["historia", "geografia"],
-				"medio":["historia", "geografia"],
+				"resumo":["História", "Geografia"],
+				"fundamental":["História", "Geografia"],
+				"medio":["História", "Geografia"],
 				"superior":[]
 			},
 			"localizacoes":{
@@ -112,33 +112,33 @@
 	],
 	"materias":{
 		"fundamental":{
-			"matematica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
-			"fisica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"Matemática":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"Física":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
 			"redacao":[],
 			"quimica":[],
 			"biologia":[],
-			"historia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
-			"geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"História":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"Geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
 			"portugues":[]
 		},
 		"medio":{
-			"matematica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
-			"fisica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"Matemática":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"Física":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
 			"redacao":[],
 			"quimica":[],
 			"biologia":[],
-			"historia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
-			"geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"História":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"Geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
 			"portugues":[]
 		},
 		"superior":{
-			"matematica":[],
-			"fisica":[],
+			"Matemática":[],
+			"Física":[],
 			"redacao":[],
 			"quimica":[],
 			"biologia":[],
-			"historia":[],
-			"geografia":[],
+			"História":[],
+			"Geografia":[],
 			"portugues":[]
 		}
 	}
