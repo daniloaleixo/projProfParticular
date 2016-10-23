@@ -18,15 +18,14 @@
     			</div>
 
     			<div class='mdl-list' ng-show='homeCtrl.nivel'>
-    				<ion-item class='item item-icon-right' ng-click="homeCtrl.showChoicesMaterias = !homeCtrl.showChoicesMaterias; homeCtrl.getMaterias();">
-    				    {{homeCtrl.materia || 'Escolha a matéria:' }}
-    					<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoicesMaterias' ></i>
+    				<ion-item class='item item-icon-right' ng-click="homeCtrl.showChoicesMaterias = !homeCtrl.showChoicesMaterias">
+    				    {{ homeCtrl.materia || 'Escolha a matéria:' }}
+    					<i class="icon icon-right ion-plus-round" ng-hide='homeCtrl.showChoicesMaterias' 
+    						ng-click='homeCtrl.getMaterias()'></i>
     					<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoicesMaterias'></i>
     				</ion-item>
-    				<ion-list ng-show='homeCtrl.showChoicesMaterias'>
-    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Matemática'">Matemática</ion-radio>
-    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Física'">Física</ion-radio>
-    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'História'">História</ion-radio>
+    				<ion-list ng-show='homeCtrl.showChoicesMaterias' ng-repeat='materia in homeCtrl.materias'>
+    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'{{materia}}'">{{materia}}</ion-radio>
     				</ion-list>
     			</div>
 

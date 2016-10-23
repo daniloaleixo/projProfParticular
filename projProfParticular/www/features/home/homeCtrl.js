@@ -1,8 +1,8 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams, $ionicLoading) {
 	var homeCtrl = this;
 
 	var database = firebase.database();
@@ -13,6 +13,7 @@ function ($scope, $stateParams) {
 	homeCtrl.nivel = '';
 	homeCtrl.showChoicesMaterias = false;
 	homeCtrl.materia = '';
+	homeCtrl.showProfessores = false;
 
 	homeCtrl.professores = [
 		{
@@ -113,7 +114,6 @@ function ($scope, $stateParams) {
 		}
 	];
 	homeCtrl.errorMessage = '';
-	homeCtrl.showProfessores = false;
 	homeCtrl.filterBarInstance;
 
 	// set the rate and max variables
@@ -121,17 +121,48 @@ function ($scope, $stateParams) {
 		'max': 5,
 		'readOnly': true
 	}
+
+	var showLoading = function(){
+		$ionicLoading.show({
+			template: '<ion-spinner icon="spiral"></ion-spinner>',
+			noBackdrop: true
+		});
+	}
+
+	var hideLoading = function(){
+		$ionicLoading.hide();
+	}
 	
 	//console.log("home Ctrl:");
 	console.log("HomeCtrl| : email: " + user.email);
 
 	homeCtrl.getMaterias = function(){
+		var refMateria = '';
+		homeCtrl.materias = [];
 
 		if(homeCtrl.nivel != ''){
+			showLoading();
 			console.log("HomeCtrl| vou pegar infos do database");
+
+			if(homeCtrl.nivel.toLowerCase() == 'fundamental') refMateria = 'fundamental';
+			if(homeCtrl.nivel.toLowerCase() == 'médio') refMateria = 'medio';
+			if(homeCtrl.nivel.toLowerCase() == 'superior') refMateria = 'superior';
+
+
+			database.ref('/materias/' + refMateria).once('value').then(function(snapshot){
+				console.log("HomeCtrl| consegui um snapshot");
+				snapshot.forEach(function(childSnapshot){
+					//console.log(childSnapshot.key);
+					homeCtrl.materias.push(childSnapshot.key);
+				});
+				$scope.$digest();
+				hideLoading();
+			});
 		} else {
 			console.log("HomeCtrl| primeiro precisa escolhjer o nivel");
+			hideLoading();
 		}
+
 	}
 
 	homeCtrl.getProfessores = function()
