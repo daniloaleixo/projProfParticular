@@ -1,8 +1,8 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', '$cordovaToast', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading) {
+function ($scope, $stateParams, $ionicLoading, $cordovaToast) {
 	var homeCtrl = this;
 
 	var database = firebase.database();
