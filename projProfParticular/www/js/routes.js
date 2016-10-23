@@ -61,11 +61,39 @@ angular.module('app.routes', [])
     views: {
       'side-menu21': {
         templateUrl: 'features/profile/profile.html',
-        controller: 'ProfileCtrl as profileCtrl'
-        
+        controller: 'ProfileCtrl as profileCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
+
+  .state('menu.professor', {
+    url: '/professores/professor',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/professores/professor.html',
+        controller: 'ProfessorCtrl as professorCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
 
   .state('menu', {
     url: '/side-menu21',
@@ -92,12 +120,6 @@ angular.module('app.routes', [])
     url: '/login',
     templateUrl: 'features/auth/login.html',
     controller: 'LoginCtrl as loginCtrl'
-  })
-
-  .state('signup', {
-    url: '/signup',
-    templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
   })
 
 $urlRouterProvider.otherwise('/side-menu21/home')
