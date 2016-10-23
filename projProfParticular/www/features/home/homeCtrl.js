@@ -15,7 +15,7 @@ function ($scope, $stateParams, $ionicLoading) {
 	homeCtrl.materia = '';
 	homeCtrl.showProfessores = false;
 
-	homeCtrl.professores = [
+	/*homeCtrl.tempProfessores = [
 		{
 			"UID": "8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
 			"displayName":"Danilo Aleixo",
@@ -112,7 +112,10 @@ function ($scope, $stateParams, $ionicLoading) {
 			},
 			"agenda":[]
 		}
-	];
+	];*/
+
+	homeCtrl.tempProfessores = new Array();
+	homeCtrl.professores = new Array();
 	homeCtrl.errorMessage = '';
 	homeCtrl.filterBarInstance;
 
@@ -137,19 +140,19 @@ function ($scope, $stateParams, $ionicLoading) {
 	console.log("HomeCtrl| : email: " + user.email);
 
 	homeCtrl.getMaterias = function(){
-		var refMateria = '';
+		var refNivel = '';
 		homeCtrl.materias = [];
 
 		if(homeCtrl.nivel != ''){
 			showLoading();
 			console.log("HomeCtrl| vou pegar infos do database");
 
-			if(homeCtrl.nivel.toLowerCase() == 'fundamental') refMateria = 'fundamental';
-			if(homeCtrl.nivel.toLowerCase() == 'médio') refMateria = 'medio';
-			if(homeCtrl.nivel.toLowerCase() == 'superior') refMateria = 'superior';
+			if(homeCtrl.nivel.toLowerCase() == 'fundamental') refNivel = 'fundamental';
+			if(homeCtrl.nivel.toLowerCase() == 'médio') refNivel = 'medio';
+			if(homeCtrl.nivel.toLowerCase() == 'superior') refNivel = 'superior';
 
 
-			database.ref('/materias/' + refMateria).once('value').then(function(snapshot){
+			database.ref('/materias/' + refNivel).once('value').then(function(snapshot){
 				console.log("HomeCtrl| consegui um snapshot");
 				snapshot.forEach(function(childSnapshot){
 					//console.log(childSnapshot.key);
@@ -159,7 +162,7 @@ function ($scope, $stateParams, $ionicLoading) {
 				hideLoading();
 			});
 		} else {
-			console.log("HomeCtrl| primeiro precisa escolhjer o nivel");
+			console.log("HomeCtrl| primeiro precisa escolher o nivel");
 			hideLoading();
 		}
 
@@ -167,14 +170,67 @@ function ($scope, $stateParams, $ionicLoading) {
 
 	homeCtrl.getProfessores = function()
 	{
+		var refNivel = '';
+		homeCtrl.professores = [];
+		homeCtrl.tempProfessores = [];
+		homeCtrl.semProfessoresMessage = '';
+
 		if(homeCtrl.nivel === '') console.log("HomeCtrl| escolha um  nivel");
 		else {
 			if(homeCtrl.materia === '') console.log("HomeCtrl| escolha uma materia");
 			else{
+
+				showLoading();
+
+
 				console.log("HomeCtrl| vou pegar os professores");
 				homeCtrl.showChoicesMaterias = false;
 				homeCtrl.showChoicesNivel = false;	
-				homeCtrl.showProfessores = true;		
+				homeCtrl.showProfessores = true;
+
+				if(homeCtrl.nivel.toLowerCase() == 'fundamental') refNivel = 'fundamental';
+				if(homeCtrl.nivel.toLowerCase() == 'médio') refNivel = 'medio';
+				if(homeCtrl.nivel.toLowerCase() == 'superior') refNivel = 'superior';		
+
+				database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value').then(function(snapshot){
+					console.log("HomeCtrl| consegui um snapshot");
+					snapshot.forEach(function(childSnapshot){
+						console.log("HomeCtrl| childSnapshot");
+						console.log(childSnapshot.val());
+						homeCtrl.tempProfessores.push(childSnapshot.val());
+					});
+
+					console.log("Vou imprimir os professores que achei nessa materia");
+					console.log(homeCtrl.tempProfessores);
+
+					if(homeCtrl.tempProfessores.length == 0) {
+						homeCtrl.semProfessoresMessage = 'Desculpe não encontrei nenhum professor perto';
+						$scope.$digest();
+						hideLoading();
+					}
+					else {
+						database.ref('/professores/').once('value').then(function(snapshot){
+							console.log("ProfessoresCtrl| consegui um snapshot");
+							snapshot.val().forEach(function(professor){
+								console.log("HomeCtrl| professor UID: " + professor.UID)
+								console.log("HomeCtrl| indexOf: " + homeCtrl.tempProfessores.indexOf(professor.UID));
+	
+								if(homeCtrl.tempProfessores.indexOf(professor.UID) != -1){
+									homeCtrl.professores.push(professor);
+								}
+
+
+								$scope.$digest();
+								hideLoading();
+
+							});
+						})
+
+
+					}
+					
+
+				});
 			}
 		}
 

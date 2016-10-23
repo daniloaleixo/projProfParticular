@@ -38,6 +38,8 @@
     			</div>
     	</form>
 
+    	<span ng-show='homeCtrl.semProfessoresMessage'>{{homeCtrl.semProfessoresMessage}}</span>
+
     	<!-- Mostra professores -->
     	<div class="list card mdl-shadow--2dp" ng-repeat='professor in homeCtrl.professores'
     			ng-show='homeCtrl.showProfessores'>
