@@ -24,9 +24,9 @@
     					<i class="icon icon-right ion-minus-round" ng-show='homeCtrl.showChoicesMaterias'></i>
     				</ion-item>
     				<ion-list ng-show='homeCtrl.showChoicesMaterias'>
-    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Fundamental'">Matemática</ion-radio>
-    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Médio'">Física</ion-radio>
-    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Superior'">História</ion-radio>
+    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Matemática'">Matemática</ion-radio>
+    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'Física'">Física</ion-radio>
+    				  <ion-radio ng-model="homeCtrl.materia" ng-value="'História'">História</ion-radio>
     				</ion-list>
     			</div>
 
@@ -39,17 +39,19 @@
     			</div>
     	</form>
 
-    	<div class="list card mdl-shadow--2dp">
+    	<!-- Mostra professores -->
+    	<div class="list card mdl-shadow--2dp" ng-repeat='professor in homeCtrl.professores'
+    			ng-show='homeCtrl.showProfessores'>
 
     	    <div class="item row" style="padding:10px;">
 
     	        <div class="col col-40">
-    	            <img class='item-professor-avatar' src="img/null-avatar.png" 
+    	            <img class='item-professor-avatar' src="{{ professor.photoURL || 'img/null-avatar.png'}}" 
     	                    style="margin-right:25px;">
     	        </div>
 
     	        <div class="col" style="text-align:left;">
-    	            <h2 style='margin-top: -20px;'>Bla</h2>
+    	            <h2 style='margin-top: -20px;'>{{professor.displayName}}</h2>
     	            <rating ng-model="professor.avaliacoes.didatica" max="homeCtrl.rating.max" 
     	                    readonly="homeCtrl.rating.readOnly"
     	                    style='margin-top: -20px;'></rating>
@@ -84,6 +86,54 @@
     	    </div>
 
     	</div>
+
+
+    	<!-- PRofessores -->
+    	<!--div class="list card mdl-shadow--2dp" ng-repeat='professor in homeCtrl.professores'>
+
+    	    <div class="item row" style="padding:10px;">
+
+    	        <div class="col col-40">
+    	            <img class='item-professor-avatar' src="img/null-avatar.png" 
+    	                    style="margin-right:25px;">
+    	        </div>
+
+    	        <div class="col" style="text-align:left;">
+    	            <h2 style='margin-top: -20px;'>Bla</h2>
+    	            <rating ng-model="professor.avaliacoes.didatica" max="homeCtrl.rating.max" 
+    	                    readonly="homeCtrl.rating.readOnly"
+    	                    style='margin-top: -20px;'></rating>
+    	            <p style='margin-top: 10px;'>
+    	                {{professor.localizacoes.principal.cidade}} - {{professor.localizacoes.principal.estado}}
+    	            </p>
+    	            <p>
+    	                <i class='icon ion-ios-location'>10km distante de você</i>
+    	            </p>
+    	        </div>  
+    	    </div>
+
+    	    <div class="item item-body">
+    	        <!-- Faculdade >
+    	        <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
+    	            <i class="icon ion-university">
+    	                {{professor.curriculo.formacao.graduacao.status}} 
+    	                {{professor.curriculo.formacao.graduacao.curso}} 
+    	                na {{professor.curriculo.formacao.graduacao.instituicao}}
+    	            </i>
+    	        </p>
+    	        <!-- Aulas que ensina >
+    	        <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
+    	            <i class="icon ion-easel">
+    	                Ensina 
+    	                <item ng-repeat='materia in professor.materias.resumo'>{{materia}}, </item>
+    	            </i>
+    	        </p>
+    	        <p  style="margin-top:0px; margin-bottom:0px;font-size:14px;">
+    	        Sobre: {{professor.curriculo.sobre}}
+    	        </p>
+    	    </div>
+
+    	</div-->
 
 
 
