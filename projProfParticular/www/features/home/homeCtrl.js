@@ -1,8 +1,8 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', '$cordovaToast', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $cordovaToast) {
+function ($scope, $stateParams, $ionicLoading, ToastService) {
 	var homeCtrl = this;
 
 	var database = firebase.database();
@@ -176,9 +176,9 @@ function ($scope, $stateParams, $ionicLoading, $cordovaToast) {
 		homeCtrl.tempProfessores = [];
 		homeCtrl.semProfessoresMessage = '';
 
-		if(homeCtrl.nivel === '') homeCtrl.showToast("Escolha um nível", 'long', 'bottom');
+		if(homeCtrl.nivel === '') ToastService.showToast("Escolha um nível", 'long', 'bottom');
 		else {
-			if(homeCtrl.materia === '') homeCtrl.showToast("Escolha uma matéria", 'long', 'bottom');
+			if(homeCtrl.materia === '') ToastService.showToast("Escolha uma matéria", 'long', 'bottom');
 			else{
 
 				showLoading();
@@ -237,13 +237,5 @@ function ($scope, $stateParams, $ionicLoading, $cordovaToast) {
 
 	}
 
-
-	homeCtrl.showToast = function(message, duration, location) {
-        $cordovaToast.show(message, duration, location).then(function(success) {
-           console.log("The toast was shown");
-        }, function (error) {
-           console.log("The toast was not shown due to " + error);
-        });
-	}
-
+	
 }])
