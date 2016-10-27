@@ -1,11 +1,51 @@
-<!--div class="bar bar-header bar-assertive">
-  <h1 class="title">bar-assertive</h1>
-</div-->
-
 <ion-view title="Professor" id="page3">
     <ion-content padding="true" class="has-header">
     <div style="margin-top: 20px;"></div>
 
-    Blaaaaaa
+
+    <div style='text-align: center;margin-bottom: 50px;' class='user-name'>
+        <div>
+        	<img class='wrapper' src="{{professorCtrl.professor.photoURL}}">
+        </div>
+        <label>
+            <p class='small'>{{professorCtrl.professor.displayName}}</p>
+        </label>
+        <rating ng-model="professorCtrl.professor.avaliacoes.didatica" max="professorCtrl.rating.max" 
+                readonly="professorCtrl.rating.readOnly"
+                style='margin-top: -20px;'></rating>
+        <p style='margin-top: 10px;'>
+            {{professorCtrl.professor.localizacoes.principal.cidade}} - {{professorCtrl.professor.localizacoes.principal.estado}}
+        </p>
+        <p style="margin-top:-20px;">
+            <i class='icon ion-ios-location'>10km distante de você</i>
+        </p>
+    </div>
+
+    <!-- Aulas que ensina -->
+    <div>
+        <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
+            <i class="icon ion-easel">
+                Ensina 
+                <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+            </i>
+        </p>
+    </div>
+    <!-- Sobre -->
+    <div>
+    	<p  style="margin-top:0px; margin-bottom:0px;font-size:14px;">
+    	Sobre: {{professorCtrl.professor.curriculo.sobre}}
+    	</p>
+    </div>
+    <!-- Formacao -->
+    <div>
+    	<p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
+    	    <i class="icon ion-university">
+    	        {{professorCtrl.professor.curriculo.formacao.graduacao.status}} 
+    	        {{professorCtrl.professor.curriculo.formacao.graduacao.curso}} 
+    	        na {{professorCtrl.professor.curriculo.formacao.graduacao.instituicao}}
+    	    </i>
+    	</p>
+    </div>
+
     </ion-content>
 </ion-view>
