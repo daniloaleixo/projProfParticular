@@ -1,5 +1,7 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', 
+// The following is the constructor function for this page's controller. 
+// See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $ionicLoading, ToastService) {
@@ -99,7 +101,8 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 				if(homeCtrl.nivel.toLowerCase() == 'médio') refNivel = 'medio';
 				if(homeCtrl.nivel.toLowerCase() == 'superior') refNivel = 'superior';		
 
-				database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value').then(function(snapshot){
+				database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value')
+					.then(function(snapshot){
 					console.log("HomeCtrl| consegui um snapshot");
 					snapshot.forEach(function(childSnapshot){
 						console.log("HomeCtrl| childSnapshot");
@@ -120,7 +123,8 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 							console.log("ProfessoresCtrl| consegui um snapshot");
 							snapshot.val().forEach(function(professor){
 								console.log("HomeCtrl| professor UID: " + professor.UID)
-								console.log("HomeCtrl| indexOf: " + homeCtrl.tempProfessores.indexOf(professor.UID));
+								console.log("HomeCtrl| indexOf: " + homeCtrl.tempProfessores.
+									indexOf(professor.UID));
 	
 								if(homeCtrl.tempProfessores.indexOf(professor.UID) != -1){
 									homeCtrl.professores.push(professor);
@@ -132,7 +136,8 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 
 							});
 						}, function(error){
-							ToastService.showToast("Desculpe tive problemas para me comunicar com o banco de dados", 'long', 'bottom');
+							ToastService.showToast("Desculpe tive problemas para me comunicar "
+								+ "com o banco de dados", 'long', 'bottom');
 						});
 
 
@@ -140,7 +145,8 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 					
 
 				}, function(error){
-					ToastService.showToast("Desculpe tive problemas para me comunicar com o banco de dados", 'long', 'bottom');
+					ToastService.showToast("Desculpe tive problemas para me comunicar" 
+						+ " com o banco de dados", 'long', 'bottom');
 				});
 			}
 		}
