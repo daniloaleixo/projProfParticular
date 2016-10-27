@@ -8,6 +8,18 @@ appProf
 function ($scope, $stateParams, $location, $ionicLoading, UserInfos, $cordovaCamera, 
 	ToastService, KeyboardService) {
 	var profileCtrl = this;
+	var storage = firebase.storage();
+
+	// Points to the root reference
+	var storageRef = firebase.storage().ref();
+
+	// Points to 'images'
+	var imagesRef = storageRef.child('images');
+
+	var userImagesRef = imagesRef.child(user.uid);
+
+	//console.log("ProfileCtrl| "+ userImagesRef);
+
 
 	profileCtrl.user = {
 		displayName: '',
@@ -72,23 +84,76 @@ function ($scope, $stateParams, $location, $ionicLoading, UserInfos, $cordovaCam
 	       var options = {
 	           quality : 75,
 	           destinationType : Camera.DestinationType.DATA_URL,
-	           sourceType : Camera.PictureSourceType.CAMERA,
+	           sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
 	           allowEdit : true,
 	           encodingType: Camera.EncodingType.JPEG,
-	           popoverOptions: CameraPopoverOptions,
 	           targetWidth: 500,
-	           targetHeight: 500,
-	           saveToPhotoAlbum: false
+	           targetHeight: 500
 	       };
 
-	       $cordovaCamera.getPicture(options).then(function(imageData) {
+	       $cordovaCamera.getPicture(options)
+	       		.then(profileCtrl.uploadImageFirebase, profileCtrl.uploadError);
+
+
+	       /*.then(function(imageData) {
 	       		console.log("ProfileCtrl| Consegui pegar a imagem");
-	       		ToastService.showToast("Consegui pegar a imagem", 'long', 'bottom');
+
+	       		//showLoading();
+
+	       		// Upload the image to Firebase Storage.
+	       		ToastService.showToast("Vou tentar subir a imagem", 'long', 'bottom');
+
+				ToastService.showToast(imageData.type, 'long', 'bottom');	       		
+
+
+	       		var uploadTask = userImagesRef.ref('/' + imageData.name)
+   		        					.put(imageData, {contentType: 'image/jpeg'});
+
+
+
+   		        /*
+   		        .then(function(snapshot) {
+   		        	ToastService.showToast("To aqui no then", 'long', 'bottom');
+   		            // Get the file's Storage URI
+   		            var imagePath = snapshot.metadata.fullPath;
+   		            // Falta atualizar 
+   		          //  hideLoading();
+   		            ToastService.showToast("Imagem atualizada com sucesso", 'long', 'bottom');
+   		        }, function(error) {
+   		        	//hideLoading();
+   		          	ToastService.showToast("Erro ao fazer o upload da imagem", 'long', 'bottom');
+   		        });*
+
 
 	       }, function(error) {
 	           console.error(error);
-	       });
+	       });*/
 	   }
+
+
+
+	   /* Funcoes auxiliares */
+
+	   
+	   	profileCtrl.uploadImageFirebase = function(imagePath){
+	   		var sourceDir = imagePath.substring(0, imagePath.lastIndexOf('/') + 1),
+   		        sourceFile = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.length),
+   		        fileName = new Date().valueOf() + sourceFile;
+
+
+   		    $cordovaFile.readAsArrayBuffer(sourceDir, sourceFile)
+   		        .then(function(success) {
+   		            var blob = new Blob([success], {type: 'image/jpeg'});
+   		            ToastService.showToast("Consegui o blob", 'long', 'bottom');
+   		            //enviarFirebase(blob, nombreParaGuardar);
+   		        }, function (error) {
+   		            console.error(error);
+   		        });
+	   	}
+
+	   	profileCtrl.uploadError = function(error){
+	   		console.log("Erro");
+	   	}
 
 
 }])
