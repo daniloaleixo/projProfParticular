@@ -47,10 +47,10 @@ function ($scope, $stateParams) {
 			}
 		},
 		"avaliacoes":{
-			"quantidade": 0,
+			"quantidade": 2,
 			"didatica":5,
-			"conhecimento":5,
-			"simpatia":5
+			"conhecimento":3.5,
+			"simpatia":4.5
 		},
 		"horariosDisponiveis":{
 			"segunda":{
@@ -72,7 +72,7 @@ function ($scope, $stateParams) {
 	}
 
 
-	
+
 
 
 }])

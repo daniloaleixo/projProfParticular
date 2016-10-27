@@ -22,30 +22,96 @@
     </div>
 
     <!-- Aulas que ensina -->
-    <div>
-        <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
-            <i class="icon ion-easel">
-                Ensina 
-                <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
-            </i>
-        </p>
-    </div>
-    <!-- Sobre -->
-    <div>
-    	<p  style="margin-top:0px; margin-bottom:0px;font-size:14px;">
-    	Sobre: {{professorCtrl.professor.curriculo.sobre}}
-    	</p>
-    </div>
-    <!-- Formacao -->
-    <div>
-    	<p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
-    	    <i class="icon ion-university">
-    	        {{professorCtrl.professor.curriculo.formacao.graduacao.status}} 
-    	        {{professorCtrl.professor.curriculo.formacao.graduacao.curso}} 
-    	        na {{professorCtrl.professor.curriculo.formacao.graduacao.instituicao}}
-    	    </i>
-    	</p>
-    </div>
+    <div class='infos-professor'>
+	    
+    	<label class='header'>Aulas oferecidas</label>
+    	<div>
+	        <p  class='body-text'>
+	        	<span>
+		        	<i class="icon ion-easel"> Ensino Fundamental </i>
+		        	<br>
+		            <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+		            </i>
+		            <br>
+	            </span>
+
+	            <span>
+		            <i class="icon ion-easel"> Ensino Médio </i>
+		        	<br>
+		            <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+		            </i>
+		            <br>
+	            <span>
+
+	            <span>
+		            <i class="icon ion-easel"> Ensino Superior </i>
+		        	<br>
+		            <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+		            </i>
+		            <br>
+	            </span>
+	        </p>
+        	<br>	
+        </div>
+	    
+	    <!-- Sobre -->
+	    <label class='header'>Sobre</label>
+	    <div>
+	    	<p  class='body-text'>
+	    	{{professorCtrl.professor.curriculo.sobre}}
+	    	</p>
+	    	<br>
+	    </div>
+	    <!-- Formacao -->
+	    <label class='header'>Formação</label>
+	    <div>
+	    	<p  class='body-text'>
+	    			<i class="icon ion-university"> Graduação </i>
+	    			<br>
+	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.status}} 
+	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.curso}} 
+	    	        na {{professorCtrl.professor.curriculo.formacao.graduacao.instituicao}}
+	    	        <br>
+
+	    	        <!-- Implementar pos graduacoes -->
+	    	        <span ng-hide="professorCtrl.professor.curriculo.formacao.posGraduacoes == ''"
+	    	        		style='display:inline;'>
+	    	        <i class="icon ion-university"> Pós Graduação </i>
+	    			<br>
+	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.status}} 
+	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.curso}} 
+	    	        na {{professorCtrl.professor.curriculo.formacao.graduacao.instituicao}}
+	    	        </span>
+	    	</p>
+	    	<br>
+	    </div>
+	    <!-- Avaliacoes -->
+	    <label class='header'>Avaliações ({{professorCtrl.professor.avaliacoes.quantidade}})</label>
+	    <div>
+	    	<p>Didática</p>
+	    	<rating ng-model="professorCtrl.professor.avaliacoes.didatica" max="professorCtrl.rating.max" 
+	    	                readonly="professorCtrl.rating.readOnly"
+	    	                style='margin-top: -20px;'></rating>
+	    	<p>Conhecimento</p>
+	    	<rating ng-model="professorCtrl.professor.avaliacoes.conhecimento" max="professorCtrl.rating.max" 
+	    	                readonly="professorCtrl.rating.readOnly"
+	    	                style='margin-top: -20px;'></rating>
+	    	<p>Simpatia</p>
+	    	<rating ng-model="professorCtrl.professor.avaliacoes.simpatia" max="professorCtrl.rating.max" 
+	    	                readonly="professorCtrl.rating.readOnly"
+	    	                style='margin-top: -20px;'></rating>
+
+	    	<br>
+	    </div>
+	</div>
+
+	<div style="margin-top:20px;">
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
+                        button button-block">
+        <i class='icon ion-search'></i>  
+          	Marcar uma aula
+        </button>
+	</div>
 
     </ion-content>
 </ion-view>
