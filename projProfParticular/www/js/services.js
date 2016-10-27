@@ -55,3 +55,12 @@ angular.module('app.services', [])
 			}
 		}
 }])
+
+.factory('KeyboardService', [
+	function(){
+		return {
+			hide: function(){
+				cordova.plugins.Keyboard.close();
+			}
+		}
+}])
