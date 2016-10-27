@@ -15,105 +15,6 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 	homeCtrl.materia = '';
 	homeCtrl.showProfessores = false;
 
-	/*homeCtrl.tempProfessores = [
-		{
-			"UID": "8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
-			"displayName":"Danilo Aleixo",
-			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
-			"materias":{
-				"resumo":["matematica", "fisica"],
-				"fundamental":["matematica", "fisica"],
-				"medio":["matematica", "fisica"],
-				"superior":[]
-			},
-			"localizacoes":{
-				"principal": {
-					"logradouro": "Rua xyz, 180",
-					"cidade": "São Paulo ",
-					"estado":"SP",
-					"CEP": "05454555"
-				},
-				"secundararias" : []
-			},
-			"curriculo": {
-				"sobre":"Sou muito legal",
-				"formacao":{
-					"graduacao":{
-						"instituicao": "USP",
-						"status":"Cursando",
-						"curso":"Ciencia da Computacao"
-					},
-					"posGraduacoes":[]
-				}
-			},
-			"avaliacoes":{
-				"quantidade": 0,
-				"didatica":5,
-				"conhecimento":5,
-				"simpatia":5
-			},
-			"horariosDisponiveis":{
-				"segunda":{
-					"8-9":true,
-					"9-10":true,
-					"10-11":false
-				},
-				"terca":{
-
-				}
-			},
-			"agenda":[]
-		},
-		{
-			"UID": "ZyEKlWn4tDh2esPRV8sGYGf77jq1",
-			"displayName":"Bla  3",
-			"photoURL":"",
-			"materias":{
-				"resumo":["historia", "geografia"],
-				"fundamental":["historia", "geografia"],
-				"medio":["historia", "geografia"],
-				"superior":[]
-			},
-			"localizacoes":{
-				"principal": {
-					"logradouro": "Rua xyz, 180",
-					"cidade": "Campinas",
-					"estado":"SP",
-					"CEP": "05454555"
-				},
-				"secundararias" : []
-			},
-			"curriculo": {
-				"sobre":"Dou aulas particulares há 5 anos e ja fiz isso e isso e isso, sempre estou presente na vida da galera e quero um texto longo",
-				"formacao":{
-					"graduacao":{
-						"instituicao": "USP",
-						"status":"Cursando",
-						"curso":"História"
-					},
-					"posGraduacoes":[]
-				}
-			},
-			"avaliacoes":{
-				"quantidade": 0,
-				"didatica":3.5,
-				"conhecimento":5,
-				"simpatia":5
-			},
-			"horariosDisponiveis":{
-				"segunda":{
-					"8-9":true,
-					"9-10":true,
-					"10-11":false
-				},
-				"terca":{
-
-				}
-			},
-			"agenda":[]
-		}
-	];*/
-
 	homeCtrl.tempProfessores = new Array();
 	homeCtrl.professores = new Array();
 	homeCtrl.errorMessage = '';
@@ -161,9 +62,14 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 				});
 				$scope.$digest();
 				hideLoading();
+			}, function(error){
+				ToastService.showToast("Desculpe não consegui encontrar matérias", 'long', 'bottom');
+				homeCtrl.showChoicesMaterias = false;	
 			});
 		} else {
 			console.log("HomeCtrl| primeiro precisa escolher o nivel");
+			ToastService.showToast("Escolha um nível", 'long', 'bottom');
+			homeCtrl.showChoicesMaterias = false;
 			hideLoading();
 		}
 
@@ -225,12 +131,16 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 								hideLoading();
 
 							});
-						})
+						}, function(error){
+							ToastService.showToast("Desculpe tive problemas para me comunicar com o banco de dados", 'long', 'bottom');
+						});
 
 
 					}
 					
 
+				}, function(error){
+					ToastService.showToast("Desculpe tive problemas para me comunicar com o banco de dados", 'long', 'bottom');
 				});
 			}
 		}
