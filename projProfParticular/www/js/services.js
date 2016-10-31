@@ -81,9 +81,13 @@ angular.module('app.services', [])
 				//console.log("ProfessorListService| " + professores.length);
 			},
 			getProfessorByUID: function(UID){
-				professores.forEach(function(professor){
-					if(professor.UID == UID) return professor;
-				})
+				// console.log("ProfessoresList| entramos na funcao, temos UID: " + UID + " e professores com " + professores.length);
+
+				for(var i = 0; i < professores.length; i++){
+					//console.log("ProfessoresList| " + professores[i].displayName);
+					// console.log("ProfessoresList| professer.UID: " + professores[i].UID + " UID: " + UID);
+					if(UID.localeCompare(professores[i].UID) == 0) return professores[i];
+				}
 				return null;
 			}
 		}

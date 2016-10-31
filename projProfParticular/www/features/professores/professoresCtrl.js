@@ -1,12 +1,12 @@
 
 appProf
 .controller('ProfessoresCtrl', ['$scope', '$stateParams', 'FIREBASE_CONFIG',
-	'ratingConfig', '$ionicLoading','$ionicFilterBar','ProfessoresList',
+	'ratingConfig', '$ionicLoading','$ionicFilterBar','ProfessoresList', '$location',
   // The following is the constructor function for this page's controller. 
   //See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, FIREBASE_CONFIG, ratingConfig, $ionicLoading, $ionicFilterBar, ProfessoresList) {
+function ($scope, $stateParams, FIREBASE_CONFIG, ratingConfig, $ionicLoading, $ionicFilterBar, ProfessoresList, $location) {
 	professoresCtrl = this;
 
 	console.log("ProfessoresCtrl | estou aqui");
@@ -69,6 +69,11 @@ function ($scope, $stateParams, FIREBASE_CONFIG, ratingConfig, $ionicLoading, $i
 			filterProperties: 'displayName'
 		});
 	};
+
+	professoresCtrl.showProfessorDetails = function(UID){
+		//console.log("ProfessoresCtrl| cliquei " + UID);
+		$location.path('/side-menu21/professores/' + UID);
+	}
 
 
 	
