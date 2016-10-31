@@ -5,7 +5,7 @@
 
     <div style='text-align: center;margin-bottom: 50px;' class='user-name'>
         <div>
-        	<img class='wrapper' src="{{professorCtrl.professor.photoURL}}">
+        	<img class='wrapper' src="{{professorCtrl.professor.photoURL || 'img/null-avatar.png'}}">
         </div>
         <label>
             <p class='small'>{{professorCtrl.professor.displayName}}</p>

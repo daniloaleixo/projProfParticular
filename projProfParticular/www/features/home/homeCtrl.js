@@ -1,10 +1,10 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', 'ProfessoresList',
+.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', 'ProfessoresList','$location', 
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList) {
+function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList, $location) {
 	var homeCtrl = this;
 
 	var database = firebase.database();
@@ -157,6 +157,11 @@ function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList) {
 			}
 		}
 
+	}
+
+	homeCtrl.showProfessorDetails = function(UID){
+		//console.log("ProfessoresCtrl| cliquei " + UID);
+		$location.path('/side-menu21/professores/' + UID);
 	}
 
 	
