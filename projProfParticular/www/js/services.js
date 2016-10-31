@@ -64,3 +64,27 @@ angular.module('app.services', [])
 			}
 		}
 }])
+
+.factory('ProfessoresList', [
+	function(){
+		var professores = [];
+
+		return {
+			all: function(){
+				return professores;
+			},
+			updateProfessoresList: function(newProfessoresList){
+				professores = [];
+				newProfessoresList.forEach(function(professor){
+					if(professor) professores.push(professor);
+				})
+				//console.log("ProfessorListService| " + professores.length);
+			},
+			getProfessorByUID: function(UID){
+				professores.forEach(function(professor){
+					if(professor.UID == UID) return professor;
+				})
+				return null;
+			}
+		}
+}])

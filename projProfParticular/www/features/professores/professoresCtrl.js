@@ -1,12 +1,12 @@
 
 appProf
 .controller('ProfessoresCtrl', ['$scope', '$stateParams', 'FIREBASE_CONFIG',
-	'ratingConfig', '$ionicLoading','$ionicFilterBar',
+	'ratingConfig', '$ionicLoading','$ionicFilterBar','ProfessoresList',
   // The following is the constructor function for this page's controller. 
   //See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, FIREBASE_CONFIG, ratingConfig, $ionicLoading, $ionicFilterBar) {
+function ($scope, $stateParams, FIREBASE_CONFIG, ratingConfig, $ionicLoading, $ionicFilterBar, ProfessoresList) {
 	professoresCtrl = this;
 
 	console.log("ProfessoresCtrl | estou aqui");
@@ -45,8 +45,10 @@ function ($scope, $stateParams, FIREBASE_CONFIG, ratingConfig, $ionicLoading, $i
 
 			if(professoresCtrl.professores.length == 0) 
 				professoresCtrl.errorMessage = 'Desculpe não consegui encontrar nenhum professor'
-			else 
+			else { 
 				professoresCtrl.errorMessage = '';
+				ProfessoresList.updateProfessoresList(professoresCtrl.professores);
+			}
 
 		}, function(error){
 			professoresCtrl.errorMessage = error;

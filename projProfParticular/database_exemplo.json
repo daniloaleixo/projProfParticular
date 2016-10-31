@@ -30,6 +30,7 @@
 					"estado":"SP",
 					"CEP": "05454555"
 				},
+				"zona":["Sul", "Centro"], 
 				"secundararias" : []
 			},
 			"curriculo": {
@@ -78,6 +79,7 @@
 					"estado":"SP",
 					"CEP": "05454555"
 				},
+				"zona":["Centro", "Oeste"],
 				"secundararias" : []
 			},
 			"curriculo": {

@@ -1,10 +1,10 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', 
+.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', 'ProfessoresList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, ToastService) {
+function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList) {
 	var homeCtrl = this;
 
 	var database = firebase.database();
@@ -101,12 +101,14 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 				if(homeCtrl.nivel.toLowerCase() == 'médio') refNivel = 'medio';
 				if(homeCtrl.nivel.toLowerCase() == 'superior') refNivel = 'superior';		
 
+				// Acessa o database olhando a materia 
 				database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value')
 					.then(function(snapshot){
 					console.log("HomeCtrl| consegui um snapshot");
 					snapshot.forEach(function(childSnapshot){
 						console.log("HomeCtrl| childSnapshot");
 						console.log(childSnapshot.val());
+						// Coloca no vetor todos os UIDs dos professores que dao essa materia */
 						homeCtrl.tempProfessores.push(childSnapshot.val());
 					});
 
@@ -119,6 +121,8 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 						hideLoading();
 					}
 					else {
+						//O vetor tempProfessores tem o UID de todos os professores que dao certa materia
+						// Agora precisamos pegar o vetor com os objetos professores de fato 
 						database.ref('/professores/').once('value').then(function(snapshot){
 							console.log("ProfessoresCtrl| consegui um snapshot");
 							snapshot.val().forEach(function(professor){
@@ -129,6 +133,8 @@ function ($scope, $stateParams, $ionicLoading, ToastService) {
 								if(homeCtrl.tempProfessores.indexOf(professor.UID) != -1){
 									homeCtrl.professores.push(professor);
 								}
+
+								ProfessoresList.updateProfessoresList(homeCtrl.professores);
 
 
 								$scope.$digest();

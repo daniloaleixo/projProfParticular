@@ -76,7 +76,7 @@ angular.module('app.routes', [])
   })
 
   .state('menu.professor', {
-    url: '/professores/professor',
+    url: '/professores/:professorUID',
     views: {
       'side-menu21': {
         templateUrl: 'features/professores/professor.html',
