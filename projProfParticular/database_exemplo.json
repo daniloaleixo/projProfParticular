@@ -18,9 +18,9 @@
 			"displayName":"Danilo Aleixo",
 			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
 			"materias":{
-				"resumo":["matematica", "fisica"],
-				"fundamental":["matematica", "fisica"],
-				"medio":["matematica", "fisica"],
+				"resumo":["Matemática", "Física"],
+				"fundamental":["Matemática", "Física"],
+				"medio":["Matemática", "Física"],
 				"superior":[]
 			},
 			"localizacoes":{
@@ -67,9 +67,9 @@
 			"displayName":"Bla  3",
 			"photoURL":"",
 			"materias":{
-				"resumo":["historia", "geografia"],
-				"fundamental":["historia", "geografia"],
-				"medio":["historia", "geografia"],
+				"resumo":["História", "Geografia"],
+				"fundamental":["História", "Geografia"],
+				"medio":["História", "Geografia"],
 				"superior":[]
 			},
 			"localizacoes":{
