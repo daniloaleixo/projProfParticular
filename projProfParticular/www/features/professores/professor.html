@@ -27,26 +27,26 @@
     	<label class='header'>Aulas oferecidas</label>
     	<div>
 	        <p  class='body-text'>
-	        	<span>
+	        	<span ng-show='professorCtrl.professor.materias.fundamental'>
 		        	<i class="icon ion-easel"> Ensino Fundamental </i>
 		        	<br>
-		            <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+		        	{{professorCtrl.professor.materias.fundamental.join(', ')}}
 		            </i>
 		            <br>
 	            </span>
 
-	            <span>
+	            <span ng-show='professorCtrl.professor.materias.medio'>
 		            <i class="icon ion-easel"> Ensino Médio </i>
 		        	<br>
-		            <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+		            {{professorCtrl.professor.materias.medio.join(', ')}}
 		            </i>
 		            <br>
 	            <span>
 
-	            <span>
+	            <span ng-show='professorCtrl.professor.materias.superior'>
 		            <i class="icon ion-easel"> Ensino Superior </i>
 		        	<br>
-		            <item ng-repeat='materia in professorCtrl.professor.materias.resumo'>{{materia}}, </item>
+		            {{professorCtrl.professor.materias.superior.join(', ')}}
 		            </i>
 		            <br>
 	            </span>

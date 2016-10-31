@@ -49,7 +49,8 @@
                     <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
                         <i class="icon ion-easel">
                             Ensina 
-                            <item ng-repeat='materia in professor.materias.resumo'>{{materia}}, </item>
+                            {{professor.materias.resumo.join(', ')}}
+                            <!--item ng-repeat='materia in professor.materias.resumo'>{{materia}}, </item-->
                         </i>
                     </p>
                     <p  style="margin-top:0px; margin-bottom:0px;font-size:14px;">
