@@ -59,7 +59,11 @@
                                readonly="homeCtrl.rating.readOnly"
                                style='margin-top: -20px;'></rating>
                        <p style='margin-top: 10px;'>
-                           {{professor.localizacoes.principal.cidade}} - {{professor.localizacoes.principal.estado}}
+                          <span ng-show='professor.localizacoes.zona'>
+                          {{professor.localizacoes.zona.join(', ')}} de 
+                          <br>
+                          </span>
+                          {{professor.localizacoes.principal.cidade}} - {{professor.localizacoes.principal.estado}}
                        </p>
                        <p>
                            <i class='icon ion-ios-location'>10km distante de você</i>
@@ -80,7 +84,7 @@
                    <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
                        <i class="icon ion-easel">
                            Ensina 
-                           <item ng-repeat='materia in professor.materias.resumo'>{{materia}}, </item>
+                           {{professor.materias.resumo.join(', ')}}
                        </i>
                    </p>
                    <p  style="margin-top:0px; margin-bottom:0px;font-size:14px;">

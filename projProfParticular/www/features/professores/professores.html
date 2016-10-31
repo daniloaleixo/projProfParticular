@@ -28,6 +28,10 @@
                                 readonly="professoresCtrl.rating.readOnly"
                                 style='margin-top: -20px;'></rating>
                         <p style='margin-top: 10px;'>
+                            <span ng-show='professor.localizacoes.zona'>
+                            {{professor.localizacoes.zona.join(', ')}} de 
+                            <br>
+                            </span>
                             {{professor.localizacoes.principal.cidade}} - {{professor.localizacoes.principal.estado}}
                         </p>
                         <p>
