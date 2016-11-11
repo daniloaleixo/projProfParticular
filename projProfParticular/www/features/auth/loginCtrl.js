@@ -1,9 +1,9 @@
 appProf
-.controller('LoginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$location',
+.controller('LoginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$location', '$ionicPopup',
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $location) {
+function ($scope, $stateParams, $ionicLoading, $location, $ionicPopup) {
 	var loginCtrl = this;
 
 	loginCtrl.user = {
@@ -77,7 +77,10 @@ function ($scope, $stateParams, $ionicLoading, $location) {
 				loginCtrl.login();
 
 			},function(error){
-				loginCtrl.error = "Não foi possivel fazer o cadastro, verifique o email e a senha";
+				$ionicPopup.alert({
+                   title: 'Login failed :(',
+                   template: 'Please try again.'
+                });
 				hideLoading();
 			})
 		} else {

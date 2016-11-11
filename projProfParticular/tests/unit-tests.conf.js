@@ -15,6 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+        '../www/lib/angular/angular.js',
+        '../www/features/*',
+        '../www/lib/angular-mocks/angular-mocks.js',
+        '**/*tests.js'
     ],
 
 
@@ -36,7 +40,7 @@ module.exports = function(config) {
 
 
     // web server port
-    port: 9876,
+    port: 8100,
 
 
     // enable / disable colors in the output (reporters and logs)
