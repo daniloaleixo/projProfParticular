@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
     <ion-side-menu-content>
-        <ion-nav-bar class="bar-assertive" hide-nav-bar='true'>
+        <ion-nav-bar class="bar-assertive">
             <ion-nav-back-button></ion-nav-back-button>
             <ion-nav-buttons side="left">
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
@@ -52,8 +52,7 @@
 
         <ion-footer-bar class="bar-light">
             <!-- Accent-colored raised button with ripple -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
-                            button button-block" 
+            <button class="button button-block" 
             style="left:0;right:0;margin:0; width: 100%;position: fixed"
             ng-click="menuCtrl.logout()">
             <i class='icon ion-log-out'></i>  
