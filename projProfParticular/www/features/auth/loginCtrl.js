@@ -1,9 +1,9 @@
 appProf
-.controller('LoginCtrl', ['$scope', '$stateParams','$location', 'LoadingService',
+.controller('LoginCtrl', ['$scope', '$stateParams','$location', 'LoadingService', 'ToastService', 
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, LoadingService) {
+function ($scope, $stateParams, $location, LoadingService, ToastService) {
 	
 	var loginCtrl = this;
 
@@ -25,7 +25,7 @@ function ($scope, $stateParams, $location, LoadingService) {
 
 		// Firebase password must've at least 6 characters
 		if(loginCtrl.user.password.length < 6 && loginCtrl.user.password.length != 0) {
-			loginCtrl.error = "Sua senha deve ser maior que 6 caracteres";
+			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
 			return ;
 		}	
 
@@ -39,7 +39,8 @@ function ($scope, $stateParams, $location, LoadingService) {
 				LoadingService.hideLoading();
 				$location.path('/home');
 			}, function(error){
-				loginCtrl.error = "Não consegui realizar o login, por favor tente novamente";
+				ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
+						  								'long', 'bottom');
 				LoadingService.hideLoading();
 			});
 		}
@@ -48,8 +49,14 @@ function ($scope, $stateParams, $location, LoadingService) {
 	loginCtrl.register = function(){
 
 		// Verify if passwords are equal
-		if(loginCtrl.user.password == loginCtrl.user.password2){
-			var tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
+		if(loginCtrl.user.password != loginCtrl.user.password2){
+			ToastService.showToast("As senhas não coincidem", 'long', 'bottom');
+		} else if(loginCtrl.user.password.length < 6 && loginCtrl.user.password.length != 0) {
+			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
+		}
+		else {
+			var tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
+																			loginCtrl.user.password);
 			LoadingService.showLoadingSpinner();
 
 			tryRegister.then(function(user){
@@ -57,12 +64,11 @@ function ($scope, $stateParams, $location, LoadingService) {
 				// Already registrated, just have to login
 				loginCtrl.login();
 			},function(error){
-				loginCtrl.error = "Não consegui realizar o cadastro, por favor tente novamente";
+				ToastService.showToast("Não consegui realizar o cadastro, por favor tente novamente", 
+											'long', 'bottom');
 				LoadingService.hideLoading();
 			})
-		} else {
-			loginCtrl.error = "As senhas não coincidem";
-		}
+		} 
 	};
 
 	loginCtrl.googleLogin = function(){
@@ -85,8 +91,10 @@ function ($scope, $stateParams, $location, LoadingService) {
 
 		}).catch(function(error){
 			// Handle Errors here.
-		  	var errorCode = error.code;
-		  	loginCtrl.error = error.message;
+		  	/*var errorCode = error.code;
+		  	loginCtrl.error = error.message;*/
+		  	ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
+		  								'long', 'bottom');
 		  	LoadingService.hideLoading();
 		});
 	};

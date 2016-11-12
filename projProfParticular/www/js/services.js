@@ -5,8 +5,8 @@ angular.module('app.services', [])
 		return $firebaseAuth();
 }])
 
-.factory('UserInfos',
-	function(){
+.factory('UserInfos',[ 'Auth',
+	function(Auth){
 		var servUser = {
 			displayName: '',
 			email: '',
@@ -41,7 +41,7 @@ angular.module('app.services', [])
 				}
 			}
 		}
-})
+}])
 
 .factory('ToastService', ['$cordovaToast',
 	function($cordovaToast){
