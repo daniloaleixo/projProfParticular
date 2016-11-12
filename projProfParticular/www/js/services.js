@@ -110,3 +110,41 @@ angular.module('app.services', [])
 			}
 		}
 }])
+
+
+
+
+
+
+
+
+
+
+
+
+.factory('Friends', function(){
+	var  friends = [
+		{
+			id: 0, 
+			name: 'Ben Sparrow',
+			notes: "dsadsadas",
+			face: 'sdassddd'
+		},
+		{
+			id: 1, 
+			name: 'Max Lynx',
+			notes: "dsadsadas",
+			face: 'sdassddd'
+		}
+
+	]
+
+	return {
+		all: function(){
+			return friends;
+		},
+		get: function(friendID){
+			return friends[friendID];
+		}
+	}
+})

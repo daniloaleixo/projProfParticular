@@ -10,7 +10,9 @@ function ($scope, $stateParams) {
    
 
 .controller('AccountCtrl', function($scope){
-	$scope.settings = {
+	accountCtrl = this;
+	
+	accountCtrl.settings = {
 		enableFriends: true
 	};
 })

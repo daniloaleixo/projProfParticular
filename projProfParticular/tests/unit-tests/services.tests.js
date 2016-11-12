@@ -1,6 +1,6 @@
-/*describe('Services Tests', function(){
+describe('Friends Unit Tests', function(){
     var Friends;
-    beforeEach(module('starter.services'));
+    beforeEach(module('app.services'));
 
     beforeEach(inject(function (_Friends_) {
         Friends = _Friends_;
@@ -11,7 +11,7 @@
     }));
 
     it('has 5 chats', inject(function(Friends) {
-        expect(Friends.all().length).toEqual(5);
+        expect(Friends.all().length).toEqual(2);
     }));
 
     it('has Max as friend with id 1', inject(function(Friends) {
@@ -24,4 +24,4 @@
 
         expect(Friends.get(1).name).toEqual(oneFriend.name);
     }));
-});*/
+});
