@@ -1,4 +1,4 @@
-describe('Services Tests', function(){
+/*describe('Services Tests', function(){
     var Friends;
     beforeEach(module('starter.services'));
 
@@ -24,4 +24,4 @@ describe('Services Tests', function(){
 
         expect(Friends.get(1).name).toEqual(oneFriend.name);
     }));
-});
+});*/

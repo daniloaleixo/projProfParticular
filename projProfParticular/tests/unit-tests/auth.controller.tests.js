@@ -1,4 +1,4 @@
-describe('LoginCtrl', function() {
+/*describe('LoginCtrl', function() {
 
     var controller, 
         deferredLogin,
@@ -51,3 +51,5 @@ describe('LoginCtrl', function() {
         });
     })
 });
+
+*/
