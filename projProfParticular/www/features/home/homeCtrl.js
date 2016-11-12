@@ -1,10 +1,10 @@
 appProf
-.controller('HomeCtrl', ['$scope', '$stateParams', '$ionicLoading', 'ToastService', 'ProfessoresList','$location', 
+.controller('HomeCtrl', ['$scope', '$stateParams', 'LoadingService', 'ToastService', 'ProfessoresList','$location', 
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList, $location) {
+function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $location) {
 	var homeCtrl = this;
 
 	var database = firebase.database();
@@ -28,55 +28,44 @@ function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList, $l
 		'readOnly': true
 	}
 
-	var showLoading = function(){
-		$ionicLoading.show({
-			template: '<ion-spinner icon="spiral"></ion-spinner>',
-			noBackdrop: true
-		});
-	}
 
-	var hideLoading = function(){
-		$ionicLoading.hide();
-	}
-	
-	//console.log("home Ctrl:");
-	console.log("HomeCtrl| : email: " + user.email);
-
+	// When the users chooses the level (fundamental, medio, superior) I have to bring courses from server
 	homeCtrl.getMaterias = function(){
 		var refNivel = '';
 		homeCtrl.materias = [];
 		homeCtrl.showChoicesNivel = false;
 
 		if(homeCtrl.nivel != ''){
-			showLoading();
-			console.log("HomeCtrl| vou pegar infos do database");
+			LoadingService.showLoadingSpinner();
 
-			if(homeCtrl.nivel.toLowerCase() == 'fundamental') refNivel = 'fundamental';
-			if(homeCtrl.nivel.toLowerCase() == 'médio') refNivel = 'medio';
-			if(homeCtrl.nivel.toLowerCase() == 'superior') refNivel = 'superior';
+			//get the path to which level I'll search
+			refNivel = getReferenceFromLevel(homeCtrl.nivel.toLowerCase());
 
-
+			//get all the materias from the leve selected
 			database.ref('/materias/' + refNivel).once('value').then(function(snapshot){
-				console.log("HomeCtrl| consegui um snapshot");
 				snapshot.forEach(function(childSnapshot){
-					//console.log(childSnapshot.key);
+					//Add courses to my vector of courses
 					homeCtrl.materias.push(childSnapshot.key);
 				});
+				//Refresh pages so the user can view the couses
 				$scope.$digest();
-				hideLoading();
+				LoadingService.hideLoading();
+
 			}, function(error){
 				ToastService.showToast("Desculpe não consegui encontrar matérias", 'long', 'bottom');
 				homeCtrl.showChoicesMaterias = false;	
 			});
-		} else {
-			console.log("HomeCtrl| primeiro precisa escolher o nivel");
+		} 
+		//If the user had not chosen a level yet
+		else {
 			ToastService.showToast("Escolha um nível", 'long', 'bottom');
 			homeCtrl.showChoicesMaterias = false;
-			hideLoading();
+			LoadingService.hideLoading();
 		}
 
 	}
 
+	//After choosing level and courses we have to bring professors 
 	homeCtrl.getProfessores = function()
 	{
 		var refNivel = '';
@@ -89,63 +78,48 @@ function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList, $l
 			if(homeCtrl.materia === '') ToastService.showToast("Escolha uma matéria", 'long', 'bottom');
 			else{
 
-				showLoading();
+				LoadingService.showLoadingSpinner();
 
-
-				console.log("HomeCtrl| vou pegar os professores");
 				homeCtrl.showChoicesMaterias = false;
 				homeCtrl.showChoicesNivel = false;	
 				homeCtrl.showProfessores = true;
 
-				if(homeCtrl.nivel.toLowerCase() == 'fundamental') refNivel = 'fundamental';
-				if(homeCtrl.nivel.toLowerCase() == 'médio') refNivel = 'medio';
-				if(homeCtrl.nivel.toLowerCase() == 'superior') refNivel = 'superior';		
+				//get the path to which level I'll search for
+				refNivel = getReferenceFromLevel(homeCtrl.nivel.toLowerCase());
 
-				// Acessa o database olhando a materia 
+				//get all professors which teaches that course
 				database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value')
 					.then(function(snapshot){
-					console.log("HomeCtrl| consegui um snapshot");
-					snapshot.forEach(function(childSnapshot){
-						console.log("HomeCtrl| childSnapshot");
-						console.log(childSnapshot.val());
-						// Coloca no vetor todos os UIDs dos professores que dao essa materia */
-						homeCtrl.tempProfessores.push(childSnapshot.val());
-					});
+						snapshot.forEach(function(childSnapshot){
+							// Put all professors UIDs in the vector
+							homeCtrl.tempProfessores.push(childSnapshot.val());
+						});
 
-					console.log("Vou imprimir os professores que achei nessa materia");
-					console.log(homeCtrl.tempProfessores);
-
+					//If none professors
 					if(homeCtrl.tempProfessores.length == 0) {
 						homeCtrl.semProfessoresMessage = 'Desculpe não encontrei nenhum professor perto';
 						$scope.$digest();
-						hideLoading();
+						LoadingService.hideLoading();
 					}
 					else {
-						//O vetor tempProfessores tem o UID de todos os professores que dao certa materia
-						// Agora precisamos pegar o vetor com os objetos professores de fato 
+						//Now I'll get all the infos from professors from the UIDs vector
 						database.ref('/professores/').once('value').then(function(snapshot){
-							console.log("ProfessoresCtrl| consegui um snapshot");
 							snapshot.val().forEach(function(professor){
-								console.log("HomeCtrl| professor UID: " + professor.UID)
-								console.log("HomeCtrl| indexOf: " + homeCtrl.tempProfessores.
-									indexOf(professor.UID));
-	
 								if(homeCtrl.tempProfessores.indexOf(professor.UID) != -1){
 									homeCtrl.professores.push(professor);
 								}
 
+								//Update the global list of professors
 								ProfessoresList.updateProfessoresList(homeCtrl.professores);
 
-
 								$scope.$digest();
-								hideLoading();
+								LoadingService.hideLoading();
 
 							});
 						}, function(error){
 							ToastService.showToast("Desculpe tive problemas para me comunicar "
 								+ "com o banco de dados", 'long', 'bottom');
 						});
-
 
 					}
 					
@@ -160,8 +134,13 @@ function ($scope, $stateParams, $ionicLoading, ToastService, ProfessoresList, $l
 	}
 
 	homeCtrl.showProfessorDetails = function(UID){
-		//console.log("ProfessoresCtrl| cliquei " + UID);
 		$location.path('/side-menu21/professores/' + UID);
+	}
+
+	var getReferenceFromLevel = function(level){
+		if(level == 'fundamental') return 'fundamental';
+		if(level == 'médio') return'medio';
+		if(level == 'superior') return 'superior';	
 	}
 
 	
