@@ -92,3 +92,19 @@ angular.module('app.services', [])
 			}
 		}
 }])
+
+
+.factory('LoadingService', [ '$ionicLoading',
+	function($ionicLoading){
+		return {
+			showLoadingSpinner: function(){
+				$ionicLoading.show({
+					template: '<ion-spinner icon="spiral"></ion-spinner>',
+					noBackdrop: true
+				});
+			},
+			hideLoading: function() {
+				$ionicLoading.hide();
+			}
+		}
+}])
