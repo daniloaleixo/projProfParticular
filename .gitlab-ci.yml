@@ -13,7 +13,7 @@ before_script:
   - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
   - phantomjs --version
   - popd
-  - bower install
+  - bower install --allow-root
   
 unit-tests:
   script:
