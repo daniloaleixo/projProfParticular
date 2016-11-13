@@ -12,7 +12,7 @@ before_script:
   - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
   - phantomjs --version
   - popd
-  - bundle install
+  - bower install
   
 unit-tests:
   script:
