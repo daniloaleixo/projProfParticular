@@ -1,0 +1,23 @@
+image: node:4.2.2
+
+before_script:
+  - apt-get update
+  - npm install -g cordova
+  - npm install -g ionic
+  - npm install -g bower
+  - npm install karma --save-dev
+  - npm install karma-jasmine --save-dev
+  - npm install -g karma-cli
+  - npm install -g protractor
+  - npm install -g phantomjs
+  - webdriver-manager update
+  - cd projProfParticular/
+  - bower install --allow-root
+  
+unit-tests:
+  script:
+    - ./run_tests.sh unit
+    
+e2e-tests:
+  script:
+    - ./run_tests.sh e2e
