@@ -2,7 +2,10 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
-  - apt-get install openjdk-8-jre -y
+  - apt-get install default-jre -y
+  - apt-get install default-jdk -y
+  - java -version
+  - javac -version
   - npm install -g cordova
   - npm install -g ionic
   - npm install -g bower
