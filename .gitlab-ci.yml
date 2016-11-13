@@ -1,0 +1,26 @@
+image: node:4.2.2
+
+before_script:
+  - apt-get update
+  - npm install -g cordova
+  - npm install -g ionic
+  - npm install -g bower
+  - mkdir ~/tmp
+  - pushd ~/tmp
+  - wget http://www.ime.usp.br/~kazuo/monitoria/phantomjs-1.9.7-linux-x86_64.tar.bz2
+  - tar xf phantomjs-1.9.7-linux-x86_64.tar.bz2
+  - mv phantomjs-1.9.7-linux-x86_64 phantomjs
+  - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
+  - phantomjs --version
+  - popd
+  - ls
+  - cd projProfParticular/
+  - bower install --allow-root
+  
+unit-tests:
+  script:
+    - ./run_tests.sh unit
+    
+e2e-tests:
+  script:
+    - ./run_tests.sh e2e
