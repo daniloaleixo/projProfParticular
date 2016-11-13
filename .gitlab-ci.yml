@@ -1,0 +1,23 @@
+before_script:
+  - apt-get update
+  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  - apt-get install -y nodejs
+  - npm install -g cordova
+  - npm install -g ionic
+  - mkdir ~/tmp
+  - pushd ~/tmp
+  - wget http://www.ime.usp.br/~kazuo/monitoria/phantomjs-1.9.7-linux-x86_64.tar.bz2
+  - tar xf phantomjs-1.9.7-linux-x86_64.tar.bz2
+  - mv phantomjs-1.9.7-linux-x86_64 phantomjs
+  - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
+  - phantomjs --version
+  - popd
+  - bundle install
+  
+unit-tests:
+  script:
+    - ./run_tests.sh unit
+    
+e2e-tests:
+  script:
+    - ./run_tests.sh e2e
