@@ -9,16 +9,8 @@ before_script:
   - npm install karma-jasmine --save-dev
   - npm install -g karma-cli
   - npm install -g protractor
+  - npm install -g phantomjs
   - webdriver-manager update
-  - mkdir ~/tmp
-  - pushd ~/tmp
-  - wget http://www.ime.usp.br/~kazuo/monitoria/phantomjs-1.9.7-linux-x86_64.tar.bz2
-  - tar xf phantomjs-1.9.7-linux-x86_64.tar.bz2
-  - mv phantomjs-1.9.7-linux-x86_64 phantomjs
-  - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
-  - phantomjs --version
-  - popd
-  - ls
   - cd projProfParticular/
   - bower install --allow-root
   
