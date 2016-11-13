@@ -1,7 +1,14 @@
 before_script:
   - apt-get update
-  - curl -sL https://deb.nodesource.com/setup_6.x | bash -
-  - apt-get install -y nodejs
+  - echo 'export PATH=$HOME/local/bin:$PATH' >> ~/.bashrc
+  - . ~/.bashrc
+  - mkdir ~/local
+  - mkdir ~/node-latest-install
+  - cd ~/node-latest-install
+  - curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
+  - ./configure --prefix=~/local
+  - make install 
+  - curl https://www.npmjs.org/install.sh | sh
   - npm install -g cordova
   - npm install -g ionic
   - npm install -g bower
@@ -13,6 +20,8 @@ before_script:
   - ln -s ~/tmp/phantomjs/bin/phantomjs /usr/bin/phantomjs
   - phantomjs --version
   - popd
+  - ls
+  - cd projProfParticular/
   - bower install --allow-root
   
 unit-tests:
