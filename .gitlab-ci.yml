@@ -2,6 +2,7 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
+  - yum install java-1.8.0-openjdk-devel
   - npm install java
   - npm install -g cordova
   - npm install -g ionic
