@@ -4,6 +4,7 @@ before_script:
   - apt-get install -y nodejs
   - npm install -g cordova
   - npm install -g ionic
+  - npm install -g bower
   - mkdir ~/tmp
   - pushd ~/tmp
   - wget http://www.ime.usp.br/~kazuo/monitoria/phantomjs-1.9.7-linux-x86_64.tar.bz2
