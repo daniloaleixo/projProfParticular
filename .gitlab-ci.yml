@@ -2,8 +2,7 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
-  - java -version
-  - javac -version
+  - npm install java
   - npm install -g cordova
   - npm install -g ionic
   - npm install -g bower
@@ -13,7 +12,6 @@ before_script:
   - npm install -g karma-cli
   - npm install -g phantomjs
   - npm install -g protractor
-  - npm install java
   - webdriver-manager update
   - cd projProfParticular/
   - bower install --allow-root
