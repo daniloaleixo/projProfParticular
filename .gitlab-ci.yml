@@ -1,7 +1,7 @@
 before_script:
   - apt-get update
-  - Y | apt-get install nodejs
-  - apt-get install npm
+  - apt-get install -y nodejs
+  - apt-get install -y npm
   - npm install -g cordova
   - npm install -g ionic
   - npm install -g bower
