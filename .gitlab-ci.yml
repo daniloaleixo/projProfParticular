@@ -2,8 +2,6 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
-  - apt-get install default-jre -y
-  - apt-get install default-jdk -y
   - java -version
   - javac -version
   - npm install -g cordova
@@ -15,6 +13,7 @@ before_script:
   - npm install -g karma-cli
   - npm install -g phantomjs
   - npm install -g protractor
+  - npm install java
   - webdriver-manager update
   - cd projProfParticular/
   - bower install --allow-root
