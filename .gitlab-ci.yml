@@ -9,6 +9,7 @@ before_script:
   - npm install karma-phantomjs-launcher --save-dev
   - npm install -g karma-cli
   - npm install -g phantomjs
+  - npm install selenium-webdriver
   - npm install -g protractor
   - webdriver-manager update
   - cd projProfParticular/
