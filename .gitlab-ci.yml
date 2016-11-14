@@ -2,12 +2,8 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
-  - update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
   - npm install -g nw-gyp
   - npm install java
-  - cd node_modules/java
-  - nw-gyp configure --target=0.10.5
-  - nw-gyp build
   - npm install -g cordova
   - npm install -g ionic
   - npm install -g bower
