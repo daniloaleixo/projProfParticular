@@ -2,7 +2,7 @@ image: node:4.2.2
 
 before_script:
   - apt-get update
-  - npm install google-chrome
+  - npm install -g java
   - npm install -g cordova
   - npm install -g ionic
   - npm install -g bower
