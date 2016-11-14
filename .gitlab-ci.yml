@@ -19,6 +19,6 @@ unit-tests:
   script:
     - ./run_tests.sh unit
     
-#e2e-tests:
-#  script:
-#    - ./run_tests.sh e2e
+e2e-tests:
+ script:
+    - ./run_tests.sh e2e
