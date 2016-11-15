@@ -1,5 +1,4 @@
-
-angular.module('app.controllers', [])
+angular.module('app.controllers')
 .controller('MenuCtrl', ['$scope', '$stateParams', '$location', 'UserInfos',
 							'$ionicSideMenuDelegate', 'ToastService',
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller

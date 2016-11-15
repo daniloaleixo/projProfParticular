@@ -1,5 +1,4 @@
-
-appProf
+angular.module('app.controllers')
 .controller('ProfessoresCtrl', ['$scope', '$stateParams', 'FIREBASE_CONFIG',
 	'ratingConfig', 'LoadingService','$ionicFilterBar','ProfessoresList', '$location',
   // The following is the constructor function for this page's controller. 

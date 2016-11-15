@@ -1,27 +1,57 @@
-xdescribe('LoginCtrl', function(){
-    var scope;
-    var loginCtrl;
+describe('LoginCtrl', function(){
+    var scope,
+        loginCtrl,
+        stateParamsMock,
+        locationMock,
+        loadingServiceMock,
+        toastServiceMock;
+
+    beforeEach(module('app.controllers'));
+
+    beforeEach(inject(function($controller, $rootScope){
+        scope = $rootScope.$new();
+
+        stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go'])
+
+        locationMock = jasmine.createSpyObj('$location spy', ['path'])
+
+        loadingServiceMock = jasmine.createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
+
+        toastServiceMock = jasmine.createSpyObj('ToastService spy', ['show'])
+
+        loginCtrl = $controller('LoginCtrl', {
+            $scope: scope,
+            $stateParams: stateParamsMock,
+            $location: locationMock,
+            LoadingService: loadingServiceMock,
+            ToastService: toastServiceMock
+        });
+
+    }))
 
     describe('Smoke test - ', function(){
-    	it('should have started the controller', function(){
-
+    	it('should have started the controller', function(){ 
+            expect(loginCtrl).not.toBe(null);
     	});
     });
 
     describe('Login function - ', function(){
-    	it('should have restarted global variable user', function(){
+    	xit('should have restarted global variable user', function(){
+            loginCtrl.login();
+            expect(user).toBe(null);
+    	});
+    	xit('should detect when password is too short and throw a Toast', function(){
+            loginCtrl.user.password = '1234';
+            loginCtrl.login();
+            expect(toastServiceMock.showToast).toHaveBeenCalled();
+    	});
+    	xit('should go to register funcion when user is trying to sign up', function(){
 
     	});
-    	it('should detect when password is too short and throw a Toast', function(){
-
-    	});
-    	it('should go to register funcion when user is trying to sign up', function(){
-
-    	});
-    	it('should try to login on firebase', function(){
+    	xit('should try to login on firebase', function(){
     		//should call loading service
     	});
-    	describe('when login is executed ', function(){
+    	xdescribe('when login is executed ', function(){
     		it('if valid update user and change location to home', function(){
     			//should have a valid user now
     			//show call hideLoading
@@ -33,7 +63,7 @@ xdescribe('LoginCtrl', function(){
     	})
     });
 
-    describe('Register function - ', function(){
+    xdescribe('Register function - ', function(){
     	it('should detect when password is too short', function(){
 
     	});
@@ -53,7 +83,7 @@ xdescribe('LoginCtrl', function(){
     	})
     });
 
-    describe('Google login function - ', function(){
+    xdescribe('Google login function - ', function(){
     	it('should have restarted global variable user', function(){
 
     	});

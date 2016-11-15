@@ -1,4 +1,4 @@
-appProf
+angular.module('app.controllers')
 .controller('HomeCtrl', ['$scope', '$stateParams', 'LoadingService', 'ToastService', 'ProfessoresList','$location', 
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller

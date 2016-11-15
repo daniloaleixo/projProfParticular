@@ -16,8 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         '../www/lib/angular/angular.js',
-        '../www/features/*',
-        '../www/js/*',
+        '../www/js/*.js',
+        '../www/features/auth/*.js',
         '../www/lib/angular-mocks/angular-mocks.js',
         '**/unit-tests/*tests.js',
         '**/unit-tests/Controllers/*tests.js',
