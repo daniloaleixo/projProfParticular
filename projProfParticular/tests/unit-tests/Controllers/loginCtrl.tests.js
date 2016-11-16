@@ -1,6 +1,6 @@
 describe('LoginCtrl', function(){
     var scope,
-        loginCtrl,
+        loginCtrl = null,
         stateParamsMock,
         locationMock,
         loadingServiceMock,
@@ -17,7 +17,7 @@ describe('LoginCtrl', function(){
 
         loadingServiceMock = jasmine.createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
 
-        toastServiceMock = jasmine.createSpyObj('ToastService spy', ['show'])
+        toastServiceMock = jasmine.createSpyObj('ToastService spy', ['showToast']);
 
         loginCtrl = $controller('LoginCtrl', {
             $scope: scope,
@@ -36,17 +36,14 @@ describe('LoginCtrl', function(){
     });
 
     describe('Login function - ', function(){
-    	xit('should have restarted global variable user', function(){
-            loginCtrl.login();
-            expect(user).toBe(null);
-    	});
-    	xit('should detect when password is too short and throw a Toast', function(){
+        it('should detect when password is too short and throw a Toast', function(){
             loginCtrl.user.password = '1234';
             loginCtrl.login();
-            expect(toastServiceMock.showToast).toHaveBeenCalled();
+            expect(toastServiceMock.showToast).toHaveBeenCalledWith("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
     	});
-    	xit('should go to register funcion when user is trying to sign up', function(){
-
+    	it('should go to register funcion when user is trying to sign up', function(){
+            loginCtrl.signingUp = true;
+            expect(loginCtrl.register()).toHaveBeenCalled();
     	});
     	xit('should try to login on firebase', function(){
     		//should call loading service
