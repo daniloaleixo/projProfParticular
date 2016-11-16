@@ -4,7 +4,7 @@ angular.module('app.controllers')
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate, currentAuth, ToastService) {
+function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate, ToastService) {
 	var menuCtrl = this;
 
 	menuCtrl.user = {
@@ -27,9 +27,10 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate, cu
 	  		menuCtrl.user.email = null;
 		  	$location.path('/login');
 		  	$ionicSideMenuDelegate.toggleLeft();
-		  	return ;
+		  	return true;
 		}, function(error) {
 		  	ToastService.showToast("Não consegui fazer o logout", 'long', 'bottom');
+		  	return false;
 		});
 	}
 
