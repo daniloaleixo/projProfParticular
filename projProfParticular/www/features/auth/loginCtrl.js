@@ -7,6 +7,8 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 	
 	var loginCtrl = this;
 
+	var trySignIn = null;
+
 	loginCtrl.user = {
 		email: '',
 		password: '',
@@ -14,6 +16,8 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 	};
 	loginCtrl.signingUp = false;
 	loginCtrl.error = '';
+
+
 
 
 
@@ -31,7 +35,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 
 		if(loginCtrl.signingUp) loginCtrl.register();
 		else {
-			var trySignIn = firebase.auth().signInWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
+			trySignIn = firebase.auth().signInWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
 			LoadingService.showLoadingSpinner();
 
 			trySignIn.then(function(auth){

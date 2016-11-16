@@ -1,10 +1,13 @@
 describe('LoginCtrl', function(){
     var scope,
+        deferred,
         loginCtrl = null,
         stateParamsMock,
         locationMock,
         loadingServiceMock,
-        toastServiceMock;
+        toastServiceMock,
+        loginCtrlMock,
+        firebaseMock;
 
     beforeEach(module('app.controllers'));
 
@@ -19,6 +22,9 @@ describe('LoginCtrl', function(){
 
         toastServiceMock = jasmine.createSpyObj('ToastService spy', ['showToast']);
 
+        firebaseMock = jasmine.createSpyObj('firebase spy', ['auth', 'createUserWithEmailAndPassword', 
+                                                            'signInWithEmailAndPassword']);
+
         loginCtrl = $controller('LoginCtrl', {
             $scope: scope,
             $stateParams: stateParamsMock,
@@ -28,6 +34,12 @@ describe('LoginCtrl', function(){
         });
 
     }))
+
+    beforeEach(inject(function(_$q_, _$timeout_) {
+            // Set `$q` and `$timeout` before tests run
+            $q = _$q_;
+            $timeout = _$timeout_;
+        }));
 
     describe('Smoke test - ', function(){
     	it('should have started the controller', function(){ 
@@ -39,23 +51,45 @@ describe('LoginCtrl', function(){
         it('should detect when password is too short and throw a Toast', function(){
             loginCtrl.user.password = '1234';
             loginCtrl.login();
-            expect(toastServiceMock.showToast).toHaveBeenCalledWith("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
+            expect(toastServiceMock.showToast)
+            .toHaveBeenCalledWith("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
     	});
     	it('should go to register funcion when user is trying to sign up', function(){
+            spyOn(loginCtrl, 'register');
             loginCtrl.signingUp = true;
-            expect(loginCtrl.register()).toHaveBeenCalled();
+            loginCtrl.login();
+            expect(loginCtrl.register).toHaveBeenCalled();
     	});
-    	xit('should try to login on firebase', function(){
-    		//should call loading service
+    	it('should try to login on firebase', function(){
+            loginCtrl.signingUp = false;
+            loginCtrl.user.email = 'bla@hotmail.com';
+            loginCtrl.user.password = '123456';
+            loginCtrl.login();
+            expect(loginCtrl.trySign).not.toBe(null);
+            expect(loadingServiceMock.showLoadingSpinner).toHaveBeenCalled();
     	});
-    	xdescribe('when login is executed ', function(){
+    	describe('when login is executed ', function(){
     		it('if valid update user and change location to home', function(){
-    			//should have a valid user now
-    			//show call hideLoading
-    			//should go to home
+                loginCtrl.user.email = 'bla@hotmail.com';
+                loginCtrl.user.password = '123456';
+                loginCtrl.login();
+                deferred = $q.defer();
+                deferred.promise.then(function(){
+                    expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
+                    expect(locationMock.path).toHaveBeenCalledWith('/home');
+                })
     		});
     		it('if not valid should throw a Toast', function(){
-    			//should call hideLoading
+    			loginCtrl.user.email = 'naoentra@hotmail.com';
+                loginCtrl.user.password = '123456';
+                loginCtrl.login();
+                deferred = $q.defer();
+                deferred.promise.then(function(){
+                    expect(toastServiceMock.showToast)
+                    .toHaveBeenCalledWith("Não consegui realizar o login, por favor tente novamente", 
+                                                        'long', 'bottom');
+                    expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
+                })
     		});
     	})
     });
