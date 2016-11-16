@@ -8,6 +8,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 	var loginCtrl = this;
 
 	var trySignIn = null;
+	var tryRegister = null;
 
 	loginCtrl.user = {
 		email: '',
@@ -59,7 +60,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
 		}
 		else {
-			var tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
+			tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
 																			loginCtrl.user.password);
 			LoadingService.showLoadingSpinner();
 

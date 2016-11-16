@@ -94,17 +94,30 @@ describe('LoginCtrl', function(){
     	})
     });
 
-    xdescribe('Register function - ', function(){
-    	it('should detect when password is too short', function(){
-
-    	});
+    describe('Register function - ', function(){
+    	it('should detect when password is too short and throw a Toast', function(){
+            loginCtrl.user.password = '1234';
+            loginCtrl.user.password2 = '1234';
+            loginCtrl.register();
+            expect(toastServiceMock.showToast)
+            .toHaveBeenCalledWith("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
+        });
     	it('should detect when the two passwords are different', function(){
-
+            loginCtrl.user.password = '1234567';
+            loginCtrl.user.password2 = '123456';
+            loginCtrl.register();
+            expect(toastServiceMock.showToast)
+            .toHaveBeenCalledWith("As senhas não coincidem", 'long', 'bottom');
     	});
-    	it('should try to register on firebase', function(){
-    		//should call loading service
+    	xit('should try to register on firebase', function(){
+            loginCtrl.signingUp = true;
+            loginCtrl.user.email = 'bla@hotmail.com';
+            loginCtrl.user.password = '123456';
+            loginCtrl.register();
+            expect(loginCtrl.tryRegister).not.toBe(null);
+            expect(loadingServiceMock.showLoadingSpinner).toHaveBeenCalled();
     	});
-    	describe('when register is executed ', function(){
+    	xdescribe('when register is executed ', function(){
     		it('if valid go to login function', function(){
     			//show call hideLoading
     		});
@@ -115,9 +128,6 @@ describe('LoginCtrl', function(){
     });
 
     xdescribe('Google login function - ', function(){
-    	it('should have restarted global variable user', function(){
-
-    	});
     	it('should try to login with Google', function(){
     		//should have called a provider
     		//should have tried to login with google provider
