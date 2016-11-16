@@ -11,6 +11,16 @@ var appProf = angular.module('app', ['ionic', 'app.controllers', 'app.routes',
               'app.directives','app.services', 'firebase', 'ionic.rating', 
               'jett.ionic.filter.bar', 'ngCordova']);
 
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyDRXTIuWMxl73q9aNrAUaxR7MMtSMXq32E",
+  authDomain: "projprofparticular.firebaseapp.com",
+  databaseURL: "https://projprofparticular.firebaseio.com",
+  storageBucket: "projprofparticular.appspot.com",
+  messagingSenderId: "240797807247"
+};
+firebase.initializeApp(config);
+
 appProf.value('user');
 
 appProf.constant('FIREBASE_CONFIG', {
