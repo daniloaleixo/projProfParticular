@@ -1,20 +1,71 @@
 xdescribe('ProfileCtrl', function(){
-    var scope;
-    var profileCtrl;
+    var scope,
+        deferred,
+        profileCtrl = null,
+        stateParamsMock,
+        locationMock,
+        loadingServiceMock,
+        toastServiceMock,
+        userInfosMock,
+        cordovaCameraMock,
+        keyboardServiceMock;
+
+    beforeEach(module('app.controllers'));
+
+    beforeEach(inject(function($controller, $rootScope){
+        scope = $rootScope.$new();
+
+        stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go'])
+
+        locationMock = jasmine.createSpyObj('$location spy', ['path'])
+
+        loadingServiceMock = jasmine.createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
+
+        toastServiceMock = jasmine.createSpyObj('ToastService spy', ['showToast']);
+
+        userInfosMock = jasmine.createSpyObj('UserInfos spy', ['getUserInfos'])
+
+        cordovaCameraMock = jasmine.createSpyObj('$cordovaCamera spy', ['getPicture'])
+
+        keyboardServiceMock = jasmine.createSpyObj('KeyboardService spy', ['hide'])
+
+
+        profileCtrl = $controller('ProfileCtrl', {
+            $scope: scope,
+            $stateParams: stateParamsMock,
+            $location: locationMock,
+            LoadingService: loadingServiceMock,
+            UserInfos: userInfosMock,
+            $cordovaCamera: cordovaCameraMock,
+            ToastService: toastServiceMock,
+            KeyboardService: keyboardServiceMock
+        });
+
+        module(function ($provide) {
+            $provide.value('user');
+        });
+
+    }))
+
+    beforeEach(inject(function(_$q_, _$timeout_) {
+            // Set `$q` and `$timeout` before tests run
+            $q = _$q_;
+            $timeout = _$timeout_;
+        }));
 
     describe('Smoke test - ', function(){
     	it('should have started the controller', function(){
-
+            expect(profileCtrl).not.toBe(null);
     	});
     });
 
-    describe('updateVariables function - ', function(){
+    xdescribe('updateVariables function - ', function(){
         it('should call UserInfos service', function(){
 
         })
     })
 
-    describe('changeDisplayName function - ', function(){
+    xdescribe('changeDisplayName function - ', function(){
         it('check if the name is valid', function(){
             
         })
@@ -39,7 +90,7 @@ xdescribe('ProfileCtrl', function(){
         })
     })
 
-    describe('uploadImage function - ', function(){
+    xdescribe('uploadImage function - ', function(){
         
     })
 
