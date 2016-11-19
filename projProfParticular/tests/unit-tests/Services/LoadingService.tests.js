@@ -7,22 +7,16 @@ describe('LoadingService', function(){
         module(function($provide){
             $provide.service('$ionicLoading', function(){
                 this.show = jasmine.createSpy('show');
+                this.hide = jasmine.createSpy('hide');
             });
         });
       module('app.services');
     });
 
-    beforeEach(inject(function($window, modalSvc, sampleSvc){
-        mockWindow=$window;
-        sampleSvcObj=sampleSvc;
+    beforeEach(inject(function(_LoadingService_, $ionicLoading){
+        LoadingService = _LoadingService_;
+        ionicLoadingMock = $ionicLoading;
     }));
-
-    // beforeEach(module('app.services'));
-
-    // beforeEach(inject(function(){
-    //     var $injector = angular.injector(['app.services']);
-    //     LoadingService = $injector.get('LoadingService');
-    // }))
 
 
     describe('Smoke test - ', function(){
@@ -32,21 +26,30 @@ describe('LoadingService', function(){
     });
 
 
-    xdescribe('showLoadingSpinner function - ', function(){
+    describe('showLoadingSpinner function - ', function(){
     	it('should call the ionicLoading witt spinner icon', function(){
-
+            LoadingService.showLoadingSpinner();
+            expect(ionicLoadingMock.show).toHaveBeenCalledWith({
+                    template: '<ion-spinner icon="spiral"></ion-spinner>',
+                    noBackdrop: true
+                });
     	})
     })
 
-    xdescribe('showLoadingUpdating function - ', function(){
+    describe('showLoadingUpdating function - ', function(){
         it('should call the ionicLoading with <atualizando> text', function(){
-
+            LoadingService.showLoadingUpdating();
+            expect(ionicLoadingMock.show).toHaveBeenCalledWith({
+                    template: 'Atualizando...',
+                    noBackdrop: true
+                });
         })
     })
 
-    xdescribe('hideLoading function - ', function(){
+    describe('hideLoading function - ', function(){
         it('should call the hide loading', function(){
-
+            LoadingService.hideLoading();
+            expect(ionicLoadingMock.hide).toHaveBeenCalled();
         })
     })
 

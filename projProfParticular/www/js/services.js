@@ -67,22 +67,24 @@ angular.module('app.services', [])
 
 .factory('ProfessoresList', [
 	function(){
-		var professores = [];
+		var ProfessoresList = this;
+		ProfessoresList.professores = [];
 
 		return {
 			all: function(){
-				return professores;
+				return ProfessoresList.professores;
 			},
 			updateProfessoresList: function(newProfessoresList){
-				professores = [];
+				ProfessoresList.professores = [];
 				newProfessoresList.forEach(function(professor){
-					if(professor) professores.push(professor);
+					if(professor) ProfessoresList.professores.push(professor);
 				})
 			},
 			getProfessorByUID: function(UID){
 
-				for(var i = 0; i < professores.length; i++){
-					if(UID.localeCompare(professores[i].UID) == 0) return professores[i];
+				for(var i = 0; i < ProfessoresList.professores.length; i++){
+					if(UID.localeCompare(ProfessoresList.professores[i].UID) == 0) 
+						return ProfessoresList.professores[i];
 				}
 				return null;
 			}
@@ -115,36 +117,3 @@ angular.module('app.services', [])
 
 
 
-
-
-
-
-
-
-
-.factory('Friends', function(){
-	var  friends = [
-		{
-			id: 0, 
-			name: 'Ben Sparrow',
-			notes: "dsadsadas",
-			face: 'sdassddd'
-		},
-		{
-			id: 1, 
-			name: 'Max Lynx',
-			notes: "dsadsadas",
-			face: 'sdassddd'
-		}
-
-	]
-
-	return {
-		all: function(){
-			return friends;
-		},
-		get: function(friendID){
-			return friends[friendID];
-		}
-	}
-})
