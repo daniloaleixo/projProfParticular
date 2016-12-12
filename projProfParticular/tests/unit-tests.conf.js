@@ -19,15 +19,9 @@ module.exports = function(config) {
         '../www/lib/firebase/firebase.js',
         '../www/lib/angular-mocks/angular-mocks.js',
         '../www/js/*.js',
-        '../www/features/auth/*.js',
-        '../www/features/chooseClass/*.js',
-        '../www/features/home/*.js',
-        '../www/features/menu/*.js',
-        '../www/features/professores/*.js',
-        '../www/features/profile/*.js',
+        '../www/features/**/*.js',
         '**/unit-tests/*tests.js',
-        '**/unit-tests/Controllers/*tests.js',
-        '**/unit-tests/Services/*tests.js'
+        '**/unit-tests/**/*tests.js'
     ],
 
 
