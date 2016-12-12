@@ -1,4 +1,4 @@
-appProf
+angular.module('app.controllers')
 .controller('ChooseClassCtrl', ['$scope', '$stateParams', 'LoadingService', 'ToastService', 'ProfessoresList','$location', 
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
@@ -39,7 +39,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 			LoadingService.showLoadingSpinner();
 
 			//get the path to which level I'll search
-			refNivel = getReferenceFromLevel(chooseClassCtrl.nivel.toLowerCase());
+			refNivel = chooseClassCtrl.getReferenceFromLevel(chooseClassCtrl.nivel.toLowerCase());
 
 			//get all the materias from the leve selected
 			database.ref('/materias/' + refNivel).once('value').then(function(snapshot){
@@ -85,7 +85,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 				chooseClassCtrl.showProfessores = true;
 
 				//get the path to which level I'll search for
-				refNivel = getReferenceFromLevel(chooseClassCtrl.nivel.toLowerCase());
+				refNivel = chooseClassCtrl.getReferenceFromLevel(chooseClassCtrl.nivel.toLowerCase());
 
 				//get all professors which teaches that course
 				database.ref('/materias/' + refNivel + '/' + chooseClassCtrl.materia).once('value')
@@ -137,7 +137,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 		$location.path('/side-menu21/professores/' + UID);
 	}
 
-	var getReferenceFromLevel = function(level){
+	chooseClassCtrl.getReferenceFromLevel = function(level){
 		if(level == 'fundamental') return 'fundamental';
 		if(level == 'médio') return'medio';
 		if(level == 'superior') return 'superior';	

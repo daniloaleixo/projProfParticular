@@ -1,7 +1,7 @@
-describe('HomeCtrl', function(){
+describe('ChooseClassCtrl', function(){
     var scope,
         deferred,
-        homeCtrl = null,
+        chooseClassCtrl = null,
         stateParamsMock,
         locationMock,
         loadingServiceMock,
@@ -27,7 +27,7 @@ describe('HomeCtrl', function(){
         // firebaseMock = jasmine.createSpyObj('firebase spy', ['auth', 'createUserWithEmailAndPassword', 
                                                             // 'signInWithEmailAndPassword']);
 
-        homeCtrl = $controller('HomeCtrl', {
+        chooseClassCtrl = $controller('ChooseClassCtrl', {
             $scope: scope,
             $stateParams: stateParamsMock,
             $location: locationMock,
@@ -47,53 +47,53 @@ describe('HomeCtrl', function(){
 
     describe('Smoke test - ', function(){
     	it('should have started the controller', function(){
-            expect(homeCtrl).not.toBe(null);
+            expect(chooseClassCtrl).not.toBe(null);
     	});
     });
 
     describe('geMaterias function - ', function(){
     	it('should have restarted variables', function(){
-            homeCtrl.getMaterias();
-            expect(homeCtrl.materias.length).toBe(0);
-            expect(homeCtrl.showChoicesNivel).toBe(false);
+            chooseClassCtrl.getMaterias();
+            expect(chooseClassCtrl.materias.length).toBe(0);
+            expect(chooseClassCtrl.showChoicesNivel).toBe(false);
     	});
     	describe('when nivel was choosen', function(){
             it('if not choosen should throw a Toast', function(){
-                homeCtrl.nivel = '';
-                homeCtrl.getMaterias();
+                chooseClassCtrl.nivel = '';
+                chooseClassCtrl.getMaterias();
                 expect(toastServiceMock.showToast)
                 .toHaveBeenCalledWith("Escolha um nível", 'long', 'bottom');
-                expect(homeCtrl.showChoicesMaterias).toBe(false);
+                expect(chooseClassCtrl.showChoicesMaterias).toBe(false);
                 expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
             });
     		it('if choosen get courses from firebase', function(){
-                homeCtrl.nivel = 'fundamental';
-                spyOn(homeCtrl, 'getReferenceFromLevel');
-                homeCtrl.getMaterias();
+                chooseClassCtrl.nivel = 'fundamental';
+                spyOn(chooseClassCtrl, 'getReferenceFromLevel');
+                chooseClassCtrl.getMaterias();
                 expect(loadingServiceMock.showLoadingSpinner).toHaveBeenCalled();
-                expect(homeCtrl.getReferenceFromLevel).toHaveBeenCalledWith(homeCtrl.nivel.toLowerCase());
+                expect(chooseClassCtrl.getReferenceFromLevel).toHaveBeenCalledWith(chooseClassCtrl.nivel.toLowerCase());
     		});
             describe('when database was caught', function(){
                 it('if it is a valid database', function(){
-                    homeCtrl.nivel = 'fundamental';
-                    homeCtrl.getMaterias();
+                    chooseClassCtrl.nivel = 'fundamental';
+                    chooseClassCtrl.getMaterias();
                     spyOn(scope, '$digest');
                     deferred = $q.defer();
                     deferred.promise.then(function(){
-                        expect(homeCtrl.materias.length).not.toBe(0);
+                        expect(chooseClassCtrl.materias.length).not.toBe(0);
                         expect(scope.$digest).toHaveBeenCalled();
                         expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
                     })
                 })
                 it('if not valid should throw a Toast', function(){
-                    homeCtrl.nivel = 'fundamental';
-                    homeCtrl.getMaterias();
+                    chooseClassCtrl.nivel = 'fundamental';
+                    chooseClassCtrl.getMaterias();
                     spyOn(scope, '$digest');
                     deferred = $q.defer();
                     deferred.promise.catch(function(){
                         expect(toastServiceMock.showToast)
                        .toHaveBeenCalledWith("Desculpe não consegui encontrar matérias", 'long', 'bottom');
-                       expect(homeCtrl.showChoicesMaterias).toBe(false);
+                       expect(chooseClassCtrl.showChoicesMaterias).toBe(false);
                     })
                 });
             })
@@ -131,8 +131,8 @@ describe('HomeCtrl', function(){
  
     describe('getReferenceLevel function - ', function(){
         it('if fundamental return fundamental', function(){
-            var x = homeCtrl.getReferenceFromLevel('fundamental');
-            var y = homeCtrl.getReferenceFromLevel('médio');
+            var x = chooseClassCtrl.getReferenceFromLevel('fundamental');
+            var y = chooseClassCtrl.getReferenceFromLevel('médio');
             expect(x).toBe('fundamental');
             expect(y).toBe('medio');
         })
