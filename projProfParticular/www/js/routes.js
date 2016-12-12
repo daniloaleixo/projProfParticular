@@ -71,6 +71,25 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('menu.chooseClass', {
+    url: '/chooseClass',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/chooseClass/chooseClass.html',
+        controller: 'ChooseClassCtrl as chooseClassCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
   .state('menu.professor', {
     url: '/professores/:professorUID',
     views: {
