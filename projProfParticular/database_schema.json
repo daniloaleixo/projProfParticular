@@ -1,0 +1,106 @@
+{
+	"alunos": [
+		{
+			"UID": "MqhNsmQB69XOR8uUjGKXtvEoP002",
+			"displayName":"Bla",
+			"photoURL":"",
+			"telefone":"",
+			"localizacoes":{
+				"principal":"Rua xyz, 180",
+				"secundararias" : []
+			},
+			"historico": [],
+			"favoritos":[]
+		}
+	],
+
+	"professores":[
+		{
+			"UID": "8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
+			"displayName":"Danilo Aleixo",
+			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
+			"telefone":"",
+			"materias":{
+				"resumo":["Matemática", "Física"],
+				"fundamental":["Matemática", "Física"],
+				"medio":["Matemática", "Física"],
+				"superior":[]
+			},
+			"localizacoes":{
+				"principal": {
+					"logradouro": "Rua xyz, 180",
+					"cidade": "São Paulo ",
+					"estado":"SP",
+					"CEP": "05454555"
+				},
+				"zona":["Sul", "Centro"], 
+				"secundararias" : []
+			},
+			"curriculo": {
+				"sobre":"Sou muito legal",
+				"formacao":{
+					"graduacao":{
+						"instituicao": "USP",
+						"status":"Cursando",
+						"curso":"Ciencia da Computacao"
+					},
+					"posGraduacoes":[]
+				}
+			},
+			"avaliacoes":{
+				"quantidade": 0,
+				"didatica":5,
+				"conhecimento":5,
+				"simpatia":5
+			},
+			"horariosDisponiveis":{
+				"segunda":{
+					"8-9":true,
+					"9-10":true,
+					"10-11":false
+				},
+				"terca":{
+
+				}
+			},
+			"agenda":[]
+		}
+	],
+
+	"materias":{
+		"fundamental":{
+			"matematica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"fisica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"redacao":[],
+			"quimica":[],
+			"biologia":[],
+			"historia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"portugues":[]
+		},
+		"medio":{
+			"matematica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"fisica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
+			"redacao":[],
+			"quimica":[],
+			"biologia":[],
+			"historia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"portugues":[]
+		},
+		"superior":{
+			"matematica":[],
+			"fisica":[],
+			"redacao":[],
+			"quimica":[],
+			"biologia":[],
+			"historia":[],
+			"geografia":[],
+			"portugues":[]
+		}
+	},
+
+	"aulas":{
+
+	}
+}
