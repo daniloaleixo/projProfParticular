@@ -167,3 +167,34 @@ ul.rating li i {
 }
 
 
+.infos-professor {
+  margin-left: 15px;
+  color:#555555;
+}
+
+.infos-professor .header {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.infos-professor .body-text {
+  font-size:14px;
+}
+
+.menu-header {
+  background-color: #BF360C;
+}
+
+.menu-header .title h1 {
+
+  padding-top:30px;
+  padding-bottom:30px;
+  text-align:center;
+  color:#fff !important;
+  font-family: Verdana, Geneva, sans-serif;
+  font-weight:bold;
+  letter-spacing: -5px;
+  font-size:42px;
+}
+

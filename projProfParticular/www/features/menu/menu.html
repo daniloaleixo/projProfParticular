@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
     <ion-side-menu-content>
-        <ion-nav-bar class="bar-assertive" hide-nav-bar='true'>
+        <ion-nav-bar class="bar-assertive">
             <ion-nav-back-button></ion-nav-back-button>
             <ion-nav-buttons side="left">
                 <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
@@ -15,11 +15,11 @@
             <!--img class='item-avatar-overload' src="{{ menuCtrl.photoURL }}">
                 <h2 class='user-name'>{{ menuCtrl.displayName }}</h2>
                 <div style="margin-top:30px;"></div-->
-            <div class="item item-avatar item-avatar-background">
+            <!--div class="item item-avatar item-avatar-background">
                 <img src="{{ menuCtrl.user.photoURL }}">
                 <h2 style="color:#FFFFFF;">
                     {{ menuCtrl.user.displayName || '' }}
-                    <!-- Icon button -->
+                    <!-- Icon button >
                     <button class="mdl-button mdl-js-button mdl-button--icon" 
                             style="float:right; margin-top:5px;"
                             ui-sref="menu.profile" menu-close="">
@@ -28,16 +28,48 @@
 
                     </button>
                 </h2>
+            </div-->
+
+            <div class='menu-header'>
+                <div class='title'>
+                    <h1> Educaqui </h1>
+                </div>
             </div>
+
+
 
             <ion-list id="menu-list3">
                 <ion-item id="menu-list-item1" ui-sref="menu.home" menu-close="" class='item item-icon-left'>
                     <i class="icon ion-home"></i>
                     Home
                 </ion-item>
+                <ion-item id="menu-list-item1" ui-sref="menu.profile" menu-close="" class='item item-icon-left'>
+                    <i class="icon ion-person"></i>
+                    Minha Conta
+                </ion-item>
+                <ion-item id="menu-list-item1" ui-sref="menu.chooseClass" menu-close="" class='item item-icon-left'>
+                    <i class="icon ion-pizza"></i>
+                    Escolha Matéria
+                </ion-item>
+                <ion-item id="menu-list-item1" ui-sref="menu.scheduledClass" menu-close="" class='item item-icon-left'>
+                    <i class="icon ion-calendar"></i>
+                    Aulas Agendadas
+                </ion-item>
                 <ion-item id="menu-list-item2" ui-sref="menu.professores" menu-close="" class='item item-icon-left'>
                     <i class="icon ion-university"></i>
                     Professores
+                </ion-item>
+                <ion-item id="menu-list-item1" ui-sref="menu.payment" menu-close="" class='item item-icon-left'>
+                    <i class="icon ion-card"></i>
+                    Pagamento
+                </ion-item>
+                <ion-item id="menu-list-item1" ui-sref="menu.history" menu-close="" class='item item-icon-left'>
+                    <i class="icon ion-clock"></i>
+                    Histórico
+                </ion-item>
+                <ion-item id="menu-list-item1" ui-sref="menu.about" menu-close="" class='item item-icon-left'>
+                    <i class="icon ion-information"></i>
+                    Sobre
                 </ion-item>
             </ion-list>
 
@@ -52,8 +84,7 @@
 
         <ion-footer-bar class="bar-light">
             <!-- Accent-colored raised button with ripple -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
-                            button button-block" 
+            <button class="button button-block" 
             style="left:0;right:0;margin:0; width: 100%;position: fixed"
             ng-click="menuCtrl.logout()">
             <i class='icon ion-log-out'></i>  

@@ -22,13 +22,9 @@ angular.module('app.routes', [])
           // controller will not be loaded until $requireSignIn resolves
           // Auth refers to our $firebaseAuth wrapper in the factory below
           "currentAuth": ["Auth", '$state', function(Auth, $state) {
-            console.log("Home Resolve| estou aqui");
             // $requireSignIn returns a promise so the resolve waits for it to complete
             // If the promise is rejected, it will throw a $stateChangeError (see above)
-            return Auth.$requireSignIn().then(function(){
-              console.log("Home Resolve| deu certo wait for sigj in");
-            }, function(error){
-              console.log("Home Resolve| erro vou para a pagina de login");
+            return Auth.$requireSignIn().then([], function(error){
               return $state.go('login')
             });
           }]
@@ -61,11 +57,134 @@ angular.module('app.routes', [])
     views: {
       'side-menu21': {
         templateUrl: 'features/profile/profile.html',
-        controller: 'ProfileCtrl as profileCtrl'
-        
+        controller: 'ProfileCtrl as profileCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
       }
     }
   })
+
+  .state('menu.chooseClass', {
+    url: '/chooseClass',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/chooseClass/chooseClass.html',
+        controller: 'ChooseClassCtrl as chooseClassCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
+  .state('menu.scheduledClass', {
+    url: '/scheduledClass',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/scheduledClass/scheduledClass.html',
+        controller: 'ScheduledClassCtrl as scheduledClassCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
+  .state('menu.payment', {
+    url: '/payment',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/payment/payment.html',
+        controller: 'PaymentCtrl as paymentCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
+  .state('menu.history', {
+    url: '/history',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/history/history.html',
+        controller: 'HistoryCtrl as historyCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
+  .state('menu.about', {
+    url: '/about',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/about/about.html',
+        controller: 'AboutCtrl as aboutCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
+  .state('menu.professor', {
+    url: '/professores/:professorUID',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/professores/professor.html',
+        controller: 'ProfessorCtrl as professorCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
 
   .state('menu', {
     url: '/side-menu21',
@@ -77,7 +196,6 @@ angular.module('app.routes', [])
       'currentAuth': ['Auth', '$state', function(Auth, $state){
         // $waitForSignIn returns a promise so the resolve waits for it to complete
         return Auth.$waitForSignIn().then(function(auth){
-          console.log("Menu Resolve|esrou aqui");
           user = auth; 
           //if(user == null) return $state.go('login');
         }, function(error){
@@ -92,12 +210,6 @@ angular.module('app.routes', [])
     url: '/login',
     templateUrl: 'features/auth/login.html',
     controller: 'LoginCtrl as loginCtrl'
-  })
-
-  .state('signup', {
-    url: '/signup',
-    templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
   })
 
 $urlRouterProvider.otherwise('/side-menu21/home')

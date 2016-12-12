@@ -1,10 +1,14 @@
-appProf
-.controller('LoginCtrl', ['$scope', '$stateParams', '$ionicLoading', '$location',
+angular.module('app.controllers')
+.controller('LoginCtrl', ['$scope', '$stateParams','$location', 'LoadingService', 'ToastService', 
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $ionicLoading, $location) {
+function ($scope, $stateParams, $location, LoadingService, ToastService) {
+	
 	var loginCtrl = this;
+
+	var trySignIn = null;
+	var tryRegister = null;
 
 	loginCtrl.user = {
 		email: '',
@@ -14,102 +18,89 @@ function ($scope, $stateParams, $ionicLoading, $location) {
 	loginCtrl.signingUp = false;
 	loginCtrl.error = '';
 
-	var showLoading = function(){
-		$ionicLoading.show({
-			template: '<ion-spinner icon="spiral"></ion-spinner>',
-			noBackdrop: true
-		});
-	}
-
-	var hideLoading = function(){
-		$ionicLoading.hide();
-	}
 
 
-	//console.log("Estou no controller");
+
 
 	loginCtrl.login = function(){
 		loginCtrl.error = '';
-		//reinicia a variavel global do user
-		//firebaseUser = null;
+
+		//restart global variable user
 		user = null;
 
-		//A senha do firebase deve ser maior que 6 caracteres
+		// Firebase password must've at least 6 characters
 		if(loginCtrl.user.password.length < 6 && loginCtrl.user.password.length != 0) {
-			loginCtrl.error = "Sua senha deve ser maior que 6 caracteres";
+			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
 			return ;
 		}	
 
-		//Se for pra registrar manda pra la
 		if(loginCtrl.signingUp) loginCtrl.register();
 		else {
-			console.log("LoginCtrl | Vou tentar fazer login");
-
-			var trySignIn = firebase.auth().signInWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
-
-			showLoading();
+			trySignIn = firebase.auth().signInWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
+			LoadingService.showLoadingSpinner();
 
 			trySignIn.then(function(auth){
-				console.log("LoginCtrl |  Estou logado como " + auth.email);
 				user = auth;
-				hideLoading();
+				LoadingService.hideLoading();
 				$location.path('/home');
 			}, function(error){
-				loginCtrl.error = "Não foi possivel fazer o login, verifique o email e a senha";
-				hideLoading();
+				ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
+						  								'long', 'bottom');
+				LoadingService.hideLoading();
 			});
 		}
 	};
 
 	loginCtrl.register = function(){
-		//Compara as senhas
-		if(loginCtrl.user.password == loginCtrl.user.password2){
-			console.log("LoginCtrl | Vou tentar me registrar");
 
-			var tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
-
-			showLoading();
+		// Verify if passwords are equal
+		if(loginCtrl.user.password != loginCtrl.user.password2){
+			ToastService.showToast("As senhas não coincidem", 'long', 'bottom');
+		} else if(loginCtrl.user.password.length < 6 && loginCtrl.user.password.length != 0) {
+			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
+		}
+		else {
+			tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
+																			loginCtrl.user.password);
+			LoadingService.showLoadingSpinner();
 
 			tryRegister.then(function(user){
-				console.log("LoginCtrl | Consegui me registrar");
-				console.log(user);
-				hideLoading();
+				LoadingService.hideLoading();
+				// Already registrated, just have to login
 				loginCtrl.login();
-
 			},function(error){
-				loginCtrl.error = "Não foi possivel fazer o cadastro, verifique o email e a senha";
-				hideLoading();
+				ToastService.showToast("Não consegui realizar o cadastro, por favor tente novamente", 
+											'long', 'bottom');
+				LoadingService.hideLoading();
 			})
-		} else {
-			loginCtrl.error = "As senhas não coincidem";
-		}
+		} 
 	};
 
 	loginCtrl.googleLogin = function(){
-		//reinicia a variavel global do user
+		//restart global variable user
 		user = null;
-
-		console.log("LoginCtrl | Vou tentear fazer o login com o google");
 
 		var provider = new firebase.auth.GoogleAuthProvider();
 
   		var tryGoogleSignIn = firebase.auth().signInWithPopup(provider);
-  		showLoading();
+  		LoadingService.showLoadingSpinner();
+
   		tryGoogleSignIn.then(function(result) {
-  			console.log("LoginCtrl | consegui acessar a conta Google");
 		  	// This gives you a Google Access Token. You can use it to access the Google API.
 		  	var token = result.credential.accessToken;
 		  	// The signed-in user info.
 		  	user = result.user;
-		  	//console.log("User " + firebaseUser);
-		  	hideLoading();
+
+		  	LoadingService.hideLoading();
 		  	$location.path('/home');
 
 		}).catch(function(error){
-					  // Handle Errors here.
-		  	var errorCode = error.code;
-		  	loginCtrl.error = error.message;
-		  	hideLoading();
+			// Handle Errors here.
+		  	/*var errorCode = error.code;
+		  	loginCtrl.error = error.message;*/
+		  	ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
+		  								'long', 'bottom');
+		  	LoadingService.hideLoading();
 		});
 	};
 
