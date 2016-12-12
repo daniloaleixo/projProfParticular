@@ -4,6 +4,7 @@
 			"UID": "MqhNsmQB69XOR8uUjGKXtvEoP002",
 			"displayName":"Bla",
 			"photoURL":"",
+			"telefone":"",
 			"localizacoes":{
 				"principal":"Rua xyz, 180",
 				"secundararias" : []
@@ -17,6 +18,7 @@
 			"UID": "8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
 			"displayName":"Danilo Aleixo",
 			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
+			"telefone":"",
 			"materias":{
 				"resumo":["Matemática", "Física"],
 				"fundamental":["Matemática", "Física"],
@@ -66,6 +68,7 @@
 			"UID": "ZyEKlWn4tDh2esPRV8sGYGf77jq1",
 			"displayName":"Bla  3",
 			"photoURL":"",
+			"telefone":"",
 			"materias":{
 				"resumo":["História", "Geografia"],
 				"fundamental":["História", "Geografia"],
