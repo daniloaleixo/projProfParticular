@@ -1,39 +1,23 @@
 {
-	"alunos": [
-		{
-			"UID": "MqhNsmQB69XOR8uUjGKXtvEoP002",
-			"displayName":"Bla",
-			"photoURL":"",
-			"telefone":"",
+	"alunos": {
+		"MqhNsmQB69XOR8uUjGKXtvEoP002":{
 			"localizacoes":{
 				"principal":"Rua xyz, 180",
 				"secundararias" : []
 			},
-			"historico": [],
+			"agenda": [],
 			"favoritos":[]
 		}
-	],
-
-	"professores":[
-		{
-			"UID": "8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
-			"displayName":"Danilo Aleixo",
-			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
-			"telefone":"",
+	},
+	"professores":{
+		"8B1eYE4JZ8MYTpVjYBZFlhGJBO52":{
 			"materias":{
-				"resumo":["Matemática", "Física"],
-				"fundamental":["Matemática", "Física"],
-				"medio":["Matemática", "Física"],
+				"fundamental":["matematica", "fisica"],
+				"medio":["matematica", "fisica"],
 				"superior":[]
 			},
 			"localizacoes":{
-				"principal": {
-					"logradouro": "Rua xyz, 180",
-					"cidade": "São Paulo ",
-					"estado":"SP",
-					"CEP": "05454555"
-				},
-				"zona":["Sul", "Centro"], 
+				"principal":"Rua xyz, 180",
 				"secundararias" : []
 			},
 			"curriculo": {
@@ -41,10 +25,10 @@
 				"formacao":{
 					"graduacao":{
 						"instituicao": "USP",
-						"status":"Cursando",
+						"status":"cursando",
 						"curso":"Ciencia da Computacao"
 					},
-					"posGraduacoes":[]
+					"posgraduacoes":[]
 				}
 			},
 			"avaliacoes":{
@@ -65,8 +49,7 @@
 			},
 			"agenda":[]
 		}
-	],
-
+	},
 	"materias":{
 		"fundamental":{
 			"matematica":["8B1eYE4JZ8MYTpVjYBZFlhGJBO52"],
@@ -74,8 +57,8 @@
 			"redacao":[],
 			"quimica":[],
 			"biologia":[],
-			"historia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
-			"geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"historia":[],
+			"geografia":[],
 			"portugues":[]
 		},
 		"medio":{
@@ -84,8 +67,8 @@
 			"redacao":[],
 			"quimica":[],
 			"biologia":[],
-			"historia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
-			"geografia":["ZyEKlWn4tDh2esPRV8sGYGf77jq1"],
+			"historia":[],
+			"geografia":[],
 			"portugues":[]
 		},
 		"superior":{
@@ -98,9 +81,5 @@
 			"geografia":[],
 			"portugues":[]
 		}
-	},
-
-	"aulas":{
-
 	}
 }
