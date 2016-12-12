@@ -1,4 +1,4 @@
-appProf
+angular.module('app.controllers')
 .controller('ProfileCtrl', ['$scope', '$stateParams', '$location', 'LoadingService', 
 		'UserInfos', '$cordovaCamera','ToastService', 'KeyboardService',
 // The following is the constructor function for this page's controller. 

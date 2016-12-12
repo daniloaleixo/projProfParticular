@@ -1,4 +1,4 @@
-appProf
+angular.module('app.controllers')
 .controller('LoginCtrl', ['$scope', '$stateParams','$location', 'LoadingService', 'ToastService', 
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -7,6 +7,9 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 	
 	var loginCtrl = this;
 
+	var trySignIn = null;
+	var tryRegister = null;
+
 	loginCtrl.user = {
 		email: '',
 		password: '',
@@ -14,6 +17,8 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 	};
 	loginCtrl.signingUp = false;
 	loginCtrl.error = '';
+
+
 
 
 
@@ -31,7 +36,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 
 		if(loginCtrl.signingUp) loginCtrl.register();
 		else {
-			var trySignIn = firebase.auth().signInWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
+			trySignIn = firebase.auth().signInWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password);
 			LoadingService.showLoadingSpinner();
 
 			trySignIn.then(function(auth){
@@ -55,7 +60,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
 		}
 		else {
-			var tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
+			tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
 																			loginCtrl.user.password);
 			LoadingService.showLoadingSpinner();
 

@@ -1,4 +1,4 @@
-appProf
+angular.module('app.controllers')
 .controller('HomeCtrl', ['$scope', '$stateParams', 'LoadingService', 'ToastService', 'ProfessoresList','$location', 
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
@@ -7,7 +7,7 @@ appProf
 function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $location) {
 	var homeCtrl = this;
 
-	var database = firebase.database();
+	homeCtrl.database = firebase.database();
 
 	homeCtrl.materias = new Array();
 
@@ -39,10 +39,10 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 			LoadingService.showLoadingSpinner();
 
 			//get the path to which level I'll search
-			refNivel = getReferenceFromLevel(homeCtrl.nivel.toLowerCase());
+			refNivel = homeCtrl.getReferenceFromLevel(homeCtrl.nivel.toLowerCase());
 
 			//get all the materias from the leve selected
-			database.ref('/materias/' + refNivel).once('value').then(function(snapshot){
+			homeCtrl.database.ref('/materias/' + refNivel).once('value').then(function(snapshot){
 				snapshot.forEach(function(childSnapshot){
 					//Add courses to my vector of courses
 					homeCtrl.materias.push(childSnapshot.key);
@@ -85,10 +85,10 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 				homeCtrl.showProfessores = true;
 
 				//get the path to which level I'll search for
-				refNivel = getReferenceFromLevel(homeCtrl.nivel.toLowerCase());
+				refNivel = homeCtrl.getReferenceFromLevel(homeCtrl.nivel.toLowerCase());
 
 				//get all professors which teaches that course
-				database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value')
+				homeCtrl.database.ref('/materias/' + refNivel + '/' + homeCtrl.materia).once('value')
 					.then(function(snapshot){
 						snapshot.forEach(function(childSnapshot){
 							// Put all professors UIDs in the vector
@@ -103,7 +103,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 					}
 					else {
 						//Now I'll get all the infos from professors from the UIDs vector
-						database.ref('/professores/').once('value').then(function(snapshot){
+						homeCtrl.database.ref('/professores/').once('value').then(function(snapshot){
 							snapshot.val().forEach(function(professor){
 								if(homeCtrl.tempProfessores.indexOf(professor.UID) != -1){
 									homeCtrl.professores.push(professor);
@@ -137,7 +137,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 		$location.path('/side-menu21/professores/' + UID);
 	}
 
-	var getReferenceFromLevel = function(level){
+	homeCtrl.getReferenceFromLevel = function(level){
 		if(level == 'fundamental') return 'fundamental';
 		if(level == 'médio') return'medio';
 		if(level == 'superior') return 'superior';	

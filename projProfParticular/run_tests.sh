@@ -7,7 +7,7 @@ if [ "$1" == "all" ]; then
 	protractor tests/e2e-tests.conf.js --verbose
 	karma start tests/unit-tests.conf.js
 elif [ "$1" == "unit" ]; then
-	karma start tests/unit-tests.conf.js
+	karma start tests/unit-tests.conf.js --verbose --colors
 elif [ "$1" == "e2e" ]; then
 	protractor tests/e2e-tests.conf.js --verbose
 else
