@@ -9,16 +9,18 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 
 	var database = firebase.database();
 
-	chooseClassCtrl.materias = new Array();
+	chooseClassCtrl.courses = new Array();
 
-	chooseClassCtrl.showChoicesNivel = true;
-	chooseClassCtrl.nivel = '';
-	chooseClassCtrl.showChoicesMaterias = false;
-	chooseClassCtrl.materia = '';
-	chooseClassCtrl.showProfessores = false;
+	chooseClassCtrl.showChoicesLevel = true;
+	chooseClassCtrl.level = '';
 
-	chooseClassCtrl.tempProfessores = new Array();
-	chooseClassCtrl.professores = new Array();
+	chooseClassCtrl.showCoursesChoices = false;
+	chooseClassCtrl.course = '';
+	chooseClassCtrl.showProfessors = false;
+
+	chooseClassCtrl.tempProfessors = new Array();
+	chooseClassCtrl.professors = new Array();
+
 	chooseClassCtrl.errorMessage = '';
 	chooseClassCtrl.filterBarInstance;
 
@@ -29,119 +31,138 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 	}
 
 
-	// When the users chooses the level (fundamental, medio, superior) I have to bring courses from server
-	chooseClassCtrl.getMaterias = function(){
+	// I have to bring courses from server
+	// When the users chooses the level (fundamental, medio, superior) 
+	chooseClassCtrl.getCourses = function(){
 		var refNivel = '';
-		chooseClassCtrl.materias = [];
-		chooseClassCtrl.showChoicesNivel = false;
 
-		if(chooseClassCtrl.nivel != ''){
+		chooseClassCtrl.courses = [];
+		chooseClassCtrl.showChoicesLevel = false;
+
+		if(chooseClassCtrl.level != ''){
 			LoadingService.showLoadingSpinner();
 
 			//get the path to which level I'll search
-			refNivel = chooseClassCtrl.getReferenceFromLevel(chooseClassCtrl.nivel.toLowerCase());
+			refNivel = chooseClassCtrl.getReferenceFromLevel(chooseClassCtrl.level.toLowerCase());
 
-			//get all the materias from the leve selected
-			database.ref('/materias/' + refNivel).once('value').then(function(snapshot){
+			// console.log("RefNivel " + refNivel);
+
+			//get all the courses from the leve selected
+			database.ref('/courses/' + refNivel).once('value').then(function(snapshot){
 				snapshot.forEach(function(childSnapshot){
 					//Add courses to my vector of courses
-					chooseClassCtrl.materias.push(childSnapshot.key);
+				
+					chooseClassCtrl.courses.push({
+						"key": childSnapshot.key,
+						"name": childSnapshot.val().name,
+						"professors": childSnapshot.val().professors
+					});
 				});
 				//Refresh pages so the user can view the couses
+				chooseClassCtrl.courses.sort();
 				$scope.$digest();
 				LoadingService.hideLoading();
 
 			}, function(error){
 				ToastService.showToast("Desculpe não consegui encontrar matérias", 'long', 'bottom');
-				chooseClassCtrl.showChoicesMaterias = false;	
+				chooseClassCtrl.showCoursesChoices = false;	
 			});
 		} 
 		//If the user had not chosen a level yet
 		else {
 			ToastService.showToast("Escolha um nível", 'long', 'bottom');
-			chooseClassCtrl.showChoicesMaterias = false;
+			chooseClassCtrl.showCoursesChoices = false;
 			LoadingService.hideLoading();
 		}
 
 	}
 
+
+
 	//After choosing level and courses we have to bring professors 
-	chooseClassCtrl.getProfessores = function()
+	chooseClassCtrl.getProfessors = function()
 	{
 		var refNivel = '';
-		chooseClassCtrl.professores = [];
-		chooseClassCtrl.tempProfessores = [];
+		chooseClassCtrl.professors = [];
+		chooseClassCtrl.tempProfessors = [];
 		chooseClassCtrl.semProfessoresMessage = '';
 
-		if(chooseClassCtrl.nivel === '') ToastService.showToast("Escolha um nível", 'long', 'bottom');
+		if(chooseClassCtrl.level === '') ToastService.showToast("Escolha um nível", 'long', 'bottom');
 		else {
-			if(chooseClassCtrl.materia === '') ToastService.showToast("Escolha uma matéria", 'long', 'bottom');
+			if(chooseClassCtrl.course === '') ToastService.showToast("Escolha uma matéria", 'long', 'bottom');
 			else{
 
 				LoadingService.showLoadingSpinner();
 
-				chooseClassCtrl.showChoicesMaterias = false;
-				chooseClassCtrl.showChoicesNivel = false;	
-				chooseClassCtrl.showProfessores = true;
+				chooseClassCtrl.showCoursesChoices = false;
+				chooseClassCtrl.showChoicesLevel = false;	
+				chooseClassCtrl.showProfessors = true;
 
 				//get the path to which level I'll search for
-				refNivel = chooseClassCtrl.getReferenceFromLevel(chooseClassCtrl.nivel.toLowerCase());
+				refNivel = chooseClassCtrl.getReferenceFromLevel(chooseClassCtrl.level.toLowerCase());
 
-				//get all professors which teaches that course
-				database.ref('/materias/' + refNivel + '/' + chooseClassCtrl.materia).once('value')
-					.then(function(snapshot){
-						snapshot.forEach(function(childSnapshot){
-							// Put all professors UIDs in the vector
-							chooseClassCtrl.tempProfessores.push(childSnapshot.val());
+
+				//Search for the course and get the array of professors
+				chooseClassCtrl.courses.forEach(function(course){
+					if(course.name == chooseClassCtrl.course){
+						chooseClassCtrl.tempProfessors = course.professors;
+					}
+				})
+
+				// console.log(chooseClassCtrl.tempProfessors);
+
+				//If none professors
+				if(chooseClassCtrl.tempProfessors.length == 0) {
+					ToastService.showToast("Desculpe não encontrei nenhum professor perto", 
+										'long', 'bottom');
+					$scope.$digest();
+					LoadingService.hideLoading();
+				}
+				else {
+
+					// console.log("aqui");
+
+
+
+					//Now I'll get all the infos from professors from the UIDs vector
+					database.ref().child('/professors/').once('value').then(function(snapshot){
+						console.log(snapshot.val());
+
+						chooseClassCtrl.tempProfessors.forEach(function(professor){
+							chooseClassCtrl.professors.push(snapshot.child(professor).val());
 						});
 
-					//If none professors
-					if(chooseClassCtrl.tempProfessores.length == 0) {
-						chooseClassCtrl.semProfessoresMessage = 'Desculpe não encontrei nenhum professor perto';
+						// //Update the global list of professors
+						ProfessoresList.updateProfessoresList(chooseClassCtrl.professors);
+
 						$scope.$digest();
 						LoadingService.hideLoading();
-					}
-					else {
-						//Now I'll get all the infos from professors from the UIDs vector
-						database.ref('/professores/').once('value').then(function(snapshot){
-							snapshot.val().forEach(function(professor){
-								if(chooseClassCtrl.tempProfessores.indexOf(professor.UID) != -1){
-									chooseClassCtrl.professores.push(professor);
-								}
 
-								//Update the global list of professors
-								ProfessoresList.updateProfessoresList(chooseClassCtrl.professores);
+					}, function(error){
+						ToastService.showToast("Desculpe tive problemas para me comunicar "
+							+ "com o banco de dados", 'long', 'bottom');
+					});
 
-								$scope.$digest();
-								LoadingService.hideLoading();
-
-							});
-						}, function(error){
-							ToastService.showToast("Desculpe tive problemas para me comunicar "
-								+ "com o banco de dados", 'long', 'bottom');
-						});
-
-					}
-					
-
-				}, function(error){
-					ToastService.showToast("Desculpe tive problemas para me comunicar" 
-						+ " com o banco de dados", 'long', 'bottom');
-				});
+				}
 			}
 		}
 
 	}
 
 	chooseClassCtrl.showProfessorDetails = function(UID){
-		$location.path('/side-menu21/professores/' + UID);
+		$location.path('/side-menu21/professors/' + UID);
 	}
 
 	chooseClassCtrl.getReferenceFromLevel = function(level){
-		if(level == 'fundamental') return 'fundamental';
-		if(level == 'médio') return'medio';
-		if(level == 'superior') return 'superior';	
+		if(level == 'fundamental') return 'level1';
+		if(level == 'médio') return'level2';
+		if(level == 'superior') return 'level3';	
 	}
 
+	chooseClassCtrl.getReferenceFromCourse = function(level){
+		if(level == 'fundamental') return 'level1';
+		if(level == 'médio') return'level2';
+		if(level == 'superior') return 'level3';	
+	}
 	
 }])
