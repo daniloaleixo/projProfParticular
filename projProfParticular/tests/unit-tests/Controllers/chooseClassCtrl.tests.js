@@ -51,49 +51,49 @@ describe('ChooseClassCtrl', function(){
     	});
     });
 
-    describe('geMaterias function - ', function(){
+    describe('getCourses function - ', function(){
     	it('should have restarted variables', function(){
-            chooseClassCtrl.getMaterias();
-            expect(chooseClassCtrl.materias.length).toBe(0);
-            expect(chooseClassCtrl.showChoicesNivel).toBe(false);
+            chooseClassCtrl.getCourses();
+            expect(chooseClassCtrl.courses.length).toBe(0);
+            expect(chooseClassCtrl.showChoicesLevel).toBe(false);
     	});
-    	describe('when nivel was choosen', function(){
+    	describe('when level was choosen', function(){
             it('if not choosen should throw a Toast', function(){
-                chooseClassCtrl.nivel = '';
-                chooseClassCtrl.getMaterias();
+                chooseClassCtrl.level = '';
+                chooseClassCtrl.getCourses();
                 expect(toastServiceMock.showToast)
                 .toHaveBeenCalledWith("Escolha um nível", 'long', 'bottom');
-                expect(chooseClassCtrl.showChoicesMaterias).toBe(false);
+                expect(chooseClassCtrl.showCoursesChoices).toBe(false);
                 expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
             });
     		it('if choosen get courses from firebase', function(){
-                chooseClassCtrl.nivel = 'fundamental';
+                chooseClassCtrl.level = 'fundamental';
                 spyOn(chooseClassCtrl, 'getReferenceFromLevel');
-                chooseClassCtrl.getMaterias();
+                chooseClassCtrl.getCourses();
                 expect(loadingServiceMock.showLoadingSpinner).toHaveBeenCalled();
-                expect(chooseClassCtrl.getReferenceFromLevel).toHaveBeenCalledWith(chooseClassCtrl.nivel.toLowerCase());
+                expect(chooseClassCtrl.getReferenceFromLevel).toHaveBeenCalledWith(chooseClassCtrl.level.toLowerCase());
     		});
             describe('when database was caught', function(){
                 it('if it is a valid database', function(){
-                    chooseClassCtrl.nivel = 'fundamental';
-                    chooseClassCtrl.getMaterias();
+                    chooseClassCtrl.level = 'fundamental';
+                    chooseClassCtrl.getCourses();
                     spyOn(scope, '$digest');
                     deferred = $q.defer();
                     deferred.promise.then(function(){
-                        expect(chooseClassCtrl.materias.length).not.toBe(0);
+                        expect(chooseClassCtrl.courses.length).not.toBe(0);
                         expect(scope.$digest).toHaveBeenCalled();
                         expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
                     })
                 })
                 it('if not valid should throw a Toast', function(){
-                    chooseClassCtrl.nivel = 'fundamental';
-                    chooseClassCtrl.getMaterias();
+                    chooseClassCtrl.level = 'fundamental';
+                    chooseClassCtrl.getCourses();
                     spyOn(scope, '$digest');
                     deferred = $q.defer();
                     deferred.promise.catch(function(){
                         expect(toastServiceMock.showToast)
                        .toHaveBeenCalledWith("Desculpe não consegui encontrar matérias", 'long', 'bottom');
-                       expect(chooseClassCtrl.showChoicesMaterias).toBe(false);
+                       expect(chooseClassCtrl.showCoursesChoices).toBe(false);
                     })
                 });
             })
@@ -107,7 +107,7 @@ describe('ChooseClassCtrl', function(){
             //shoudl have tempProfessores []
             //should have sem professores message ''
         });
-        describe('when nivel was choosen', function(){
+        describe('when level was choosen', function(){
 
             describe('when materia was choosen', function(){
                 it('if choosen get professors from firebase', function(){
@@ -133,8 +133,8 @@ describe('ChooseClassCtrl', function(){
         it('if fundamental return fundamental', function(){
             var x = chooseClassCtrl.getReferenceFromLevel('fundamental');
             var y = chooseClassCtrl.getReferenceFromLevel('médio');
-            expect(x).toBe('fundamental');
-            expect(y).toBe('medio');
+            expect(x).toBe('level1');
+            expect(y).toBe('level2');
         })
     })
 

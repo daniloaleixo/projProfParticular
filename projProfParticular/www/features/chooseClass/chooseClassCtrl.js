@@ -158,11 +158,5 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 		if(level == 'médio') return'level2';
 		if(level == 'superior') return 'level3';	
 	}
-
-	chooseClassCtrl.getReferenceFromCourse = function(level){
-		if(level == 'fundamental') return 'level1';
-		if(level == 'médio') return'level2';
-		if(level == 'superior') return 'level3';	
-	}
 	
 }])
