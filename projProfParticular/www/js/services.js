@@ -158,5 +158,17 @@ angular.module('app.services', [])
 
 
 
+.factory('MyScheduledClassesList', ['LoadingService','ToastService',
+	function(LoadingService, ToastService){
+		var myScheduledClassesList = this;
+		MyScheduledClassesList.scheduledClasses = [];
+
+		return {
+			all: function(){
+
+			}
+		}
+}])
+
 
 

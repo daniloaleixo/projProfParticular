@@ -209,18 +209,31 @@
 	},
 
 	"scheduledClasses":{
-		"MqhNsmQB69XOR8uUjGKXtvEoP002-8B1eYE4JZ8MYTpVjYBZFlhGJBO52":{
+		"MqhNsmQB69XOR8uUjGKXtvEoP002-ZyEKlWn4tDh2esPRV8sGYGf77jq1":{
 			"students":{
 				"MqhNsmQB69XOR8uUjGKXtvEoP002":"Bla"
 			},
-			"professor":"8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
+			"professor":"ZyEKlWn4tDh2esPRV8sGYGf77jq1",
 			"date":"18/09/2016",
 			"hour":"18:00-19:00",
 			"location":{},
 			"course":{
 				"2-7":"História"
 			},
-			"description":""
+			"description":"Quero aprender sobre história do Brasil"
+		},
+		"MqhNsmQB69XOR8uUjGKXtvEoP002-8B1eYE4JZ8MYTpVjYBZFlhGJBO52":{
+			"students":{
+				"MqhNsmQB69XOR8uUjGKXtvEoP002":"Bla"
+			},
+			"professor":"8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
+			"date":"30/09/2016",
+			"hour":"17:00-19:00",
+			"location":{},
+			"course":{
+				"1-2":"Física"
+			},
+			"description":"Preciso aprender física básica"
 		}
 	}
 }
