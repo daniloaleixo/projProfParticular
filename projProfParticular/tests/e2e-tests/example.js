@@ -8,7 +8,7 @@ describe('demo', function() {
   var url = 'http://google.com';
 
   describe('Start page', function () {
-          it('should show form when loaded', function (done) {
+          it('should show form when loaded', function () {
               new Nightmare() 
                   .goto(url)
                   .evaluate(function() {
@@ -16,7 +16,6 @@ describe('demo', function() {
                   })
                   .run(function(err, result){
                     result.should.equal(1);
-                    done();
                   });
           });
       });
