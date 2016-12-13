@@ -10,15 +10,15 @@
         <label>
             <p class='small'>{{professorCtrl.professor.displayName}}</p>
         </label>
-        <rating ng-model="professorCtrl.professor.avaliacoes.didatica" max="professorCtrl.rating.max" 
+        <rating ng-model="professorCtrl.professor.assessments.teaching" max="professorCtrl.rating.max" 
                 readonly="professorCtrl.rating.readOnly"
                 style='margin-top: -20px;'></rating>
         <p style='margin-top: 10px;'>
-        	<span ng-show='professorCtrl.professor.localizacoes.zona'>
-        	{{professorCtrl.professor.localizacoes.zona.join(', ')}} de 
+        	<span ng-show='professorCtrl.professor.locations.zone'>
+        	{{professorCtrl.professor.locations.zone.join(', ')}} de 
         	</span>
-            {{professorCtrl.professor.localizacoes.principal.cidade}} - 
-            {{professorCtrl.professor.localizacoes.principal.estado}}
+            {{professorCtrl.professor.locations.main.city}} - 
+            {{professorCtrl.professor.locations.main.state}}
         </p>
         <p style="margin-top:-20px;">
             <i class='icon ion-ios-location'>10km distante de você</i>
@@ -31,26 +31,26 @@
     	<label class='header'>Aulas oferecidas</label>
     	<div>
 	        <p  class='body-text'>
-	        	<span ng-show='professorCtrl.professor.materias.fundamental'>
+	        	<span ng-show='professorCtrl.professor.courses.fundamental'>
 		        	<i class="icon ion-easel"> Ensino Fundamental </i>
 		        	<br>
-		        	{{professorCtrl.professor.materias.fundamental.join(', ')}}
+		        	{{professorCtrl.professor.courses.fundamental.join(', ')}}
 		            </i>
 		            <br>
 	            </span>
 
-	            <span ng-show='professorCtrl.professor.materias.medio'>
+	            <span ng-show='professorCtrl.professor.courses.medio'>
 		            <i class="icon ion-easel"> Ensino Médio </i>
 		        	<br>
-		            {{professorCtrl.professor.materias.medio.join(', ')}}
+		            {{professorCtrl.professor.courses.medio.join(', ')}}
 		            </i>
 		            <br>
 	            <span>
 
-	            <span ng-show='professorCtrl.professor.materias.superior'>
+	            <span ng-show='professorCtrl.professor.courses.superior'>
 		            <i class="icon ion-easel"> Ensino Superior </i>
 		        	<br>
-		            {{professorCtrl.professor.materias.superior.join(', ')}}
+		            {{professorCtrl.professor.courses.superior.join(', ')}}
 		            </i>
 		            <br>
 	            </span>
@@ -62,7 +62,7 @@
 	    <label class='header'>Sobre</label>
 	    <div>
 	    	<p  class='body-text'>
-	    	{{professorCtrl.professor.curriculo.sobre}}
+	    	{{professorCtrl.professor.curriculum.about}}
 	    	</p>
 	    	<br>
 	    </div>
@@ -72,36 +72,39 @@
 	    	<p  class='body-text'>
 	    			<i class="icon ion-university"> Graduação </i>
 	    			<br>
-	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.status}} 
-	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.curso}} 
-	    	        na {{professorCtrl.professor.curriculo.formacao.graduacao.instituicao}}
+	    	        {{professorCtrl.professor.curriculum.formation.college.status}} 
+	    	        {{professorCtrl.professor.curriculum.formation.college.course}} 
+	    	        na {{professorCtrl.professor.curriculum.formation.college.institute}}
 	    	        <br>
 
 	    	        <!-- Implementar pos graduacoes -->
-	    	        <span ng-show="professorCtrl.professor.curriculo.formacao.posGraduacoes.length == 0"
+	    	        <span ng-show="professorCtrl.professor.curriculum.formation.posGraduacoes.length == 0"
 	    	        		style='display:inline;'>
 	    	        <i class="icon ion-university"> Pós Graduação </i>
 	    			<br>
-	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.status}} 
-	    	        {{professorCtrl.professor.curriculo.formacao.graduacao.curso}} 
-	    	        na {{professorCtrl.professor.curriculo.formacao.graduacao.instituicao}}
+	    	        {{professorCtrl.professor.curriculum.formation.college.status}} 
+	    	        {{professorCtrl.professor.curriculum.formation.college.course}} 
+	    	        na {{professorCtrl.professor.curriculum.formation.college.institute}}
 	    	        </span>
 	    	</p>
 	    	<br>
 	    </div>
 	    <!-- Avaliacoes -->
-	    <label class='header'>Avaliações ({{professorCtrl.professor.avaliacoes.quantidade}})</label>
+	    <label class='header'>Avaliações ({{professorCtrl.professor.assessments.quantity}})</label>
 	    <div>
 	    	<p>Didática</p>
-	    	<rating ng-model="professorCtrl.professor.avaliacoes.didatica" max="professorCtrl.rating.max" 
+	    	<rating ng-model="professorCtrl.professor.assessments.teaching" 
+	    					max="professorCtrl.rating.max" 
 	    	                readonly="professorCtrl.rating.readOnly"
 	    	                style='margin-top: -20px;'></rating>
 	    	<p>Conhecimento</p>
-	    	<rating ng-model="professorCtrl.professor.avaliacoes.conhecimento" max="professorCtrl.rating.max" 
+	    	<rating ng-model="professorCtrl.professor.assessments.knowledge" 
+	    					max="professorCtrl.rating.max" 
 	    	                readonly="professorCtrl.rating.readOnly"
 	    	                style='margin-top: -20px;'></rating>
 	    	<p>Simpatia</p>
-	    	<rating ng-model="professorCtrl.professor.avaliacoes.simpatia" max="professorCtrl.rating.max" 
+	    	<rating ng-model="professorCtrl.professor.assessments.sympathy" 
+	    					max="professorCtrl.rating.max" 
 	    	                readonly="professorCtrl.rating.readOnly"
 	    	                style='margin-top: -20px;'></rating>
 
