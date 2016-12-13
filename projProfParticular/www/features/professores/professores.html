@@ -12,7 +12,7 @@
 
 
         <!-- Card do professor -->
-        <div class="list card mdl-shadow--2dp" ng-repeat='professor in professoresCtrl.professores'>
+        <div class="list card mdl-shadow--2dp" ng-repeat='professor in professoresCtrl.professors'>
 
             <span ng-click='professoresCtrl.showProfessorDetails(professor.UID)'>
                 <div class="item row" style="padding:10px;">
@@ -24,15 +24,16 @@
 
                     <div class="col" style="text-align:left;">
                         <h2 style='margin-top: -20px;'>{{professor.displayName}}</h2>
-                        <rating ng-model="professor.avaliacoes.didatica" max="professoresCtrl.rating.max" 
+                        <rating ng-model="professor.assessments.teaching" 
+                                max="professoresCtrl.rating.max" 
                                 readonly="professoresCtrl.rating.readOnly"
                                 style='margin-top: -20px;'></rating>
                         <p style='margin-top: 10px;'>
-                            <span ng-show='professor.localizacoes.zona'>
-                            {{professor.localizacoes.zona.join(', ')}} de 
+                            <span ng-show='professor.locations.zone'>
+                            {{professor.locations.zone.join(', ')}} de 
                             <br>
                             </span>
-                            {{professor.localizacoes.principal.cidade}} - {{professor.localizacoes.principal.estado}}
+                            {{professor.locations.main.city}} - {{professor.locations.main.state}}
                         </p>
                         <p>
                             <i class='icon ion-ios-location'>10km distante de você</i>
@@ -44,21 +45,21 @@
                     <!-- Faculdade -->
                     <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
                         <i class="icon ion-university">
-                            {{professor.curriculo.formacao.graduacao.status}} 
-                            {{professor.curriculo.formacao.graduacao.curso}} 
-                            na {{professor.curriculo.formacao.graduacao.instituicao}}
+                            {{professor.curriculum.formation.college.status}} 
+                            {{professor.curriculum.formation.college.course}} 
+                            na {{professor.curriculum.formation.college.institute}}
                         </i>
                     </p>
                     <!-- Aulas que ensina -->
                     <p style="margin-top:0px; margin-bottom:0px;font-size:14px;">
                         <i class="icon ion-easel">
                             Ensina 
-                            {{professor.materias.resumo.join(', ')}}
+                            {{professor.courses.show.join(', ')}}
                             <!--item ng-repeat='materia in professor.materias.resumo'>{{materia}}, </item-->
                         </i>
                     </p>
                     <p  style="margin-top:0px; margin-bottom:0px;font-size:14px;">
-                    Sobre: {{professor.curriculo.sobre}}
+                    Sobre: {{professor.curriculum.about}}
                     </p>
                 </div>                
             </span>

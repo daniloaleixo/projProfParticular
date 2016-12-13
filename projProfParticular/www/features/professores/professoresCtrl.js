@@ -11,7 +11,7 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	professoresCtrl = this;
 
 	var database = firebase.database();
-	professoresCtrl.professores = new Array();
+	professoresCtrl.professors = new Array();
 	professoresCtrl.errorMessage = '';
 	professoresCtrl.filterBarInstance;
 
@@ -24,17 +24,24 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	professoresCtrl.atualizaListaProfessores = function(){
 		LoadingService.showLoadingSpinner();
 		//get all professors
-		database.ref('/professores/').once('value').then(function(snapshot){
-			snapshot.val().forEach(function(professor){
-				if(professor) professoresCtrl.professores.push(professor);
+		database.ref().child('professors').once('value').then(function(snapshot){
+
+			console.log(snapshot.val());
+			console.log("aqui");
+			Object.keys(snapshot.val()).forEach(function(professor){
+				console.log(professor);
+				console.log(snapshot.val()[professor]);
+				if(professor) professoresCtrl.professors.push(snapshot.val()[professor]);
 			})
+
 			LoadingService.hideLoading();
 
-			if(professoresCtrl.professores.length == 0) 
+			if(professoresCtrl.professors.length == 0) 
 				professoresCtrl.errorMessage = 'Desculpe não consegui encontrar nenhum professor'
 			else { 
 				professoresCtrl.errorMessage = '';
-				ProfessoresList.updateProfessoresList(professoresCtrl.professores);
+				console.log("estou aqui");
+				ProfessoresList.updateProfessoresList(professoresCtrl.professors);
 			}
 
 		}, function(error){
@@ -48,9 +55,9 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 
 	professoresCtrl.showFilterBar = function(){
 		filterBarInstance = $ionicFilterBar.show({
-			items: professoresCtrl.professores,
+			items: professoresCtrl.professors,
 			update: function(filteredItems) {
-				professoresCtrl.professores = filteredItems;
+				professoresCtrl.professors = filteredItems;
 			},
 			filterProperties: 'displayName'
 		});
