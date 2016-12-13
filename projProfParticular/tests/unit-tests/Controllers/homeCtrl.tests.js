@@ -2,18 +2,27 @@ describe('HomeCtrl', function(){
     var scope,
         deferred,
         homeCtrl = null,
-        stateParamsMock;
+        stateParamsMock,
+        loadingServiceMock,
+        userInfosMock;
 
     beforeEach(module('app.controllers'));
 
     beforeEach(inject(function($controller, $rootScope){
         scope = $rootScope.$new();
 
-        stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go'])
+        stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go']);
+
+        loadingServiceMock = jasmine.createSpyObj('LoadingService spy', 
+                            ['showLoadingSpinner', 'hideLoading']);
+
+        userInfosMock = jasmine.createSpyObj('UserInfos spy', ['getUserInfos']);
 
         homeCtrl = $controller('HomeCtrl', {
             $scope: scope,
-            $stateParams: stateParamsMock
+            $stateParams: stateParamsMock,
+            LoadingService: loadingServiceMock,
+            UserInfos: userInfosMock
         });
 
     }))

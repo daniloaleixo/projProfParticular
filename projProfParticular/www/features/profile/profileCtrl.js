@@ -37,7 +37,13 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 
 
 	profileCtrl.updateVariables = function(){
-		profileCtrl.user = UserInfos.getUserInfos();
+		LoadingService.showLoadingSpinner();
+		UserInfos.getUserInfos().then(function(result){
+			console.log(result);
+			profileCtrl.user = result;
+			LoadingService.hideLoading();
+		});
+		// profileCtrl.user = UserInfos.getUserInfos();
 	}
 
 	profileCtrl.updateVariables();

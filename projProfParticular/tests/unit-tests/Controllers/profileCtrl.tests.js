@@ -19,7 +19,8 @@ xdescribe('ProfileCtrl', function(){
 
         locationMock = jasmine.createSpyObj('$location spy', ['path'])
 
-        loadingServiceMock = jasmine.createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
+        loadingServiceMock = jasmine.createSpyObj('LoadingService spy', 
+                                ['showLoadingSpinner', 'hideLoading'])
 
         toastServiceMock = jasmine.createSpyObj('ToastService spy', ['showToast']);
 
