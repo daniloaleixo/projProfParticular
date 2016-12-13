@@ -42,6 +42,8 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 
 	profileCtrl.changeDisplayName = function(){
 
+		console.log("cliquei");
+
 		if(profileCtrl.newUserInfos.displayName != '' && user != null){
 			LoadingService.showLoadingUpdating();
 			user.updateProfile({

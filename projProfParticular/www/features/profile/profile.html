@@ -5,24 +5,52 @@
         <div>
         	<img class='wrapper' src="{{profileCtrl.user.photoURL}}">
         </div>
-        <!--a class="button button-icon icon-left ion-settings"> Editar Foto</a-->    
-        <label>
-            Nome de usuário: 
-            <p class='small'>{{profileCtrl.user.displayName}}</p>
-        </label>
-    </div>
 
-    <div style='text-align: center;'>
-    	<form  ng-submit='profileCtrl.changeDisplayName()'>
-    		<label class="item item-input icon-right" id="login-input1" style="margin-top:20px;">
-    	    <input type="text" placeholder="Digite um novo nome de usuário" ng-model='profileCtrl.newUserInfos.displayName'>
-    	    <button class="button button-clear icon ion-checkmark-round"></button>
-    	</label>
-    	</form>
 
         <button class="button icon-left ion-camera"
-                style='margin-top: 30px;'>
-                Editar Foto</button>
+                style='margin-top: 10px;'>
+                Editar foto</button>
+
+        <!--a class="button button-icon icon-left ion-settings"> Editar Foto</a-->    
+        <!-- <label>
+            Nome de usuário: 
+            <p class='small'>{{profileCtrl.user.displayName}}</p>
+        </label> -->
+    </div>
+
+    <div style='margin-top:-30px;'>
+		<!-- <label class="item item-input icon-right" id="login-input1" style="margin-top:20px;">
+    	    <input type="text" placeholder="Digite um novo nome de usuário" ng-model='profileCtrl.newUserInfos.displayName'>
+    	    <button class="button button-clear icon ion-checkmark-round"
+                    ng-click='profileCtrl.changeDisplayName()'></button>
+    	</label> -->
+
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Nome</span>
+            <input type="text" placeholder="{{profileCtrl.user.displayName}}">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="{{profileCtrl.user.email}}">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Telefone</span>
+            <input type="text" placeholder="{{profileCtrl.user.cellphone || '+55 11 98765 5675'}}">
+        </label>
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Endereço</span>
+            <input type="text" placeholder="Av. Bla">
+        </label>
+
+
+        <button class="mdl-button mdl-js-button mdl-button--raised 
+                        mdl-js-ripple-effect mdl-button--accent 
+                        button button-block"
+                style="margin-top:50px;">
+            <i class='icon ion-search'></i>  
+            Salvar informações
+        </button>
     </div>
 
 
