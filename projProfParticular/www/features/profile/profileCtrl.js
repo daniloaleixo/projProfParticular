@@ -22,13 +22,17 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 	profileCtrl.user = {
 		displayName: '',
 		photoURL: '',
-		email: ''
+		email: '',
+		cellphone: '',
+		location: ''
 	};
 
 	profileCtrl.newUserInfos = {
 		displayName: '',
 		photoURL: '',
-		email: ''
+		email: '',
+		cellphone: '',
+		location: ''
 	};
 
 
@@ -40,28 +44,39 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 
 
 
-	profileCtrl.changeDisplayName = function(){
+	profileCtrl.updateUserInfo = function(){
 
 		console.log("cliquei");
 
-		if(profileCtrl.newUserInfos.displayName != '' && user != null){
+		if(user != null && 
+			profileCtrl.newUserInfos.displayName != ''){
+
 			LoadingService.showLoadingUpdating();
-			user.updateProfile({
-				displayName: profileCtrl.newUserInfos.displayName
-			}).then(function(){
-				KeyboardService.hide();
-				ToastService.showToast("Seu nome de usuário foi atualizado com sucesso!", 'long', 'bottom');
-				// cordova.plugins.Keyboard.close();
-				profileCtrl.newUserInfos.displayName = '';
-				profileCtrl.updateVariables();
-				$scope.$digest();
-				LoadingService.hideLoading();
-			}, function(error){
-				console.log("ProfileCtrl |Erro ao atualizar Display Name");
-				ToastService.showToast("Erro ao atualizar seu nome de usuário!", 'long', 'bottom');
-				profileCtrl.updateVariables();
-				LoadingService.hideLoading();
-			});
+
+			// user.updateProfile({
+			// 	displayName: profileCtrl.newUserInfos.displayName 
+			// 					|| profileCtrl.user.displayName,
+			// 	email: profileCtrl.newUserInfos.email
+			// 					|| profileCtrl.user.email,
+			// 	cellphone: profileCtrl.newUserInfos.cellphone
+			// 					|| profileCtrl.user.cellphone
+			// 	// TODO colocar a localizacao
+			// 	// location: profileCtrl.newUserInfos.displayName
+			// }).then(function(){
+			// 	KeyboardService.hide();
+			// 	ToastService.showToast("Seu nome de usuário foi atualizado com sucesso!", 'long', 'bottom');
+			// 	// cordova.plugins.Keyboard.close();
+			// 	profileCtrl.resetNewVariables();
+			// 	profileCtrl.updateVariables();
+			// 	$scope.$digest();
+			// 	LoadingService.hideLoading();
+			// }, function(error){
+			// 	console.log("ProfileCtrl |Erro ao atualizar Display Name");
+			// 	ToastService.showToast("Erro ao atualizar seu nome de usuário!", 'long', 'bottom');
+			// 	profileCtrl.resetNewVariables();
+			// 	profileCtrl.updateVariables();
+			// 	LoadingService.hideLoading();
+			// });
 		}
 	};
 
@@ -118,28 +133,39 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 
 
 
-	   /* Funcoes auxiliares */
+   /* Funcoes auxiliares */
 
-	   
-	   	profileCtrl.uploadImageFirebase = function(imagePath){
-	   		var sourceDir = imagePath.substring(0, imagePath.lastIndexOf('/') + 1),
-   		        sourceFile = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.length),
-   		        fileName = new Date().valueOf() + sourceFile;
+   
+   	profileCtrl.uploadImageFirebase = function(imagePath){
+   		var sourceDir = imagePath.substring(0, imagePath.lastIndexOf('/') + 1),
+		        sourceFile = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.length),
+		        fileName = new Date().valueOf() + sourceFile;
 
 
-   		    $cordovaFile.readAsArrayBuffer(sourceDir, sourceFile)
-   		        .then(function(success) {
-   		            var blob = new Blob([success], {type: 'image/jpeg'});
-   		            ToastService.showToast("Consegui o blob", 'long', 'bottom');
-   		            //enviarFirebase(blob, nombreParaGuardar);
-   		        }, function (error) {
-   		            console.error(error);
-   		        });
-	   	}
+		    $cordovaFile.readAsArrayBuffer(sourceDir, sourceFile)
+		        .then(function(success) {
+		            var blob = new Blob([success], {type: 'image/jpeg'});
+		            ToastService.showToast("Consegui o blob", 'long', 'bottom');
+		            //enviarFirebase(blob, nombreParaGuardar);
+		        }, function (error) {
+		            console.error(error);
+		        });
+   	}
 
-	   	profileCtrl.uploadError = function(error){
-	   		console.log("Erro");
-	   	}
+   	profileCtrl.uploadError = function(error){
+   		console.log("Erro");
+   	}
+
+   	profileCtrl.resetNewVariables = function(){
+   		profileCtrl.newUserInfos = {
+   			displayName: '',
+   			photoURL: '',
+   			email: '',
+   			cellphone: '',
+   			location: ''
+   		};
+   	}
+
 
 
 }])

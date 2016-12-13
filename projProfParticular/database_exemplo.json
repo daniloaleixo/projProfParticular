@@ -3,6 +3,7 @@
 		"MqhNsmQB69XOR8uUjGKXtvEoP002": {
 			"displayName":"Bla",
 			"photoURL":"",
+			"email":"bla@hotmail.com",
 			"cellphone":"",
 			"locations":{
 				"main": {},
@@ -19,6 +20,7 @@
 		"8B1eYE4JZ8MYTpVjYBZFlhGJBO52": {
 			"displayName":"Danilo Aleixo",
 			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
+			"email":"bla@hotmail.com",
 			"cellphone":"",
 			"courses":{
 				"show":["Matemática","Física"],
@@ -60,6 +62,7 @@
 		"ZyEKlWn4tDh2esPRV8sGYGf77jq1": {
 			"displayName":"Bla",
 			"photoURL":"",
+			"email":"bla@hotmail.com",
 			"cellphone":"",
 			"courses":{
 				"show":["Geografia","História"],
