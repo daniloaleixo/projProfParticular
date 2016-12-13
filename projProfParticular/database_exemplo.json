@@ -1,10 +1,10 @@
 {
-	"alunos": {
+	"students": {
 		"MqhNsmQB69XOR8uUjGKXtvEoP002": {
 			"displayName":"Bla",
 			"photoURL":"",
 			"email":"bla@hotmail.com",
-			"cellphone":"",
+			"cellphone":"+55 11 97506 5056",
 			"locations":{
 				"main": {},
 				"zone":{},

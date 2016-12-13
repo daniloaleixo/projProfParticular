@@ -5,18 +5,37 @@ angular.module('app.services', [])
 		return $firebaseAuth();
 }])
 
-.factory('UserInfos',[ 'Auth',
-	function(Auth){
+.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService',
+	function(Auth, ToastService, LoadingService){
 		var servUser = {
 			displayName: '',
 			email: '',
-			photoURL: ''
+			photoURL: '',
+			cellphone: '',
+			location: ''
 		};
 
 		var updateUser = function(){
 			servUser.displayName = user.displayName || user.email;
 			servUser.photoURL = user.photoURL || 'img/null-avatar.png';
 			servUser.email = user.email || '';
+			if(servUser.cellphone.length == 0 && servUser.location.length == 0){
+				LoadingService.showLoadingSpinner();
+				//Let's get the cellphone and location at the database
+				firebase.database().ref()
+				.child('students').child(user.uid)
+						.once('value').then(function(snapshot){
+							servUser.cellphone = snapshot.val().cellphone || ''; 
+							servUser.location = snapshot.val().location || '';
+							LoadingService.hideLoading();
+						}, function(error){
+							ToastService
+							.showToast("Tive problemas para me conectar com o servidor", 
+												'long', 'bottom');
+							LoadingService.hideLoading();
+						})
+			}
+
 		}
 
 		return {
@@ -34,11 +53,7 @@ angular.module('app.services', [])
 			},
 			getUserInfos: function(){
 				updateUser();
-				return {
-					displayName: servUser.displayName ,
-					email: servUser.email,
-					photoURL: servUser.photoURL
-				}
+				return servUser;
 			}
 		}
 }])
