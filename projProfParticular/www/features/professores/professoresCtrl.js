@@ -22,32 +22,7 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	}
 
 	professoresCtrl.atualizaListaProfessores = function(){
-		LoadingService.showLoadingSpinner();
-		//get all professors
-		database.ref().child('professors').once('value').then(function(snapshot){
-
-			console.log(snapshot.val());
-			console.log("aqui");
-			Object.keys(snapshot.val()).forEach(function(professor){
-				console.log(professor);
-				console.log(snapshot.val()[professor]);
-				if(professor) professoresCtrl.professors.push(snapshot.val()[professor]);
-			})
-
-			LoadingService.hideLoading();
-
-			if(professoresCtrl.professors.length == 0) 
-				professoresCtrl.errorMessage = 'Desculpe não consegui encontrar nenhum professor'
-			else { 
-				professoresCtrl.errorMessage = '';
-				console.log("estou aqui");
-				ProfessoresList.updateProfessoresList(professoresCtrl.professors);
-			}
-
-		}, function(error){
-			professoresCtrl.errorMessage = error;
-			LoadingService.hideLoading();
-		});	
+		professoresCtrl.professors = ProfessoresList.all();
 	}
 
 	professoresCtrl.atualizaListaProfessores();
@@ -64,7 +39,7 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	};
 
 	professoresCtrl.showProfessorDetails = function(UID){
-		//console.log("ProfessoresCtrl| cliquei " + UID);
+		console.log("ProfessoresCtrl| cliquei " + UID);
 		$location.path('/side-menu21/professores/' + UID);
 	}
 

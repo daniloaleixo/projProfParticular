@@ -65,26 +65,48 @@ angular.module('app.services', [])
 		}
 }])
 
-.factory('ProfessoresList', [
-	function(){
+.factory('ProfessoresList', ['LoadingService','ToastService',
+	function(LoadingService, ToastService){
 		var ProfessoresList = this;
-		ProfessoresList.professores = [];
+		ProfessoresList.professors = [];
 
 		return {
 			all: function(){
-				return ProfessoresList.professores;
+				if(ProfessoresList.professors.length == 0) {
+					LoadingService.showLoadingSpinner();
+					//get all professors
+					firebase.database().ref().child('professors')
+						.once('value').then(function(snapshot){
+
+						Object.keys(snapshot.val()).forEach(function(professor){
+							if(professor) {
+								var temp = snapshot.val()[professor];
+								// Add UID to the hash
+								temp["UID"] = professor;
+								ProfessoresList.professors
+									.push(temp);
+							}
+						})
+						LoadingService.hideLoading();
+					}, function(error){
+						ToastService.showToast("Tive problemas para me conectar com o servidor", 
+											'long', 'bottom');
+						LoadingService.hideLoading();
+					});	
+				}
+				return ProfessoresList.professors;
 			},
 			updateProfessoresList: function(newProfessoresList){
-				ProfessoresList.professores = [];
+				ProfessoresList.professors = [];
 				newProfessoresList.forEach(function(professor){
-					if(professor) ProfessoresList.professores.push(professor);
+					if(professor) ProfessoresList.professors.push(professor);
 				})
 			},
 			getProfessorByUID: function(UID){
 
-				for(var i = 0; i < ProfessoresList.professores.length; i++){
-					if(UID.localeCompare(ProfessoresList.professores[i].UID) == 0) 
-						return ProfessoresList.professores[i];
+				for(var i = 0; i < ProfessoresList.professors.length; i++){
+					if(UID.localeCompare(ProfessoresList.professors[i].UID) == 0) 
+						return ProfessoresList.professors[i];
 				}
 				return null;
 			}
