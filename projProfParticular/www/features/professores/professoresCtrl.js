@@ -39,7 +39,7 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	};
 
 	professoresCtrl.showProfessorDetails = function(UID){
-		console.log("ProfessoresCtrl| cliquei " + UID);
+		// console.log("ProfessoresCtrl| cliquei " + UID);
 		$location.path('/side-menu21/professores/' + UID);
 	}
 

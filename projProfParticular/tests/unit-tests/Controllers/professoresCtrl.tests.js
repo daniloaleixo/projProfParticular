@@ -18,11 +18,11 @@ describe('ProfessoresCtrl', function(){
 
         locationMock = jasmine.createSpyObj('$location spy', ['path'])
 
-        loadingServiceMock = jasmine.createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
+        loadingServiceMock = jasmine
+            .createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
 
-        toastServiceMock = jasmine.createSpyObj('ToastService spy', ['showToast']);
-
-        professoresListMock = jasmine.createSpyObj('ProfessoresList spy', ['updateProfessoresList'])
+        professoresListMock = jasmine
+            .createSpyObj('ProfessoresList spy', ['all', 'updateProfessoresList'])
 
         ionicFilterBarMock = jasmine.createSpyObj('$ionicFilterBar spy', ['show'])
 
@@ -36,8 +36,7 @@ describe('ProfessoresCtrl', function(){
             LoadingService: loadingServiceMock,
             $ionicFilterBar: ionicFilterBarMock,
             ProfessoresList: professoresListMock,
-            $location: locationMock,
-            ToastService: toastServiceMock,
+            $location: locationMock
         });
 
     }))
@@ -50,51 +49,8 @@ describe('ProfessoresCtrl', function(){
 
     describe('Smoke test - ', function(){
     	it('should have started the controller', function(){
-            expect(professoresCtrl).not.toBe(null);
+            expect(professoresCtrl).not.toBe(null);                
     	});
-    });
-
-    describe('atualizaListaProfessores function - ', function(){
-        beforeEach(inject(function(){
-            professoresCtrl.atualizaListaProfessores();
-        }));
-
-    	it('should call the firebase database', function(){
-            expect(loadingServiceMock.showLoadingSpinner).toHaveBeenCalled();
-    	});
-    	describe('when connecting with firebase database', function(){
-    		it('if successful', function(){
-    			deferred = $q.defer();
-                    deferred.promise.then(function(){
-                        expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
-                    })
-    		})
-            it('if not successful', function(){
-                deferred = $q.defer();
-                    deferred.promise.catch(function(){
-                        expect(professoresCtrl.errorMessage.length).not.toBe(0);
-                        expect(loadingServiceMock.hideLoading).toHaveBeenCalled();
-                    })
-            })
-    		describe('when successful', function(){
-    			it('if there is professors at database', function(){
-                    deferred = $q.defer();
-                    deferred.promise.then(function(){
-                        expect(professoresCtrl.errorMessage).toBe('');
-                        expect(professoresListMock.updateProfessoresList)
-                        .toHaveBeenCalledWith(professoresCtrl.professores);
-                    })
-    			})
-    			it('if there is no professors at database', function(){
-    				deferred = $q.defer();
-                    deferred.promise.then(function(){
-                        professoresCtrl.professores = {};
-                        expect(professoresCtrl.errorMessage)
-                        .toBe('Desculpe não consegui encontrar nenhum professor');
-                    })
-    			})
-    		})
-    	})
     });
 
     describe('showFilterBar function -', function(){
