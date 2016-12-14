@@ -1,7 +1,51 @@
 <ion-view title="Aulas Agendadas" id="page3">
     <ion-content padding="true" class="has-header">
 
-    Aulas agendadas
+    <!-- Card do professor -->
+    <div class="list card mdl-shadow--2dp" ng-repeat='class in scheduledClassCtrl.myScheduledClasses'>
+
+        <span>
+
+        	<div class="item row">
+
+        		<div class="col col-40">
+        			<span class='mdl-layout-title' style="font-size:45px;">{{class.date.substring(0,5)}}</span>
+        			<span class='mdl-layout-title'>{{class.hour}}</span>
+	        	</div>
+
+	        	<div class="col mdl-card__supporting-text" >
+	        		<span ng-repeat='course in class.course'>
+	        			<span style="font-size:25px;">
+	        				{{course}}
+	        			</span>
+	        		</span>
+
+	        		<br>
+	        		<span style="font-size:18px;margin-top:5px;">
+        				Prof. {{class.professor.displayName}}
+        			</span>
+	        	</div>
+
+        	</div>    
+
+            <div class="item item-body row" style="padding:10px;">
+
+                <div class="col col-40">
+                    <img class='item-professor-avatar' src="{{class.professor.photoURL || 'img/null-avatar.png'}}" 
+                            style="margin-right:25px;">
+                </div>
+
+                <div class="col mdl-card__supporting-text" style="text-align:left;">
+                    location 
+                    <br>
+                    <span>
+                    	Descrição: {{class.description}}
+                    </span>
+                </div>  
+            </div>            
+        </span>
+
+    </div>
 
     </ion-content>
 </ion-view>

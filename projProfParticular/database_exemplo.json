@@ -213,7 +213,11 @@
 			"students":{
 				"MqhNsmQB69XOR8uUjGKXtvEoP002":"Bla"
 			},
-			"professor":"ZyEKlWn4tDh2esPRV8sGYGf77jq1",
+			"professor":{
+				"UID":"ZyEKlWn4tDh2esPRV8sGYGf77jq1",
+				"displayName":"Bla",
+				"photoURL":""
+			},
 			"date":"18/09/2016",
 			"hour":"18:00-19:00",
 			"location":{},
@@ -226,7 +230,11 @@
 			"students":{
 				"MqhNsmQB69XOR8uUjGKXtvEoP002":"Bla"
 			},
-			"professor":"8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
+			"professor":{
+				"UID":"8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
+				"displayName":"Danilo Aleixo",
+				"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg"
+			},
 			"date":"30/09/2016",
 			"hour":"17:00-19:00",
 			"location":{},

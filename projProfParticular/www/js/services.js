@@ -160,12 +160,33 @@ angular.module('app.services', [])
 
 .factory('MyScheduledClassesList', ['LoadingService','ToastService',
 	function(LoadingService, ToastService){
-		var myScheduledClassesList = this;
+		var MyScheduledClassesList = this;
 		MyScheduledClassesList.scheduledClasses = [];
 
 		return {
-			all: function(){
+			myScheduledClasses: function(uid){
 
+				if(MyScheduledClassesList.scheduledClasses.length == 0)
+				{
+					LoadingService.showLoadingSpinner();
+					//Search for all the scheduled classes that starts with the user uid
+					firebase.database().ref().child('scheduledClasses').orderByKey()
+					.startAt(uid).once('value').then(function(snapshot){
+
+						Object.keys(snapshot.val()).forEach(function(scheduledClass){
+							// Go through each scheduledClass in the hash
+							MyScheduledClassesList.scheduledClasses
+								.push(snapshot.val()[scheduledClass])
+						});
+		
+						LoadingService.hideLoading();
+					}, function(error){
+						ToastService.showToast("Tive problemas para me conectar com o servidor", 
+											'long', 'bottom');
+						LoadingService.hideLoading();
+					});	
+				}
+				return MyScheduledClassesList.scheduledClasses;
 			}
 		}
 }])
