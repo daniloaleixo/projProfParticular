@@ -107,7 +107,7 @@ angular.module('app.services', [])
 								ProfessoresList.professors
 									.push(temp);
 							}
-						})
+						});
 						LoadingService.hideLoading();
 					}, function(error){
 						ToastService.showToast("Tive problemas para me conectar com o servidor", 
@@ -158,35 +158,57 @@ angular.module('app.services', [])
 
 
 
-.factory('MyScheduledClassesList', ['LoadingService','ToastService',
-	function(LoadingService, ToastService){
+.factory('MyScheduledClassesList', ['LoadingService','ToastService', '$q', '$timeout',
+	function(LoadingService, ToastService, $q, $timeout){
 		var MyScheduledClassesList = this;
 		MyScheduledClassesList.scheduledClasses = [];
+
+		var updateClasses = function(uid){
+			if(MyScheduledClassesList.scheduledClasses.length == 0)
+			{
+				LoadingService.showLoadingSpinner();
+				//Search for all the scheduled classes that starts with the user uid
+				firebase.database().ref().child('scheduledClasses').orderByKey()
+				.startAt(uid).once('value').then(function(snapshot){
+
+					Object.keys(snapshot.val()).forEach(function(scheduledClass){
+						// Go through each scheduledClass in the hash
+						MyScheduledClassesList.scheduledClasses
+							.push(snapshot.val()[scheduledClass])
+					});
+					sortByDate();
+					LoadingService.hideLoading();
+				}, function(error){
+					ToastService.showToast("Tive problemas para me conectar com o servidor", 
+										'long', 'bottom');
+					LoadingService.hideLoading();
+				});	
+			}
+
+			return MyScheduledClassesList.scheduledClasses;
+		}
+
+		var sortByDate = function(){
+			//Transform in dateTime object
+			for(var i = 0; i < MyScheduledClassesList.scheduledClasses.length; i++){
+				MyScheduledClassesList.scheduledClasses[i].hour = 
+					new Date(MyScheduledClassesList.scheduledClasses[i].hour);
+				console.log(MyScheduledClassesList.scheduledClasses[i].hour);
+			}
+			//Sort by day
+			MyScheduledClassesList.scheduledClasses.sort(function(a,b) {
+			    return a.hour - b.hour;
+			});
+		}
 
 		return {
 			myScheduledClasses: function(uid){
 
-				if(MyScheduledClassesList.scheduledClasses.length == 0)
-				{
-					LoadingService.showLoadingSpinner();
-					//Search for all the scheduled classes that starts with the user uid
-					firebase.database().ref().child('scheduledClasses').orderByKey()
-					.startAt(uid).once('value').then(function(snapshot){
-
-						Object.keys(snapshot.val()).forEach(function(scheduledClass){
-							// Go through each scheduledClass in the hash
-							MyScheduledClassesList.scheduledClasses
-								.push(snapshot.val()[scheduledClass])
-						});
-		
-						LoadingService.hideLoading();
-					}, function(error){
-						ToastService.showToast("Tive problemas para me conectar com o servidor", 
-											'long', 'bottom');
-						LoadingService.hideLoading();
-					});	
-				}
-				return MyScheduledClassesList.scheduledClasses;
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(updateClasses(uid));
+				}, 2000);
+				return deferred.promise;
 			}
 		}
 }])

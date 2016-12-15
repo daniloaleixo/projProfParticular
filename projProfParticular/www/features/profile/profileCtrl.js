@@ -42,6 +42,11 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 			console.log(result);
 			profileCtrl.user = result;
 			LoadingService.hideLoading();
+		}, function(error){
+			ToastService.showToast("Desculpe não consegui obter as informações do usuário", 
+								'long', 'bottom');
+			console.log(error);
+			LoadingService.hideLoading();
 		});
 		// profileCtrl.user = UserInfos.getUserInfos();
 	}

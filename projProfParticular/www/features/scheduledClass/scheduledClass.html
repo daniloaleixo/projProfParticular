@@ -9,8 +9,10 @@
         	<div class="item row">
 
         		<div class="col col-40">
-        			<span class='mdl-layout-title' style="font-size:45px;">{{class.date.substring(0,5)}}</span>
-        			<span class='mdl-layout-title'>{{class.hour}}</span>
+        			<span class='mdl-layout-title' style="font-size:45px;">
+                        {{class.hour.getUTCDate()}}/{{class.hour.getUTCMonth() + 1}}
+                    </span>
+        			<span class='mdl-layout-title'>{{class.duration}} minutos</span>
 	        	</div>
 
 	        	<div class="col mdl-card__supporting-text" >

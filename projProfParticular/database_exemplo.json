@@ -218,8 +218,8 @@
 				"displayName":"Bla",
 				"photoURL":""
 			},
-			"date":"18/09/2016",
-			"hour":"18:00-19:00",
+			"hour":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
+			"duration":"120",
 			"location":{},
 			"course":{
 				"2-7":"História"
@@ -235,8 +235,8 @@
 				"displayName":"Danilo Aleixo",
 				"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg"
 			},
-			"date":"30/09/2016",
-			"hour":"17:00-19:00",
+			"hour":"Mon Sep 9 2016 19:00:00 GMT-0300 (BRT)",
+			"duration":"60",
 			"location":{},
 			"course":{
 				"1-2":"Física"

@@ -10,10 +10,23 @@ function ($scope, $stateParams, MyScheduledClassesList, LoadingService) {
 
 
 	scheduledClassCtrl.getScheduledClasses = function(){
-		scheduledClassCtrl.myScheduledClasses = MyScheduledClassesList.myScheduledClasses(user.uid);
+		LoadingService.showLoadingSpinner();
+		MyScheduledClassesList.myScheduledClasses(user.uid).then(function(result){
+			scheduledClassCtrl.myScheduledClasses = result;
+			LoadingService.hideLoading();
+		}, function(error){
+			ToastService.showToast("Desculpe não consegui obter as próximas aulas", 
+								'long', 'bottom');
+			console.log(error);
+			LoadingService.hideLoading();
+		});
 	}
 
-	scheduledClassCtrl.getScheduledClasses();
+	scheduledClassCtrl.getNextClasses = function(){
+		scheduledClassCtrl.getScheduledClasses();
+	}
+
+	scheduledClassCtrl.getNextClasses();
 
 
 }])
