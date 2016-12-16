@@ -36,6 +36,15 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 		description: ''
 	};
 
+	requestClassCtrl.requestClass = function(){
+		console.log("requestClass function");
+
+		if(requestClassCtrl.request.location.search("Brazil") == - 1 ){
+			ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
+		}
+
+
+	}
 
 
 	// I have to bring courses from server
@@ -83,14 +92,6 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 
 	}
 
-	requestClassCtrl.requestClass = function(){
-		console.log("function requestClass");
-		console.log(requestClassCtrl.request.location);
-	}
-
-	requestClassCtrl.yourLocationChangeCallback = function(){
-		console.log(requestClassCtrl.request.location);
-	}
 
 	requestClassCtrl.getReferenceFromLevel = function(level){
 		if(level == 'fundamental') return 'level1';
@@ -98,6 +99,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 		if(level == 'superior') return 'level3';	
 	}
 
+	//Show a popup with autocomplete in the address
 	requestClassCtrl.showPopup = function() {
 	  $scope.data = {};
 
@@ -124,12 +126,4 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	  });
 	 };
 
-
-
-	// "<ion-google-place ng-model='location'/>"
-
-	requestClassCtrl.showMaps = function(){
-		requestClassCtrl.showMapsHelp = !requestClassCtrl.showMapsHelp;
-	}
-	
-}])
+}]);
