@@ -12,14 +12,18 @@ angular.module('app.services', [])
 			email: '',
 			photoURL: '',
 			cellphone: '',
-			location: ''
+			location: {
+				address : '',
+				number: '',
+				complement: ''
+			}
 		};
 
 		var updateUser = function(){
 			servUser.displayName = user.displayName || user.email;
 			servUser.photoURL = user.photoURL || 'img/null-avatar.png';
 			servUser.email = user.email || '';
-			if(servUser.cellphone.length == 0 && servUser.location.length == 0){
+			if(servUser.cellphone.length == 0 && servUser.location.address.length == 0){
 				// LoadingService.showLoadingSpinner();
 				//Let's get the cellphone and location at the database
 
@@ -27,7 +31,7 @@ angular.module('app.services', [])
 				.child('students').child(user.uid)
 						.once('value').then(function(snapshot){
 							servUser.cellphone = snapshot.val().cellphone || ''; 
-							servUser.location = snapshot.val().location || '';
+							servUser.location = snapshot.val().locations.main || '';
 							// LoadingService.hideLoading();
 						}, function(error){
 							ToastService

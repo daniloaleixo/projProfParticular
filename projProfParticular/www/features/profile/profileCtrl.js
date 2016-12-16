@@ -24,7 +24,11 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 		photoURL: '',
 		email: '',
 		cellphone: '',
-		location: ''
+		location: {
+			address : '',
+			number: '',
+			complement: ''
+		}
 	};
 
 	profileCtrl.newUserInfos = {
@@ -32,7 +36,11 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 		photoURL: '',
 		email: '',
 		cellphone: '',
-		location: ''
+		location: {
+			address : '',
+			number: '',
+			complement: ''
+		}
 	};
 
 

@@ -37,11 +37,23 @@
         </label>
         <label class="item item-input item-stacked-label">
             <span class="input-label">Telefone</span ng-model='profileCtrl.newUserInfos.cellphone'>
-            <input type="text" placeholder="{{profileCtrl.user.cellphone || '+55 11 98765 5675'}}">
+            <input type="text" placeholder="{{profileCtrl.user.cellphone}}">
         </label>
         <label class="item item-input item-stacked-label">
-            <span class="input-label">Endereço</span ng-model='profileCtrl.newUserInfos.location'>
-            <input type="text" placeholder="Av. Bla">
+            <span class="input-label">Endereço</span ng-model='profileCtrl.newUserInfos.location.address'>
+            <input type="text" placeholder="{{profileCtrl.user.location.address}}">
+        </label>
+        <label class="item item-input item-stacked-label row">
+            <div class='col'>
+                <span class="input-label">Número
+                    </span ng-model='profileCtrl.newUserInfos.location.number'>
+                <input type="text" placeholder="{{profileCtrl.user.location.number}}">
+            </div>
+            <div class='col col-75'>
+                <span class="input-label">Complemento
+                    </span ng-model='profileCtrl.newUserInfos.location.complement'>
+                <input type="text" placeholder="{{profileCtrl.user.location.complement}}">
+            </div>
         </label>
 
 
