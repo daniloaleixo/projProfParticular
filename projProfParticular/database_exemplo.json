@@ -6,7 +6,11 @@
 			"email":"bla@hotmail.com",
 			"cellphone":"+55 11 97506 5056",
 			"locations":{
-				"main": {},
+				"main": {
+					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+					"number":"180",
+					"complement":"142A"
+				},
 				"zone":{},
 				"others" : {}
 			},
@@ -35,7 +39,11 @@
 				"level3":{}
 			},
 			"locations":{
-				"main": {},
+				"main": {
+					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+					"number":"1800",
+					"complement":"165A"
+				},
 				"zone":{},
 				"others" : {}
 			},
@@ -77,7 +85,11 @@
 				"level3":{}
 			},
 			"locations":{
-				"main": {},
+				"main": {
+					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+					"number":"180",
+					"complement":"142A"
+				},
 				"zone":{},
 				"others" : {}
 			},
@@ -223,7 +235,11 @@
 			},
 			"hour":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
 			"duration":"120",
-			"location":{},
+			"location":{
+				"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+				"number":"180",
+				"complement":"142A"
+			},
 			"course":{
 				"2-7":"História"
 			},
@@ -243,7 +259,11 @@
 			},
 			"hour":"Mon Sep 9 2016 19:00:00 GMT-0300 (BRT)",
 			"duration":"60",
-			"location":{},
+			"location":{
+				"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+				"number":"180",
+				"complement":"142A"
+			},
 			"course":{
 				"1-2":"Física"
 			},
@@ -261,7 +281,11 @@
 			},
 			"hour":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
 			"duration":"120",
-			"location":{},
+			"location":{
+				"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+				"number":"180",
+				"complement":"142A"
+			},
 			"course":{
 				"2-7":"História"
 			},
