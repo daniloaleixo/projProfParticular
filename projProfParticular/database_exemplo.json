@@ -211,7 +211,10 @@
 	"scheduledClasses":{
 		"MqhNsmQB69XOR8uUjGKXtvEoP002-ZyEKlWn4tDh2esPRV8sGYGf77jq1":{
 			"students":{
-				"MqhNsmQB69XOR8uUjGKXtvEoP002":"Bla"
+				"MqhNsmQB69XOR8uUjGKXtvEoP002":{
+					"displayName":"Bla",
+					"photoURL":""
+				}
 			},
 			"professor":{
 				"UID":"ZyEKlWn4tDh2esPRV8sGYGf77jq1",
@@ -228,7 +231,10 @@
 		},
 		"MqhNsmQB69XOR8uUjGKXtvEoP002-8B1eYE4JZ8MYTpVjYBZFlhGJBO52":{
 			"students":{
-				"MqhNsmQB69XOR8uUjGKXtvEoP002":"Bla"
+				"MqhNsmQB69XOR8uUjGKXtvEoP002":{
+					"displayName":"Bla",
+					"photoURL":""
+				}
 			},
 			"professor":{
 				"UID":"8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
@@ -242,6 +248,29 @@
 				"1-2":"Física"
 			},
 			"description":"Preciso aprender física básica"
+		}
+	},
+	"requestForClasses":{
+		"MqhNsmQB69XOR8uUjGKXtvEoP002-ZyEKlWn4tDh2esPRV8sGYGf77jq1":{
+			"status": "Pendente",
+			"students":{
+				"MqNhsmQB69XOR8uUjGKXtvEoP002":{
+					"displayName":"Bla",
+					"photoURL":""
+				}
+			},
+			"professor":{
+				"UID":"ZyEKlWn4tDh2esPRV8sGYGf77jq1",
+				"displayName":"Bla",
+				"photoURL":""
+			},
+			"hour":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
+			"duration":"120",
+			"location":{},
+			"course":{
+				"2-7":"História"
+			},
+			"description":"Quero aprender sobre história do Brasil"
 		}
 	}
 }
