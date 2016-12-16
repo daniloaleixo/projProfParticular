@@ -1,0 +1,76 @@
+<ion-view title="Escolha o que quer aprender" id="page1">
+    <ion-content padding="true" class="has-header">
+    	<div style="margin-top: 20px;"></div>
+
+    	<!-- Form para pesquisar professors -->
+    	<form ng-submit='requestClassCtrl.requestClass()'>
+
+    			<div class='mdl-list'>
+            <!-- Nivel -->
+    				<ion-item class='item item-icon-right' ng-click="requestClassCtrl.showChoicesLevel = !requestClassCtrl.showChoicesLevel">
+    				    {{requestClassCtrl.level || 'Escolha seu nível:' }}
+    					<i class="icon icon-right ion-plus-round" ng-hide='requestClassCtrl.showChoicesLevel'></i>
+    					<i class="icon icon-right ion-minus-round" ng-show='requestClassCtrl.showChoicesLevel'></i>
+    				</ion-item>
+    				<ion-list ng-show='requestClassCtrl.showChoicesLevel'>
+    				  <ion-radio ng-model="requestClassCtrl.level" ng-value="'Fundamental'">Fundamental</ion-radio>
+    				  <ion-radio ng-model="requestClassCtrl.level" ng-value="'Médio'">Médio</ion-radio>
+    				  <ion-radio ng-model="requestClassCtrl.level" ng-value="'Superior'">Superior</ion-radio>
+    				</ion-list>
+    			</div>
+
+          <!-- Materia -->
+    			<div class='mdl-list'>
+    				<ion-item class='item item-icon-right' ng-click="requestClassCtrl.showCoursesChoices = !requestClassCtrl.showCoursesChoices">
+    				    {{ requestClassCtrl.course || 'Escolha a matéria:' }}
+    					<i class="icon icon-right ion-plus-round" ng-hide='requestClassCtrl.showCoursesChoices' 
+    						ng-click='requestClassCtrl.getCourses(); '></i>
+    					<i class="icon icon-right ion-minus-round" ng-show='requestClassCtrl.showCoursesChoices'></i>
+    				</ion-item>
+    				<ion-list ng-show='requestClassCtrl.showCoursesChoices' ng-repeat='materia in requestClassCtrl.courses'>
+    				  <ion-radio ng-model="requestClassCtrl.course" ng-value="'{{materia.name}}'">
+                {{materia.name}}
+              </ion-radio>
+    				</ion-list>
+    			</div>
+
+          <div class="mdl-card__title" style="padding-top:20px;">
+            <h2 class="mdl-card__title-text">Informações</h2>
+          </div>
+
+          <label class="item item-input">
+              Dia:
+              <input style="margin-left:15px;" type='text' placeholder="dd/mm/aaaa" 
+                    ng-model='requestClassCtrl.request.day'>
+          </label>
+          <label class="item item-input">
+              Hora:
+              <input style="margin-left:15px;" type='text' placeholder="hh:mm" 
+                    ng-model='requestClassCtrl.request.hour'>
+          </label>
+          <label class="item item-input">
+            Duração:
+            <input type="text" placeholder="Escolha a duração" 
+                  ng-model='requestClassCtrl.request.duration'>
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Digite a localização" 
+                    ng-model='requestClassCtrl.request.location'>
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Coloque uma breve descrição da materia que deseja" 
+                    ng-model='requestClassCtrl.request.description'>
+          </label>
+
+
+    			<div>
+    				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 
+    		                        button button-block">
+    		        <i class='icon ion-search'></i>  
+    		          Marcar aula
+    		        </button>
+    			</div>
+    	</form>
+
+    </ion-content>
+</ion-view>
