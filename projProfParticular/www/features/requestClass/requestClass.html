@@ -62,6 +62,9 @@
                     ng-model='requestClassCtrl.request.description'>
           </label>
 
+          <ion-google-place placeholder="Your address" ng-model="requestClassCtrl.request.location" location-changed="requestClassCtrl.yourLocationChangeCallback()"/>
+
+
 
     			<div>
     				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 

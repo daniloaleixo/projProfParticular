@@ -81,6 +81,10 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 		console.log("function requestClass");
 	}
 
+	requestClassCtrl.yourLocationChangeCallback = function(){
+		console.log(requestClassCtrl.request.location);
+	}
+
 	requestClassCtrl.getReferenceFromLevel = function(level){
 		if(level == 'fundamental') return 'level1';
 		if(level == 'médio') return'level2';
