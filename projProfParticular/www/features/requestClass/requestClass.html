@@ -34,6 +34,11 @@
     				</ion-list>
     			</div>
 
+          <label class="item item-input">
+            <input type="text" placeholder="Coloque uma breve descrição da materia que deseja" 
+                    ng-model='requestClassCtrl.request.description'>
+          </label>
+
           <div class="mdl-card__title" style="padding-top:20px;">
             <h2 class="mdl-card__title-text">Informações</h2>
           </div>
@@ -53,16 +58,32 @@
             <input type="text" placeholder="Escolha a duração" 
                   ng-model='requestClassCtrl.request.duration'>
           </label>
+
+          <!-- Endereço -->
+<!--           <div ng-show='requestClassCtrl.showMapsHelp'>
+ -->           <!--  <ion-google-place placeholder="Your address" ng-model="requestClassCtrl.request.location" location-changed="requestClassCtrl.yourLocationChangeCallback()"/> -->
+<!--           </div>
+ -->
+          <button class='button button-block button-positive'
+                ng-click='requestClassCtrl.showPopup()'>
+            Aqui
+          </button>
+
+
+
           <label class="item item-input">
-            <input type="text" placeholder="Digite a localização" 
-                    ng-model='requestClassCtrl.request.location'>
+            <input type="text" placeholder="Endereço" 
+                  ng-model='requestClassCtrl.request.location'>
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Coloque uma breve descrição da materia que deseja" 
-                    ng-model='requestClassCtrl.request.description'>
+            <input type="number" placeholder="Número" 
+                  ng-model='requestClassCtrl.request.location_number'>
+          </label>
+          <label class="item item-input">
+            <input type="number" placeholder="Complemento" 
+                  ng-model='requestClassCtrl.request.location_compl'>
           </label>
 
-          <ion-google-place placeholder="Your address" ng-model="requestClassCtrl.request.location" location-changed="requestClassCtrl.yourLocationChangeCallback()"/>
 
 
 

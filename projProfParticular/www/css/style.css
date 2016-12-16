@@ -198,3 +198,18 @@ ul.rating li i {
   font-size:42px;
 }
 
+
+
+
+
+.popup-head{
+  height: 60px !important;
+}
+
+.popup-body{
+  font-size:24px !important;
+  width: 100% !important;
+  height: 300px !important;
+}
+
+

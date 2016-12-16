@@ -1,10 +1,12 @@
 angular.module('app.controllers')
-.controller('RequestClassCtrl', ['$scope', '$stateParams', 'LoadingService', 'ToastService', 'ProfessoresList','$location', 
+.controller('RequestClassCtrl', ['$scope', '$stateParams', 'LoadingService', 
+	'ToastService', 'ProfessoresList','$location', '$ionicPopup',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $location) {
+function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, 
+	$location, $ionicPopup) {
 	var requestClassCtrl = this;
 
 	var database = firebase.database();
@@ -20,6 +22,8 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 	requestClassCtrl.errorMessage = '';
 	requestClassCtrl.filterBarInstance;
 
+	requestClassCtrl.showMapsHelp = false;
+
 	requestClassCtrl.request = {
 		level: 0,
 		course: '',
@@ -27,6 +31,8 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 		hour: '',
 		duration: '',
 		location: '',
+		location_number: '',
+		location_compl: '',
 		description: ''
 	};
 
@@ -79,6 +85,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 
 	requestClassCtrl.requestClass = function(){
 		console.log("function requestClass");
+		console.log(requestClassCtrl.request.location);
 	}
 
 	requestClassCtrl.yourLocationChangeCallback = function(){
@@ -89,6 +96,40 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, $
 		if(level == 'fundamental') return 'level1';
 		if(level == 'médio') return'level2';
 		if(level == 'superior') return 'level3';	
+	}
+
+	requestClassCtrl.showPopup = function() {
+	  $scope.data = {};
+
+	  // An elaborate, custom popup
+	  var myPopup = $ionicPopup.show({
+	    template: "<ion-google-place ng-model='data.location'>",
+	    title: 'Digite o endereço',
+	    scope: $scope,
+	    buttons: [
+	      { text: 'Cancel' },
+	      {
+	        text: '<b>Save</b>',
+	        type: 'button-positive',
+	        onTap: function(e) {
+	          return $scope.data.location;	      
+	        }
+	      }
+	    ]
+	  });
+
+	  myPopup.then(function(res) {
+	    console.log('Tapped!', res);
+	    requestClassCtrl.request.location = res;
+	  });
+	 };
+
+
+
+	// "<ion-google-place ng-model='location'/>"
+
+	requestClassCtrl.showMaps = function(){
+		requestClassCtrl.showMapsHelp = !requestClassCtrl.showMapsHelp;
 	}
 	
 }])
