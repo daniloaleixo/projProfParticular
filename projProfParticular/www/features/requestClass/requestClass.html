@@ -27,9 +27,9 @@
     						ng-click='requestClassCtrl.getCourses(); '></i>
     					<i class="icon icon-right ion-minus-round" ng-show='requestClassCtrl.showCoursesChoices'></i>
     				</ion-item>
-    				<ion-list ng-show='requestClassCtrl.showCoursesChoices' ng-repeat='materia in requestClassCtrl.courses'>
-    				  <ion-radio ng-model="requestClassCtrl.course" ng-value="'{{materia.name}}'">
-                {{materia.name}}
+    				<ion-list ng-show='requestClassCtrl.showCoursesChoices' ng-repeat='course in requestClassCtrl.courses'>
+    				  <ion-radio ng-model="requestClassCtrl.course" ng-value="'{{course}}'">
+                {{course}}
               </ion-radio>
     				</ion-list>
     			</div>

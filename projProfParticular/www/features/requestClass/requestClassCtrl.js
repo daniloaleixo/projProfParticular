@@ -69,13 +69,12 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 			refNivel = requestClassCtrl.getReferenceFromLevel(requestClassCtrl.level.toLowerCase());
 
 			requestClassCtrl.courses = requestClassCtrl.allCourses[refNivel]['coursesList'];
-			console.log(requestClassCtrl.courses);
 
+			// For showing in the screen when there's no course
+			if(requestClassCtrl.courses.length == 0)
+				requestClassCtrl.course = 'Desculpe, mas não temos oferecimento';
 
 			LoadingService.hideLoading();
-			$scope.$apply();
-
-
 		} 
 		//If the user had not chosen a level yet
 		else {
