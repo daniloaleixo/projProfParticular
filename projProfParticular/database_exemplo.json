@@ -14,8 +14,6 @@
 				"zone":{},
 				"others" : {}
 			},
-			"history": {},
-			"scheduled": {},
 			"favorites":{}
 		}
 	},
@@ -26,6 +24,7 @@
 			"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg",
 			"email":"bla@hotmail.com",
 			"cellphone":"",
+			"professorLevel":"1",
 			"courses":{
 				"show":["Matemática","Física"],
 				"level1":{
@@ -64,14 +63,14 @@
 				"knowledge":5,
 				"sympathy":5
 			},
-			"disponibility":{},
-			"scheduled":{}
+			"disponibility":{}
 		},
 		"ZyEKlWn4tDh2esPRV8sGYGf77jq1": {
 			"displayName":"Bla",
 			"photoURL":"",
 			"email":"bla@hotmail.com",
 			"cellphone":"",
+			"professorLevel":"1",
 			"courses":{
 				"show":["Geografia","História"],
 				"level1":{
@@ -110,8 +109,7 @@
 				"knowledge":5,
 				"sympathy":5
 			},
-			"disponibility":{},
-			"scheduled":{}
+			"disponibility":{}
 		}
 	},
 
@@ -271,7 +269,7 @@
 		}
 	},
 	"requestForClasses":{
-		"MqhNsmQB69XOR8uUjGKXtvEoP002-ZyEKlWn4tDh2esPRV8sGYGf77jq1":{
+		"MqhNsmQB69XOR8uUjGKXtvEoP002":{
 			"status": "Pendente",
 			"students":{
 				"MqNhsmQB69XOR8uUjGKXtvEoP002":{
