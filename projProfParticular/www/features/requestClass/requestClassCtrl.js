@@ -1,17 +1,18 @@
 angular.module('app.controllers')
 .controller('RequestClassCtrl', ['$scope', '$stateParams', 'LoadingService', 
-	'ToastService', 'ProfessoresList','$location', '$ionicPopup',
+	'ToastService', 'ProfessoresList','$location', '$ionicPopup', 'CoursesOfferedList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, 
-	$location, $ionicPopup) {
+	$location, $ionicPopup, CoursesOfferedList) {
 	var requestClassCtrl = this;
 
 	var database = firebase.database();
 
 	requestClassCtrl.courses = new Array();
+	requestClassCtrl.allCourses = {};
 
 	requestClassCtrl.showChoicesLevel = true;
 	requestClassCtrl.level = '';
@@ -21,8 +22,6 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 
 	requestClassCtrl.errorMessage = '';
 	requestClassCtrl.filterBarInstance;
-
-	requestClassCtrl.showMapsHelp = false;
 
 	requestClassCtrl.request = {
 		level: 0,
@@ -36,14 +35,22 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 		description: ''
 	};
 
+	//Get the list of courses
+	requestClassCtrl.updateCoursesList = function(){
+		LoadingService.showLoadingSpinner();
+		requestClassCtrl.allCourses = CoursesOfferedList.all();
+		LoadingService.hideLoading();
+	}
+	requestClassCtrl.updateCoursesList();
+
+	// TODO 
+	// Upload the request to server
 	requestClassCtrl.requestClass = function(){
 		console.log("requestClass function");
 
 		if(requestClassCtrl.request.location.search("Brazil") == - 1 ){
 			ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
 		}
-
-
 	}
 
 
@@ -61,27 +68,14 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 			//get the path to which level I'll search
 			refNivel = requestClassCtrl.getReferenceFromLevel(requestClassCtrl.level.toLowerCase());
 
-			// console.log("RefNivel " + refNivel);
+			requestClassCtrl.courses = requestClassCtrl.allCourses[refNivel]['coursesList'];
+			console.log(requestClassCtrl.courses);
 
-			//get all the courses from the leve selected
-			database.ref('/courses/' + refNivel).once('value').then(function(snapshot){
-				snapshot.forEach(function(childSnapshot){
-					//Add courses to my vector of courses
-				
-					requestClassCtrl.courses.push({
-						"key": childSnapshot.key,
-						"name": childSnapshot.val().name
-					});
-				});
-				//Refresh pages so the user can view the couses
-				requestClassCtrl.courses.sort();
-				$scope.$digest();
-				LoadingService.hideLoading();
 
-			}, function(error){
-				ToastService.showToast("Desculpe não consegui encontrar matérias", 'long', 'bottom');
-				requestClassCtrl.showCoursesChoices = false;	
-			});
+			LoadingService.hideLoading();
+			$scope.$apply();
+
+
 		} 
 		//If the user had not chosen a level yet
 		else {
