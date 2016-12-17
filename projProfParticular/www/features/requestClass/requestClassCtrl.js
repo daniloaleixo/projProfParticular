@@ -48,9 +48,9 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	requestClassCtrl.requestClass = function(){
 		console.log("requestClass function");
 
-		if(requestClassCtrl.request.location.search("Brazil") == - 1 ){
-			ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
-		}
+		// if(requestClassCtrl.request.location.search("Brazil") == - 1 ){
+		// 	ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
+		// }
 	}
 
 
