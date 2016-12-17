@@ -108,8 +108,8 @@ angular.module('app.services', [])
 }])
 
 
-.factory('MyScheduledClassesList', ['LoadingService','ToastService', '$q', '$timeout',
-	function(LoadingService, ToastService, $q, $timeout){
+.factory('MyScheduledClassesList', ['LoadingService','ToastService', 
+	function(LoadingService, ToastService){
 		var MyScheduledClassesList = this;
 		MyScheduledClassesList.scheduledClasses = [];
 
@@ -164,8 +164,8 @@ angular.module('app.services', [])
 		}
 }])
 
-.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService', '$q', '$timeout',
-	function(Auth, ToastService, LoadingService, $q, $timeout){
+.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService',
+	function(Auth, ToastService, LoadingService){
 		var servUser = {
 			displayName: '',
 			email: '',
@@ -229,3 +229,67 @@ angular.module('app.services', [])
 }])
 
 
+.factory('CoursesOfferedList', ['LoadingService','ToastService',
+	function(LoadingService, ToastService){
+		var CoursesOfferedList = this;
+		CoursesOfferedList.offeredCourses = {};
+
+		var updateCourses = function(){
+			if(Object.keys(CoursesOfferedList.offeredCourses).length == 0)
+			{
+				console.log("Chamei o servico de CoursesOfferedList");
+				LoadingService.showLoadingSpinner();
+
+				//Go through each level and get the list of courses offered 
+				// only if there's professors at this course
+				firebase.database().ref().child('courses')
+					.once('value').then(function(snapshot){
+						CoursesOfferedList.offeredCourses = snapshot.val();
+
+						Object.keys(snapshot.val()).forEach(function(level){
+							coursesOfferedForThisLevel = [];
+
+							// Go through each level
+							Object.keys(snapshot.val()[level]).forEach(function(course){
+								var name = '';
+								var professors = [];
+
+								// Go through the childs of the couse, and if the course has 
+								// professors then we add it to the list of courses for the level
+								Object.keys(snapshot.val()[level][course])
+									.forEach(function(childs){
+									if(childs == 'professors')
+										professors = snapshot.val()[level][course][childs];
+									else
+										name = snapshot.val()[level][course][childs];
+								});
+
+								if(professors.length != 0)
+									coursesOfferedForThisLevel.push(name);
+							});
+
+							//Sort and then add the list of courses to the object
+							coursesOfferedForThisLevel.sort();
+							CoursesOfferedList.offeredCourses[level]['coursesList']
+										= coursesOfferedForThisLevel;
+						});
+
+					LoadingService.hideLoading();
+
+				}, function(error){
+					ToastService
+					.showToast("Tive problemas para me conectar com o servidor", 
+										'long', 'bottom');
+					LoadingService.hideLoading();
+				});
+				
+			}
+			return CoursesOfferedList.offeredCourses;
+		}
+
+		return {
+			all: function(){
+				return updateCourses();
+			}
+		}
+}])

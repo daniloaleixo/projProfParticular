@@ -1,12 +1,12 @@
 angular.module('app.controllers')
 .controller('MenuCtrl', ['$scope', '$stateParams', '$location', 'UserInfos',
 							'$ionicSideMenuDelegate', 'ToastService', 
-							'MyScheduledClassesList', 'ProfessoresList', 
+							'MyScheduledClassesList', 'ProfessoresList', 'CoursesOfferedList',
 // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate, 
-	ToastService, MyScheduledClassesList, ProfessoresList) {
+	ToastService, MyScheduledClassesList, ProfessoresList, CoursesOfferedList) {
 	var menuCtrl = this;
 
 	// menuCtrl.user = {
@@ -23,6 +23,7 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 		UserInfos.getUserInfos();
 		MyScheduledClassesList.myScheduledClasses(user.uid);
 		ProfessoresList.all();
+		CoursesOfferedList.all();
 	}
 
 	menuCtrl.updateVariables();
