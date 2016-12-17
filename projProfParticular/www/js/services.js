@@ -5,68 +5,6 @@ angular.module('app.services', [])
 		return $firebaseAuth();
 }])
 
-.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService', '$q', '$timeout',
-	function(Auth, ToastService, LoadingService, $q, $timeout){
-		var servUser = {
-			displayName: '',
-			email: '',
-			photoURL: '',
-			cellphone: '',
-			location: {
-				address : '',
-				number: '',
-				complement: ''
-			}
-		};
-
-		var updateUser = function(){
-			servUser.displayName = user.displayName || user.email;
-			servUser.photoURL = user.photoURL || 'img/null-avatar.png';
-			servUser.email = user.email || '';
-			if(servUser.cellphone.length == 0 && servUser.location.address.length == 0){
-				// LoadingService.showLoadingSpinner();
-				//Let's get the cellphone and location at the database
-
-				firebase.database().ref()
-				.child('students').child(user.uid)
-						.once('value').then(function(snapshot){
-							servUser.cellphone = snapshot.val().cellphone || ''; 
-							servUser.location = snapshot.val().locations.main || '';
-							// LoadingService.hideLoading();
-						}, function(error){
-							ToastService
-							.showToast("Tive problemas para me conectar com o servidor", 
-												'long', 'bottom');
-							// LoadingService.hideLoading();
-						})
-			}
-			return servUser;
-
-		}
-
-		return {
-			getDisplayName: function(){
-				updateUser();
-				return servUser.displayName;
-			},
-			getPhotoURL: function(){
-				updateUser();
-				return servUser.photoURL;
-			},
-			getEmail: function(){
-				updateUser();
-				return servUser.email;
-			},
-			getUserInfos: function(){
-				var deferred = $q.defer();
-				$timeout(function(){
-					deferred.resolve(updateUser());
-				}, 2000);
-				// updateUser();
-				return deferred.promise;
-			}
-		}
-}])
 
 .factory('ToastService', ['$cordovaToast',
 	function($cordovaToast){
@@ -90,6 +28,36 @@ angular.module('app.services', [])
 		}
 }])
 
+.factory('LoadingService', [ '$ionicLoading',
+	function($ionicLoading){
+		return {
+			showLoadingSpinner: function(){
+				$ionicLoading.show({
+					template: '<ion-spinner icon="spiral"></ion-spinner>',
+					noBackdrop: true
+				});
+			},
+			showLoadingUpdating: function(){
+				$ionicLoading.show({
+					template: 'Atualizando...',
+					noBackdrop: true
+				});
+			},
+			hideLoading: function() {
+				$ionicLoading.hide();
+			}
+		}
+}])
+
+
+
+// ***************************************************************
+// 
+// 			Services that uses the database
+// 			they're all called in the menuCtrl
+// 
+// ***************************************************************
+
 .factory('ProfessoresList', ['LoadingService','ToastService',
 	function(LoadingService, ToastService){
 		var ProfessoresList = this;
@@ -98,6 +66,7 @@ angular.module('app.services', [])
 		return {
 			all: function(){
 				if(ProfessoresList.professors.length == 0) {
+					console.log("Chamei o servico de ProfessoresList");
 					LoadingService.showLoadingSpinner();
 					//get all professors
 					firebase.database().ref().child('professors')
@@ -139,29 +108,6 @@ angular.module('app.services', [])
 }])
 
 
-.factory('LoadingService', [ '$ionicLoading',
-	function($ionicLoading){
-		return {
-			showLoadingSpinner: function(){
-				$ionicLoading.show({
-					template: '<ion-spinner icon="spiral"></ion-spinner>',
-					noBackdrop: true
-				});
-			},
-			showLoadingUpdating: function(){
-				$ionicLoading.show({
-					template: 'Atualizando...',
-					noBackdrop: true
-				});
-			},
-			hideLoading: function() {
-				$ionicLoading.hide();
-			}
-		}
-}])
-
-
-
 .factory('MyScheduledClassesList', ['LoadingService','ToastService', '$q', '$timeout',
 	function(LoadingService, ToastService, $q, $timeout){
 		var MyScheduledClassesList = this;
@@ -170,6 +116,7 @@ angular.module('app.services', [])
 		var updateClasses = function(uid){
 			if(MyScheduledClassesList.scheduledClasses.length == 0)
 			{
+				console.log("Chamei o servico de scheduledClasses");
 				LoadingService.showLoadingSpinner();
 				//Search for all the scheduled classes that starts with the user uid
 				firebase.database().ref().child('scheduledClasses').orderByKey()
@@ -197,7 +144,7 @@ angular.module('app.services', [])
 			for(var i = 0; i < MyScheduledClassesList.scheduledClasses.length; i++){
 				MyScheduledClassesList.scheduledClasses[i].hour = 
 					new Date(MyScheduledClassesList.scheduledClasses[i].hour);
-				console.log(MyScheduledClassesList.scheduledClasses[i].hour);
+				// console.log(MyScheduledClassesList.scheduledClasses[i].hour);
 			}
 			//Sort by day
 			MyScheduledClassesList.scheduledClasses.sort(function(a,b) {
@@ -207,15 +154,78 @@ angular.module('app.services', [])
 
 		return {
 			myScheduledClasses: function(uid){
-
-				var deferred = $q.defer();
-				$timeout(function(){
-					deferred.resolve(updateClasses(uid));
-				}, 2000);
-				return deferred.promise;
+				return updateClasses(uid);
+				// var deferred = $q.defer();
+				// $timeout(function(){
+				// 	deferred.resolve(updateClasses(uid));
+				// }, 2000);
+				// return deferred.promise;
 			}
 		}
 }])
 
+.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService', '$q', '$timeout',
+	function(Auth, ToastService, LoadingService, $q, $timeout){
+		var servUser = {
+			displayName: '',
+			email: '',
+			photoURL: '',
+			cellphone: '',
+			location: {
+				address : '',
+				number: '',
+				complement: ''
+			}
+		};
+
+		var updateUser = function(){
+			servUser.displayName = user.displayName || user.email;
+			servUser.photoURL = user.photoURL || 'img/null-avatar.png';
+			servUser.email = user.email || '';
+			if(servUser.cellphone.length == 0 && servUser.location.address.length == 0){
+				console.log("Chamei o servico de UserInfos");
+				LoadingService.showLoadingSpinner();
+
+				//Let's get the cellphone and location at the database
+				firebase.database().ref()
+				.child('students').child(user.uid)
+						.once('value').then(function(snapshot){
+							servUser.cellphone = snapshot.val().cellphone || ''; 
+							servUser.location = snapshot.val().locations.main || '';
+							LoadingService.hideLoading();
+						}, function(error){
+							ToastService
+							.showToast("Tive problemas para me conectar com o servidor", 
+												'long', 'bottom');
+							LoadingService.hideLoading();
+						})
+			}
+			return servUser;
+
+		}
+
+		return {
+			getDisplayName: function(){
+				updateUser();
+				return servUser.displayName;
+			},
+			getPhotoURL: function(){
+				updateUser();
+				return servUser.photoURL;
+			},
+			getEmail: function(){
+				updateUser();
+				return servUser.email;
+			},
+			getUserInfos: function(){
+				// var deferred = $q.defer();
+				// $timeout(function(){
+				// 	deferred.resolve(updateUser());
+				// }, 2000);
+				return updateUser();
+				// return deferred.promise;
+			}
+		}
+}])
 
 

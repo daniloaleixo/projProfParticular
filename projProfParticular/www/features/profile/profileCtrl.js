@@ -46,17 +46,18 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 
 	profileCtrl.updateVariables = function(){
 		LoadingService.showLoadingSpinner();
-		UserInfos.getUserInfos().then(function(result){
-			console.log(result);
-			profileCtrl.user = result;
-			LoadingService.hideLoading();
-		}, function(error){
-			ToastService.showToast("Desculpe não consegui obter as informações do usuário", 
-								'long', 'bottom');
-			console.log(error);
-			LoadingService.hideLoading();
-		});
-		// profileCtrl.user = UserInfos.getUserInfos();
+		// UserInfos.getUserInfos().then(function(result){
+		// 	console.log(result);
+		// 	profileCtrl.user = result;
+		// 	LoadingService.hideLoading();
+		// }, function(error){
+		// 	ToastService.showToast("Desculpe não consegui obter as informações do usuário", 
+		// 						'long', 'bottom');
+		// 	console.log(error);
+		// 	LoadingService.hideLoading();
+		// });
+		profileCtrl.user = UserInfos.getUserInfos();
+		LoadingService.hideLoading();
 	}
 
 	profileCtrl.updateVariables();
