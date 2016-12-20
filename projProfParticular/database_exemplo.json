@@ -232,7 +232,29 @@
 					"displayName":"Bla",
 					"photoURL":""
 				},
-				"hour":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
+				"duration":"120",
+				"location":{
+					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+					"number":"180",
+					"complement":"142A"
+				},
+				"course":{
+					"2-7":"História"
+				},
+				"description":"Quero aprender sobre história do Brasil"
+			},
+			"Mon Sep 7 2017 19:00:00 GMT-0300 (BRT)":{
+				"students":{
+					"MqhNsmQB69XOR8uUjGKXtvEoP002":{
+						"displayName":"Bla",
+						"photoURL":""
+					}
+				},
+				"professor":{
+					"UID":"ZyEKlWn4tDh2esPRV8sGYGf77jq1",
+					"displayName":"Bla",
+					"photoURL":""
+				},
 				"duration":"120",
 				"location":{
 					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
@@ -258,7 +280,6 @@
 					"displayName":"Danilo Aleixo",
 					"photoURL":"https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg"
 				},
-				"hour":"Mon Sep 9 2016 19:00:00 GMT-0300 (BRT)",
 				"duration":"60",
 				"location":{
 					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
@@ -282,7 +303,6 @@
 						"photoURL":""
 					}
 				},
-				"hour":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
 				"duration":"120",
 				"location":{
 					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",

@@ -111,10 +111,12 @@ angular.module('app.services', [])
 .factory('MyScheduledClassesList', ['LoadingService','ToastService', 
 	function(LoadingService, ToastService){
 		var MyScheduledClassesList = this;
+		MyScheduledClassesList.allScheduledClasses = [];
 		MyScheduledClassesList.scheduledClasses = [];
+		MyScheduledClassesList.historyClasses = [];
 
 		var updateClasses = function(uid){
-			if(MyScheduledClassesList.scheduledClasses.length == 0)
+			if(MyScheduledClassesList.allScheduledClasses.length == 0)
 			{
 				console.log("Chamei o servico de scheduledClasses");
 				LoadingService.showLoadingSpinner();
@@ -122,12 +124,25 @@ angular.module('app.services', [])
 				firebase.database().ref().child('scheduledClasses').orderByKey()
 				.startAt(uid).once('value').then(function(snapshot){
 
-					Object.keys(snapshot.val()).forEach(function(scheduledClass){
-						// Go through each scheduledClass in the hash
-						MyScheduledClassesList.scheduledClasses
-							.push(snapshot.val()[scheduledClass])
+					//Iterate through each combination user and professor
+					Object.keys(snapshot.val()).forEach(function(user_prof) {
+
+						//Then iterate for every date that the user had classes 
+						// with that professor
+						Object.keys(snapshot.val()[user_prof]).forEach(function(date){
+
+							// Go through each scheduledClass in the hash
+							var scheduledClassObject = snapshot.val()[user_prof][date];
+							scheduledClassObject['hour'] = new Date(date);
+							MyScheduledClassesList.allScheduledClasses
+								.push(scheduledClassObject);
+						});
 					});
+
 					sortByDate();
+					separeIntoHistoryAndToCome();
+					// console.log(MyScheduledClassesList.scheduledClasses);
+					// console.log(MyScheduledClassesList.historyClasses);
 					LoadingService.hideLoading();
 				}, function(error){
 					ToastService.showToast("Tive problemas para me conectar com o servidor", 
@@ -136,30 +151,38 @@ angular.module('app.services', [])
 				});	
 			}
 
-			return MyScheduledClassesList.scheduledClasses;
+			// return MyScheduledClassesList.allScheduledClasses;
 		}
 
 		var sortByDate = function(){
-			//Transform in dateTime object
-			for(var i = 0; i < MyScheduledClassesList.scheduledClasses.length; i++){
-				MyScheduledClassesList.scheduledClasses[i].hour = 
-					new Date(MyScheduledClassesList.scheduledClasses[i].hour);
-				// console.log(MyScheduledClassesList.scheduledClasses[i].hour);
-			}
 			//Sort by day
-			MyScheduledClassesList.scheduledClasses.sort(function(a,b) {
+			MyScheduledClassesList.allScheduledClasses.sort(function(a,b) {
 			    return a.hour - b.hour;
+			});
+		}
+
+		var separeIntoHistoryAndToCome = function(){
+			MyScheduledClassesList.allScheduledClasses.forEach(function(scheduledClass){
+				if(scheduledClass.hour.valueOf() > Date.now().valueOf())
+					MyScheduledClassesList.scheduledClasses.push(scheduledClass);
+				else
+					MyScheduledClassesList.historyClasses.push(scheduledClass);
 			});
 		}
 
 		return {
 			myScheduledClasses: function(uid){
-				return updateClasses(uid);
+				updateClasses(uid);
+				return MyScheduledClassesList.scheduledClasses;
 				// var deferred = $q.defer();
 				// $timeout(function(){
 				// 	deferred.resolve(updateClasses(uid));
 				// }, 2000);
 				// return deferred.promise;
+			},
+			myHistoryClasses: function(uid){
+				updateClasses(uid);
+				return MyScheduledClassesList.historyClasses;
 			}
 		}
 }])
