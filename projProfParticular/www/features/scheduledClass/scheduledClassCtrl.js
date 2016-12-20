@@ -23,12 +23,8 @@ function ($scope, $stateParams, MyScheduledClassesList, LoadingService) {
 		scheduledClassCtrl.myScheduledClasses = MyScheduledClassesList.myScheduledClasses(user.uid);
 		LoadingService.hideLoading();
 	}
-
-	scheduledClassCtrl.getNextClasses = function(){
-		scheduledClassCtrl.getScheduledClasses();
-	}
-
-	scheduledClassCtrl.getNextClasses();
+	
+	scheduledClassCtrl.getScheduledClasses();
 
 
 }])
