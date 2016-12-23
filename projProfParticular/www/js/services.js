@@ -213,8 +213,17 @@ angular.module('app.services', [])
 				firebase.database().ref()
 				.child('students').child(user.uid)
 						.once('value').then(function(snapshot){
-							servUser.cellphone = snapshot.val().cellphone || ''; 
-							servUser.location = snapshot.val().locations.main || '';
+							
+							if(snapshot.hasChild('cellphone'))
+								servUser.cellphone = snapshot.val().cellphone;
+							else
+								servUser.cellphone = ''; 
+
+							if(snapshot.hasChild('locations'))
+								servUser.location = snapshot.val().locations.main;
+							else
+								servUser.location = {address : '',number: '',complement: ''}
+
 							LoadingService.hideLoading();
 						}, function(error){
 							ToastService
