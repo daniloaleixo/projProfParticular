@@ -65,8 +65,7 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 			profileCtrl.user.email.length != 0 && 
 			profileCtrl.user.cellphone.length != 0 && 
 			profileCtrl.user.location.address.length != 0 &&
-			profileCtrl.user.location.number.length != 0 &&
-			profileCtrl.user.location.complement.length != 0){
+			profileCtrl.user.location.number.length != 0){
 
 			console.log("entrei no if");
 
@@ -75,9 +74,8 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 				displayName: profileCtrl.user.displayName,
 				email: profileCtrl.user.email
 			}).then(function(){
-				KeyboardService.hide();
-				ToastService.showToast("Seu usuário foi atualizado com sucesso!", 'long', 'bottom');
-
+				// KeyboardService.hide();
+				// ToastService.showToast("Seu usuário foi atualizado com sucesso!", 'long', 'bottom');
 
 
 				firebase.database().ref().child('students').child(user.uid).
