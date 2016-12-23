@@ -201,11 +201,15 @@ angular.module('app.services', [])
 			}
 		};
 
+		var force = false;
+
 		var updateUser = function(){
 			servUser.displayName = user.displayName || user.email;
 			servUser.photoURL = user.photoURL || 'img/null-avatar.png';
 			servUser.email = user.email || '';
-			if(servUser.cellphone.length == 0 && servUser.location.address.length == 0){
+			if(
+				(servUser.cellphone.length == 0 && servUser.location.address.length == 0)
+				|| force == true){
 				console.log("Chamei o servico de UserInfos");
 				LoadingService.showLoadingSpinner();
 
@@ -232,6 +236,7 @@ angular.module('app.services', [])
 							LoadingService.hideLoading();
 						})
 			}
+			force = false;
 			return servUser;
 
 		}
@@ -250,12 +255,11 @@ angular.module('app.services', [])
 				return servUser.email;
 			},
 			getUserInfos: function(){
-				// var deferred = $q.defer();
-				// $timeout(function(){
-				// 	deferred.resolve(updateUser());
-				// }, 2000);
 				return updateUser();
-				// return deferred.promise;
+			},
+			getUserInfosForce: function(){
+				force = true;
+				return updateUser();
 			}
 		}
 }])

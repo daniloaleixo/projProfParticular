@@ -46,16 +46,6 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 
 	profileCtrl.updateVariables = function(){
 		LoadingService.showLoadingSpinner();
-		// UserInfos.getUserInfos().then(function(result){
-		// 	console.log(result);
-		// 	profileCtrl.user = result;
-		// 	LoadingService.hideLoading();
-		// }, function(error){
-		// 	ToastService.showToast("Desculpe não consegui obter as informações do usuário", 
-		// 						'long', 'bottom');
-		// 	console.log(error);
-		// 	LoadingService.hideLoading();
-		// });
 		profileCtrl.user = UserInfos.getUserInfos();
 		profileCtrl.oldUserInfos = UserInfos.getUserInfos();
 		LoadingService.hideLoading();
@@ -68,7 +58,7 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 	profileCtrl.updateUserInfo = function(){
 
 		console.log("cliquei");
-		console.log(profileCtrl.user)
+		console.log(profileCtrl.user);
 
 		if(user != null && 
 			profileCtrl.user.displayName.length != 0 &&
@@ -81,32 +71,40 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 			console.log("entrei no if");
 
 			LoadingService.showLoadingUpdating();
-			console.log(profileCtrl.user.displayName);
+			user.updateProfile({
+				displayName: profileCtrl.user.displayName,
+				email: profileCtrl.user.email
+			}).then(function(){
+				KeyboardService.hide();
+				ToastService.showToast("Seu usuário foi atualizado com sucesso!", 'long', 'bottom');
 
-			// user.updateProfile({
-			// 	displayName: profileCtrl.newUserInfos.displayName 
-			// 					|| profileCtrl.user.displayName,
-			// 	email: profileCtrl.newUserInfos.email
-			// 					|| profileCtrl.user.email,
-			// 	cellphone: profileCtrl.newUserInfos.cellphone
-			// 					|| profileCtrl.user.cellphone
-			// 	// TODO colocar a localizacao
-			// 	// location: profileCtrl.newUserInfos.displayName
-			// }).then(function(){
-			// 	KeyboardService.hide();
-			// 	ToastService.showToast("Seu nome de usuário foi atualizado com sucesso!", 'long', 'bottom');
-			// 	// cordova.plugins.Keyboard.close();
-			// 	profileCtrl.resetNewVariables();
-			// 	profileCtrl.updateVariables();
-			// 	$scope.$digest();
-			// 	LoadingService.hideLoading();
-			// }, function(error){
-			// 	console.log("ProfileCtrl |Erro ao atualizar Display Name");
-			// 	ToastService.showToast("Erro ao atualizar seu nome de usuário!", 'long', 'bottom');
-			// 	profileCtrl.resetNewVariables();
-			// 	profileCtrl.updateVariables();
-			// 	LoadingService.hideLoading();
-			// });
+
+
+				firebase.database().ref().child('students').child(user.uid).
+				set({
+					displayName: profileCtrl.user.displayName,
+					email: profileCtrl.user.email,
+					cellphone: profileCtrl.user.cellphone,
+					locations:{
+						main: {
+							address: profileCtrl.user.location.address,
+							number: profileCtrl.user.location.number,
+							complement: profileCtrl.user.location.complement
+						}
+					}
+				});
+
+
+				UserInfos.getUserInfosForce();
+				$scope.$digest();
+				LoadingService.hideLoading();
+			}, function(error){
+				console.log("ProfileCtrl | Erro ao atualizar");
+				ToastService.showToast("Erro ao atualizar seu usuário!", 'long', 'bottom');
+				UserInfos.getUserInfosForce();
+				LoadingService.hideLoading();
+			});
+
 			LoadingService.hideLoading();
 		} else {
 			ToastService.showToast("Por favor complete as informações necessárias", 
