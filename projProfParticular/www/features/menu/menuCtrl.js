@@ -32,9 +32,6 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 	menuCtrl.logout = function(){
 		firebase.auth().signOut().then(function() {
 		  	user = null;
-	  	  	menuCtrl.user.displayName = null;
-	  		menuCtrl.user.photoURL = null;
-	  		menuCtrl.user.email = null;
 		  	$location.path('/login');
 		  	$ionicSideMenuDelegate.toggleLeft();
 		  	return true;
