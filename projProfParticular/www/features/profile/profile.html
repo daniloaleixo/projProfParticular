@@ -21,38 +21,51 @@
     <form style='margin-top:-30px;'
             ng-submit='profileCtrl.updateUserInfo()'>
 		<!-- <label class="item item-input icon-right" id="login-input1" style="margin-top:20px;">
-    	    <input type="text" placeholder="Digite um novo nome de usuário" ng-model='profileCtrl.newUserInfos.displayName'>
+    	    <input type="text" placeholder="Digite um novo nome de usuário" ng-model='profileCtrl.user.displayName'>
     	    <button class="button button-clear icon ion-checkmark-round"
                     ng-click='profileCtrl.changeDisplayName()'></button>
     	</label> -->
 
 
         <label class="item item-input item-stacked-label">
-            <span class="input-label">Nome</span ng-model='profileCtrl.newUserInfos.displayName'>
-            <input type="text" placeholder="{{profileCtrl.user.displayName}}">
+            <span class="input-label">Nome</span>
+            <input type="text" placeholder="{{profileCtrl.user.displayName}}" 
+                    ng-model='profileCtrl.user.displayName'>
         </label>
         <label class="item item-input item-stacked-label">
-            <span class="input-label">Email</span ng-model='profileCtrl.newUserInfos.email'>
-            <input type="text" placeholder="{{profileCtrl.user.email}}">
+            <span class="input-label">Email</span>
+            <input type="text" placeholder="{{profileCtrl.user.email}}" 
+                    ng-model='profileCtrl.user.email'>
         </label>
         <label class="item item-input item-stacked-label">
-            <span class="input-label">Telefone</span ng-model='profileCtrl.newUserInfos.cellphone'>
-            <input type="text" placeholder="{{profileCtrl.user.cellphone}}">
+            <span class="input-label">Telefone</span>
+            <input type="text" placeholder="{{profileCtrl.user.cellphone}}"
+                    ng-model='profileCtrl.user.cellphone'>
         </label>
-        <label class="item item-input item-stacked-label">
-            <span class="input-label">Endereço</span ng-model='profileCtrl.newUserInfos.location.address'>
-            <input type="text" placeholder="{{profileCtrl.user.location.address}}">
-        </label>
+        <span class='row item item-input item-stacked-label'>
+            <span class='col col-20'>
+                <a class='button button-block' ng-click='profileCtrl.showPopup()'>
+                    <i class="icon ion-ios-location"></i>
+                </a>
+            </span>
+            <label class="item-input item-stacked-label col">
+                <span class="input-label">Endereço</span >
+                <input type="text" placeholder="{{profileCtrl.user.location.address}}"
+                        ng-model='profileCtrl.user.location.address'>
+            </label>
+        </span>
         <label class="item item-input item-stacked-label row">
             <div class='col'>
                 <span class="input-label">Número
-                    </span ng-model='profileCtrl.newUserInfos.location.number'>
-                <input type="text" placeholder="{{profileCtrl.user.location.number}}">
+                    </span >
+                <input type="text" placeholder="{{profileCtrl.user.location.number}}"
+                        ng-model='profileCtrl.user.location.number'>
             </div>
             <div class='col col-75'>
                 <span class="input-label">Complemento
-                    </span ng-model='profileCtrl.newUserInfos.location.complement'>
-                <input type="text" placeholder="{{profileCtrl.user.location.complement}}">
+                    </span >
+                <input type="text" placeholder="{{profileCtrl.user.location.complement}}"
+                        ng-model='profileCtrl.user.location.complement'>
             </div>
         </label>
 

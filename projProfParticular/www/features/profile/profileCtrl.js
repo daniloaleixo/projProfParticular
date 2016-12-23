@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('ProfileCtrl', ['$scope', '$stateParams', '$location', 'LoadingService', 
+.controller('ProfileCtrl', ['$scope', '$stateParams', '$location', '$ionicPopup', 'LoadingService', 
 		'UserInfos', '$cordovaCamera','ToastService', 'KeyboardService',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCamera, 
+function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfos, $cordovaCamera, 
 	ToastService, KeyboardService) {
 	var profileCtrl = this;
 	var storage = firebase.storage();
@@ -31,7 +31,7 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 		}
 	};
 
-	profileCtrl.newUserInfos = {
+	profileCtrl.oldUserInfos = {
 		displayName: '',
 		photoURL: '',
 		email: '',
@@ -57,6 +57,7 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 		// 	LoadingService.hideLoading();
 		// });
 		profileCtrl.user = UserInfos.getUserInfos();
+		profileCtrl.oldUserInfos = UserInfos.getUserInfos();
 		LoadingService.hideLoading();
 	}
 
@@ -67,11 +68,20 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 	profileCtrl.updateUserInfo = function(){
 
 		console.log("cliquei");
+		console.log(profileCtrl.user)
 
 		if(user != null && 
-			profileCtrl.newUserInfos.displayName != ''){
+			profileCtrl.user.displayName.length != 0 &&
+			profileCtrl.user.email.length != 0 && 
+			profileCtrl.user.cellphone.length != 0 && 
+			profileCtrl.user.location.address.length != 0 &&
+			profileCtrl.user.location.number.length != 0 &&
+			profileCtrl.user.location.complement.length != 0){
+
+			console.log("entrei no if");
 
 			LoadingService.showLoadingUpdating();
+			console.log(profileCtrl.user.displayName);
 
 			// user.updateProfile({
 			// 	displayName: profileCtrl.newUserInfos.displayName 
@@ -97,6 +107,10 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
 			// 	profileCtrl.updateVariables();
 			// 	LoadingService.hideLoading();
 			// });
+			LoadingService.hideLoading();
+		} else {
+			ToastService.showToast("Por favor complete as informações necessárias", 
+				'long', 'bottom');
 		}
 	};
 
@@ -176,15 +190,46 @@ function ($scope, $stateParams, $location, LoadingService, UserInfos, $cordovaCa
    		console.log("Erro");
    	}
 
-   	profileCtrl.resetNewVariables = function(){
-   		profileCtrl.newUserInfos = {
-   			displayName: '',
-   			photoURL: '',
-   			email: '',
-   			cellphone: '',
-   			location: ''
-   		};
-   	}
+   	// profileCtrl.resetNewVariables = function(){
+   	// 	profileCtrl.newUserInfos = {
+   	// 		displayName: '',
+   	// 		photoURL: '',
+   	// 		email: '',
+   	// 		cellphone: '',
+   	// 		location: ''
+   	// 	};
+   	// };
+
+
+   	//Show a popup with autocomplete in the address
+   	profileCtrl.showPopup = function() {
+   		console.log("showPopup");
+   	  	$scope.data = {};
+
+   	  	// An elaborate, custom popup
+   	  	var myPopup = $ionicPopup.show({
+   	    	template: "<ion-google-place ng-model='data.location'>",
+   	    	title: 'Digite o endereço',
+   	    	scope: $scope,
+   	   		 buttons: [
+   	      		{ text: 'Cancel' },
+   	      		{
+   	        		text: '<b>Save</b>',
+   	        		type: 'button-positive',
+   	        		onTap: function(e) {
+   	          			return $scope.data.location;	      
+   	        		}
+   	      		}
+   	    	]
+   	 	 });
+
+   	  	myPopup.then(function(res) {
+   	    	console.log('Tapped!', res);
+   	    	profileCtrl.user.location.address = res;
+   	  	});
+   	 };
+
+
 
 
 
