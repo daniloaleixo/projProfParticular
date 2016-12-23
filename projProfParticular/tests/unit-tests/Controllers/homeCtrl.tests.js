@@ -3,8 +3,10 @@ describe('HomeCtrl', function(){
         deferred,
         homeCtrl = null,
         stateParamsMock,
+        locationMock,
         loadingServiceMock,
-        userInfosMock;
+        userInfosMock,
+        toastServiceMock;
 
     beforeEach(module('app.controllers'));
 
@@ -13,16 +15,22 @@ describe('HomeCtrl', function(){
 
         stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go']);
 
+        locationMock = jasmine.createSpyObj('$location spy', ['path']);
+
         loadingServiceMock = jasmine.createSpyObj('LoadingService spy', 
                             ['showLoadingSpinner', 'hideLoading']);
 
         userInfosMock = jasmine.createSpyObj('UserInfos spy', ['getUserInfos']);
 
+        toastServiceMock = jasmine.createSpyObj('ToastService spy', ['showToast']);
+
         homeCtrl = $controller('HomeCtrl', {
             $scope: scope,
             $stateParams: stateParamsMock,
+            $location: locationMock,
             LoadingService: loadingServiceMock,
-            UserInfos: userInfosMock
+            UserInfos: userInfosMock,
+            ToastService: toastServiceMock
         });
 
     }))
@@ -33,7 +41,22 @@ describe('HomeCtrl', function(){
     //         $timeout = _$timeout_;
     //     }));
 
-    describe('Smoke test - ', function(){
+    xdescribe('Smoke test - ', function(){
+
+        beforeEach(inject(function(){
+            homeCtrl.user = {
+                displayName: '',
+                email: '',
+                photoURL: '',
+                cellphone: '54355656456',
+                location: {
+                        address : 'bla',
+                        number: '',
+                        complement: ''
+                    }
+            }
+        }));
+
     	it('should have started the controller', function(){
             expect(homeCtrl).not.toBe(null);
     	});

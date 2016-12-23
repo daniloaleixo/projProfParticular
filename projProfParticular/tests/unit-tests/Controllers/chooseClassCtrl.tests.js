@@ -14,9 +14,9 @@ describe('ChooseClassCtrl', function(){
     beforeEach(inject(function($controller, $rootScope){
         scope = $rootScope.$new();
 
-        stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go'])
+        stateParamsMock = jasmine.createSpyObj('$stateParams spy', ['go']);
 
-        locationMock = jasmine.createSpyObj('$location spy', ['path'])
+        locationMock = jasmine.createSpyObj('$location spy', ['path']);
 
         loadingServiceMock = jasmine.createSpyObj('LoadingService spy', ['showLoadingSpinner', 'hideLoading'])
 
