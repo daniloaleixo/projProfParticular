@@ -24,15 +24,15 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 		LoadingService.showLoadingSpinner();
 		homeCtrl.user = UserInfos.getUserInfos();
 
-		if(homeCtrl.user.cellphone.length == 0 || homeCtrl.user.location.address.length == 0){
-			console.log(homeCtrl.user);
-			console.log("O usuario nao tem celular ou address");
+		// if(homeCtrl.user.cellphone.length == 0 || homeCtrl.user.location.address.length == 0){
+		// 	console.log(homeCtrl.user);
+		// 	console.log("O usuario nao tem celular ou address");
 
-			// ToastService.showToast("Por favor preencha as informações", 
-			// 									'long', 'bottom');
-			$location.path('/side-menu21/profile');
+		// 	// ToastService.showToast("Por favor preencha as informações", 
+		// 	// 									'long', 'bottom');
+		// 	$location.path('/side-menu21/profile');
 
-		}
+		// }
 
 		LoadingService.hideLoading();
 		
