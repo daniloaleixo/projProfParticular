@@ -31,8 +31,8 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 				console.log(homeCtrl.user);
 				console.log("O usuario nao tem celular ou address");
 
-				// ToastService.showToast("Por favor preencha as informações", 
-				// 									'long', 'bottom');
+				ToastService.showToast("Por favor preencha as informações", 
+													'long', 'bottom');
 				$location.path('/side-menu21/profile');
 
 			}

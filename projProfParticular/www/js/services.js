@@ -240,6 +240,8 @@ angular.module('app.services', [])
 							else
 								servUser.location = {address : '',number: '',complement: ''}
 
+
+							force = false;
 							LoadingService.hideLoading();
 						}, function(error){
 							ToastService
@@ -248,9 +250,7 @@ angular.module('app.services', [])
 							LoadingService.hideLoading();
 						})
 			}
-			force = false;
-			return servUser;
-
+			if(force == false) return servUser;
 		}
 
 		return {
@@ -274,6 +274,7 @@ angular.module('app.services', [])
 				return updateUser();
 			},
 			getUserInfosAsPromise: function(){
+				force = true;
 				var deferred = $q.defer();
 				$timeout(function(){
 					deferred.resolve(updateUser());
