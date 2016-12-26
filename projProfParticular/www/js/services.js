@@ -187,8 +187,8 @@ angular.module('app.services', [])
 		}
 }])
 
-.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService',
-	function(Auth, ToastService, LoadingService){
+.factory('UserInfos',[ 'Auth', 'ToastService', 'LoadingService', '$q', '$timeout',
+	function(Auth, ToastService, LoadingService, $q, $timeout){
 		var servUser = {
 			displayName: '',
 			email: '',
@@ -260,6 +260,13 @@ angular.module('app.services', [])
 			getUserInfosForce: function(){
 				force = true;
 				return updateUser();
+			},
+			getUserInfosAsPromise: function(){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(updateUser());
+				}, 2000);
+				return deferred.promise;
 			}
 		}
 }])
