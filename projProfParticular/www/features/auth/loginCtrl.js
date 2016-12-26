@@ -1,9 +1,12 @@
 angular.module('app.controllers')
 .controller('LoginCtrl', ['$scope', '$stateParams','$location', 'LoadingService', 'ToastService', 
-// The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+				'MyScheduledClassesList', 'ProfessoresList', 'CoursesOfferedList', 'UserInfos',
+// The following is the constructor function for this page's controller. 
+// See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, LoadingService, ToastService) {
+function ($scope, $stateParams, $location, LoadingService, ToastService,
+	MyScheduledClassesList, ProfessoresList, CoursesOfferedList, UserInfos) {
 	
 	var loginCtrl = this;
 
@@ -41,6 +44,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 
 			trySignIn.then(function(auth){
 				user = auth;
+				// updateVariables();
 				LoadingService.hideLoading();
 				$location.path('/home');
 			}, function(error){
@@ -90,6 +94,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 		  	var token = result.credential.accessToken;
 		  	// The signed-in user info.
 		  	user = result.user;
+		  	// updateVariables();
 
 		  	LoadingService.hideLoading();
 		  	$location.path('/home');
@@ -103,6 +108,20 @@ function ($scope, $stateParams, $location, LoadingService, ToastService) {
 		  	LoadingService.hideLoading();
 		});
 	};
+
+
+	var updateVariables = function(){
+		// menuCtrl.user = UserInfos.getUserInfos();
+
+		console.log("Vou puxar todas as infos");
+
+		// Agora o menu vai chamar todos os requests para o DB assim quando o usuario estiver 
+		// entrando na pagina que necessita essa info nao precisará fazer outra requisicao
+		UserInfos.getUserInfos();
+		MyScheduledClassesList.myScheduledClasses(user.uid);
+		ProfessoresList.all();
+		CoursesOfferedList.all();
+	}
 
 
 

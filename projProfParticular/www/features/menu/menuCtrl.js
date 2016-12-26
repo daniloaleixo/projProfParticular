@@ -27,11 +27,14 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 		CoursesOfferedList.all();
 	}
 
+	console.log("entrei no menuCtrl");
 	menuCtrl.updateVariables();
+
 
 	menuCtrl.logout = function(){
 		firebase.auth().signOut().then(function() {
 		  	user = null;
+		  	resetAllVariables();
 		  	$location.path('/login');
 		  	$ionicSideMenuDelegate.toggleLeft();
 		  	return true;
@@ -39,6 +42,14 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 		  	ToastService.showToast("Não consegui fazer o logout", 'long', 'bottom');
 		  	return false;
 		});
+	}
+
+
+	var resetAllVariables = function(){
+		ProfessoresList.reset();
+		MyScheduledClassesList.reset();
+		UserInfos.reset();
+		CoursesOfferedList.reset();
 	}
 
 }])

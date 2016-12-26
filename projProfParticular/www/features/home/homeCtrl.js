@@ -5,7 +5,7 @@ angular.module('app.controllers')
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService) {
+function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService, allInfosUpdate) {
 	var homeCtrl = this;
 
 	homeCtrl.user = {
@@ -24,6 +24,7 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 		LoadingService.showLoadingSpinner();
 
 		UserInfos.getUserInfosAsPromise().then(function(result){
+			console.log("Esperei pelas infos do usuario");
 			homeCtrl.user = result;
 			//Verify if the user need to fill the other infos
 			if(homeCtrl.user.cellphone.length == 0 || homeCtrl.user.location.address.length == 0){

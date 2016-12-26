@@ -103,6 +103,10 @@ angular.module('app.services', [])
 						return ProfessoresList.professors[i];
 				}
 				return null;
+			}, 
+			reset: function(){
+				ProfessoresList.professors = [];
+				console.log("Resetando professores " + ProfessoresList.professors.length);
 			}
 		}
 }])
@@ -125,19 +129,21 @@ angular.module('app.services', [])
 				.startAt(uid).once('value').then(function(snapshot){
 
 					//Iterate through each combination user and professor
-					Object.keys(snapshot.val()).forEach(function(user_prof) {
+					if(snapshot.val() != null){
+						Object.keys(snapshot.val()).forEach(function(user_prof) {
 
-						//Then iterate for every date that the user had classes 
-						// with that professor
-						Object.keys(snapshot.val()[user_prof]).forEach(function(date){
+							//Then iterate for every date that the user had classes 
+							// with that professor
+							Object.keys(snapshot.val()[user_prof]).forEach(function(date){
 
-							// Go through each scheduledClass in the hash
-							var scheduledClassObject = snapshot.val()[user_prof][date];
-							scheduledClassObject['hour'] = new Date(date);
-							MyScheduledClassesList.allScheduledClasses
-								.push(scheduledClassObject);
+								// Go through each scheduledClass in the hash
+								var scheduledClassObject = snapshot.val()[user_prof][date];
+								scheduledClassObject['hour'] = new Date(date);
+								MyScheduledClassesList.allScheduledClasses
+									.push(scheduledClassObject);
+							});
 						});
-					});
+					}
 
 					sortByDate();
 					separeIntoHistoryAndToCome();
@@ -183,6 +189,12 @@ angular.module('app.services', [])
 			myHistoryClasses: function(uid){
 				updateClasses(uid);
 				return MyScheduledClassesList.historyClasses;
+			}, 
+			reset: function(){
+				MyScheduledClassesList.allScheduledClasses = [];
+				MyScheduledClassesList.scheduledClasses = [];
+				MyScheduledClassesList.historyClasses = [];
+				console.log("Resetando aulas " + MyScheduledClassesList.allScheduledClasses.length);
 			}
 		}
 }])
@@ -267,6 +279,20 @@ angular.module('app.services', [])
 					deferred.resolve(updateUser());
 				}, 2000);
 				return deferred.promise;
+			},
+			reset: function(){
+				servUser = {
+					displayName: '',
+					email: '',
+					photoURL: '',
+					cellphone: '',
+					location: {
+						address : '',
+						number: '',
+						complement: ''
+					}
+				};
+				console.log("Resetando usuario " + servUser);
 			}
 		}
 }])
@@ -333,6 +359,10 @@ angular.module('app.services', [])
 		return {
 			all: function(){
 				return updateCourses();
+			},
+			reset: function(){
+				CoursesOfferedList.offeredCourses = {};
+				console.log("Resetando cursos oferecidos " + CoursesOfferedList.offeredCourses);
 			}
 		}
 }])
