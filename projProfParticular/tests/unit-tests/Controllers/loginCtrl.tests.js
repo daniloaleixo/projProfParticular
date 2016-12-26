@@ -1,4 +1,4 @@
-describe('LoginCtrl', function(){
+xdescribe('LoginCtrl', function(){
     var scope,
         deferred,
         loginCtrl = null,
