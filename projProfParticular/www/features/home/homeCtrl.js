@@ -48,6 +48,7 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 	homeCtrl.getUserInfos();
 
 	
+	
 
 	
 }])

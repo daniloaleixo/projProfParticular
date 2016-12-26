@@ -52,4 +52,9 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 		CoursesOfferedList.reset();
 	}
 
+	// $scope.$on('$ionicView.enter', function() {
+	//     // analytics.trackView('Screen Title');
+	//     console.log("Entrei");
+	// });
+
 }])

@@ -217,13 +217,13 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
    	        		}
    	      		}
    	    	]
-   	 	 });
+   	 	});
 
    	  	myPopup.then(function(res) {
    	    	console.log('Tapped!', res);
    	    	profileCtrl.user.location.address = res;
    	  	});
-   	 };
+   	};
 
 
 
