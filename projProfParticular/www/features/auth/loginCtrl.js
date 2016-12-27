@@ -109,6 +109,8 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 			// Handle Errors here.
 		  	/*var errorCode = error.code;
 		  	loginCtrl.error = error.message;*/
+		  	console.log("nao consegui");
+
 		  	ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
 		  								'long', 'bottom');
 		  	LoadingService.hideLoading();

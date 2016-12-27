@@ -67,15 +67,13 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 			profileCtrl.user.location.address.length != 0 &&
 			profileCtrl.user.location.number.length != 0){
 
-			console.log("entrei no if");
-
 			LoadingService.showLoadingUpdating();
 			user.updateProfile({
 				displayName: profileCtrl.user.displayName,
 				email: profileCtrl.user.email
 			}).then(function(){
-				// KeyboardService.hide();
-				// ToastService.showToast("Seu usuário foi atualizado com sucesso!", 'long', 'bottom');
+				KeyboardService.hide();
+				ToastService.showToast("Seu usuário foi atualizado com sucesso!", 'long', 'bottom');
 
 
 				firebase.database().ref().child('students').child(user.uid).
@@ -97,7 +95,6 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 				$scope.$digest();
 				LoadingService.hideLoading();
 			}, function(error){
-				console.log("ProfileCtrl | Erro ao atualizar");
 				ToastService.showToast("Erro ao atualizar seu usuário!", 'long', 'bottom');
 				UserInfos.getUserInfosForce();
 				LoadingService.hideLoading();

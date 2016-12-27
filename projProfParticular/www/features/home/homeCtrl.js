@@ -28,7 +28,6 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 			homeCtrl.user = result;
 			//Verify if the user need to fill the other infos
 			if(homeCtrl.user.cellphone.length == 0 || homeCtrl.user.location.address.length == 0){
-				console.log(homeCtrl.user);
 				console.log("O usuario nao tem celular ou address");
 
 				ToastService.showToast("Por favor preencha as informações", 
