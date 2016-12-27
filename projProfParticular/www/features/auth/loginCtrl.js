@@ -28,6 +28,8 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 	loginCtrl.login = function(){
 		loginCtrl.error = '';
 
+		// console.log("Chamei o login");
+
 		//restart global variable user
 		user = null;
 
@@ -64,16 +66,20 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 			ToastService.showToast("A senha deve ter mais de 6 caracteres", 'long', 'bottom');
 		}
 		else {
-			tryRegister = firebase.auth().createUserWithEmailAndPassword(loginCtrl.user.email, 
-																			loginCtrl.user.password);
 			LoadingService.showLoadingSpinner();
-
-			tryRegister.then(function(user){
+			firebase.auth()
+			.createUserWithEmailAndPassword(loginCtrl.user.email, loginCtrl.user.password)
+			.then(function(user){
 				LoadingService.hideLoading();
 				// Already registrated, just have to login
+				loginCtrl.signingUp = false;
 				loginCtrl.login();
 			},function(error){
-				ToastService.showToast("Não consegui realizar o cadastro, por favor tente novamente", 
+				if(error.code == 'auth/email-already-in-use')
+					ToastService.showToast("O email escolhido já esta em uso", 
+											'long', 'bottom');
+				else
+					ToastService.showToast("Não consegui realizar o cadastro, por favor tente novamente", 
 											'long', 'bottom');
 				LoadingService.hideLoading();
 			})
