@@ -134,11 +134,11 @@ angular.module('app.services', [])
 
 							//Then iterate for every date that the user had classes 
 							// with that professor
-							Object.keys(snapshot.val()[user_prof]).forEach(function(date){
+							Object.keys(snapshot.val()[user_prof]).forEach(function(id){
 
 								// Go through each scheduledClass in the hash
-								var scheduledClassObject = snapshot.val()[user_prof][date];
-								scheduledClassObject['hour'] = new Date(date);
+								var scheduledClassObject = snapshot.val()[user_prof][id];
+								scheduledClassObject['hour'] = new Date(snapshot.val()[user_prof][id].date);
 								MyScheduledClassesList.allScheduledClasses
 									.push(scheduledClassObject);
 							});
