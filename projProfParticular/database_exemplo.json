@@ -306,7 +306,7 @@
 						"photoURL":""
 					}
 				},
-				"date":"Mon Sep 7 2016 19:00:00 GMT-0300 (BRT)",
+				"date":"Mon Sep 7 2017 19:00:00 GMT-0300 (BRT)",
 				"duration":"120",
 				"location":{
 					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
@@ -317,6 +317,26 @@
 					"2-7":"História"
 				},
 				"description":"Quero aprender sobre história do Brasil"
+			},
+			"2":{
+				"status": "Pendente",
+				"students":{
+					"MqNhsmQB69XOR8uUjGKXtvEoP002":{
+						"displayName":"Bla",
+						"photoURL":""
+					}
+				},
+				"date":"Mon Sep 8 2017 19:00:00 GMT-0300 (BRT)",
+				"duration":"120",
+				"location":{
+					"address":"Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+					"number":"180",
+					"complement":"142A"
+				},
+				"course":{
+					"2-7":"História"
+				},
+				"description":"Quero aprender sobre história da America"
 			}
 		}
 	}

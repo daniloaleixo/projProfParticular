@@ -63,27 +63,27 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 
 
 				// Send request to the server
-				console.log("Send request to server");
 				var requestsRef = firebase.database().ref().child('requestForClasses');
 				requestsRef.once('value').then(function(snapshot){
 
-					// if(!snapshot.hasChild(userUID)){
-					// 	console.log("nao tem o filho");
-					// 	requestsRef.child(userUID).set({});
-					// }
-					// else
-					// 	console.log("ja tem esse cara");
+					var index = 0;
 
-					// return false;
+					//  If we dont have this user, the index will be 1 for the first class
+					if(!snapshot.hasChild(userUID)){
+						index = 1;
+					}
+					else{
+						//  If the user had already requested classes, then
+						//  we get the last key and sum 1
+						var keys = Object.keys(snapshot.val()[userUID]).sort();
+						index = parseInt(keys[keys.length - 1]) + 1;
+					}
 
-					requestsRef.child(userUID).child(classDatetime).set({
+					// Build the Object we're gonna upload in database
+					var requestJSON = {
 						status: "Pendente",
-						students:{
-							userUID:{
-								displayName:user.displayName,
-								photoURL:user.photoURL
-							}
-						},
+						students:{},
+						date:classDatetime, 
 						duration:requestClassCtrl.request.duration,
 						location:{
 							address:requestClassCtrl.request.location,
@@ -94,11 +94,22 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 							"2-7":"História"
 						},
 						description:requestClassCtrl.request.description
-					})
-				})
+					};
+					requestJSON.students[userUID] = {
+								displayName:user.displayName,
+								photoURL:user.photoURL
+					};
 
-				console.log("Pronto agora ta la");
-				LoadingService.hideLoading();
+					// Upload at firebase
+					requestsRef.child(userUID).child(index).set(requestJSON);
+					LoadingService.hideLoading();
+
+					// TODO 
+					//  O que vamos fazer depois: vai mostrar uma tela dizendo que 
+					// vai entrar em contato?
+					console.log("Corretamente marcado essa aula");
+					$location.path('/side-menu21/home');
+				})
 
 			} else {
 				ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
@@ -188,8 +199,7 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	 		requestClassCtrl.request.description.length > 0)
 	 		return true;
 	 	else
-	 		// return false;
-	 		return true;
+	 		return false;
 	}
 
 }]);
