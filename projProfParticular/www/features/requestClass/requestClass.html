@@ -3,7 +3,7 @@
     	<div style="margin-top: 20px;"></div>
 
     	<!-- Form para pesquisar professors -->
-    	<form ng-submit='requestClassCtrl.requestClass()'>
+    	<form ng-submit='requestClassCtrl.requestClassButton()'>
 
     			<div class='mdl-list'>
             <!-- Nivel -->
@@ -64,10 +64,10 @@
  -->           <!--  <ion-google-place placeholder="Your address" ng-model="requestClassCtrl.request.location" location-changed="requestClassCtrl.yourLocationChangeCallback()"/> -->
 <!--           </div>
  -->
-          <button class='button button-block'
+          <a class='button button-block'
                 ng-click='requestClassCtrl.showPopup()'>
             Procurar no Maps
-          </button>
+          </a>
 
 
 

@@ -26,10 +26,10 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	requestClassCtrl.request = {
 		level: 0,
 		course: '',
-		day: '',
-		hour: '',
+		day: '01/03/2017',
+		hour: '19:00',
 		duration: '',
-		location: '',
+		location: 'Brazil',
 		location_number: '',
 		location_compl: '',
 		description: ''
@@ -45,12 +45,68 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 
 	// TODO 
 	// Upload the request to server
-	requestClassCtrl.requestClass = function(){
-		console.log("requestClass function");
+	requestClassCtrl.requestClassButton = function(){
 
-		// if(requestClassCtrl.request.location.search("Brazil") == - 1 ){
-		// 	ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
-		// }
+		if(checkAllFieldsFilled()){
+			if(requestClassCtrl.request.location.search("Brazil") != -1 ){
+
+				LoadingService.showLoadingSpinner();
+
+				var day = requestClassCtrl.request.day.substring(0,2);
+				var month = requestClassCtrl.request.day.substring(3,5);
+				var year = requestClassCtrl.request.day.substring(6,10);
+				var hour = requestClassCtrl.request.hour.substring(0,2);
+				var minutes = requestClassCtrl.request.hour.substring(3,5);
+				var classDatetime = new Date(year, month - 1, day, hour, minutes);
+				// var classDatetime = 'blablablabla';
+				var userUID = user.uid;
+
+
+				// Send request to the server
+				console.log("Send request to server");
+				var requestsRef = firebase.database().ref().child('requestForClasses');
+				requestsRef.once('value').then(function(snapshot){
+
+					// if(!snapshot.hasChild(userUID)){
+					// 	console.log("nao tem o filho");
+					// 	requestsRef.child(userUID).set({});
+					// }
+					// else
+					// 	console.log("ja tem esse cara");
+
+					// return false;
+
+					requestsRef.child(userUID).child(classDatetime).set({
+						status: "Pendente",
+						students:{
+							userUID:{
+								displayName:user.displayName,
+								photoURL:user.photoURL
+							}
+						},
+						duration:requestClassCtrl.request.duration,
+						location:{
+							address:requestClassCtrl.request.location,
+							number:requestClassCtrl.request.location_number,
+							complement:requestClassCtrl.request.location_compl
+						},
+						course:{
+							"2-7":"História"
+						},
+						description:requestClassCtrl.request.description
+					})
+				})
+
+				console.log("Pronto agora ta la");
+				LoadingService.hideLoading();
+
+			} else {
+				ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
+			}
+		} else {
+			ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
+		}
+
 	}
 
 
@@ -94,29 +150,46 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 
 	//Show a popup with autocomplete in the address
 	requestClassCtrl.showPopup = function() {
-	  $scope.data = {};
+	  	$scope.data = {};
 
-	  // An elaborate, custom popup
-	  var myPopup = $ionicPopup.show({
-	    template: "<ion-google-place ng-model='data.location'>",
-	    title: 'Digite o endereço',
-	    scope: $scope,
-	    buttons: [
-	      { text: 'Cancel' },
-	      {
-	        text: '<b>Save</b>',
-	        type: 'button-positive',
-	        onTap: function(e) {
-	          return $scope.data.location;	      
-	        }
-	      }
-	    ]
-	  });
+	  	// An elaborate, custom popup
+	  	var myPopup = $ionicPopup.show({
+	    	template: "<ion-google-place ng-model='data.location'>",
+		    title: 'Digite o endereço',
+		    scope: $scope,
+		    buttons: [
+			    { text: 'Cancel' },
+			    {
+			        text: '<b>Save</b>',
+			        type: 'button-positive',
+			        onTap: function(e) {
+			          return $scope.data.location;	      
+			        }
+			    }
+		    ]
+	  	});
 
-	  myPopup.then(function(res) {
-	    console.log('Tapped!', res);
-	    requestClassCtrl.request.location = res;
-	  });
-	 };
+	  	myPopup.then(function(res) {
+	    	console.log('Tapped!', res);
+	    	requestClassCtrl.request.location = res;
+	  	});
+	};
+
+	var checkAllFieldsFilled = function()
+	{
+	 	if(requestClassCtrl.request.level.length > 0 && 
+	 		requestClassCtrl.request.course.length > 0 && 
+	 		requestClassCtrl.request.day.length > 0 && 
+	 		requestClassCtrl.request.hour.length > 0 &&
+	 		requestClassCtrl.request.duration.length > 0 && 
+	 		requestClassCtrl.request.location.length > 0 && 
+	 		requestClassCtrl.request.location_number.length > 0 && 
+	 		requestClassCtrl.request.location_compl.length > 0 && 
+	 		requestClassCtrl.request.description.length > 0)
+	 		return true;
+	 	else
+	 		// return false;
+	 		return true;
+	}
 
 }]);
