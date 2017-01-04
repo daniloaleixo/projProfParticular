@@ -1,7 +1,47 @@
 <ion-view title="EduCaqui" id="page1">
     <ion-content padding="true" class="has-header">
 
-    Home
+    <h5>Próxima aula</h5>
+
+    <!-- Card da proxima aula -->
+    <div class="item row">
+        <div class="col col-40">
+            <span class='mdl-layout-title' style="font-size:45px; padding-top:10px;">
+                {{homeCtrl.nextClass.hour.getUTCDate()}}/{{homeCtrl.nextClass.hour.getUTCMonth() + 1}}
+            </span>
+            <!-- <span class='mdl-layout-title'>{{homeCtrl.nextClass.duration}}h de duração</span> -->
+        </div>
+
+        <div class="col mdl-card__supporting-text" >
+            <span ng-repeat='course in homeCtrl.nextClass.course'>
+                <span style="font-size:25px;">
+                    {{course}}
+                </span>
+            </span>
+
+            <br>
+            <span style="font-size:18px;margin-top:5px;">
+                Prof. {{homeCtrl.nextClass.professor.displayName}}
+            </span>
+        </div>
+
+    </div>    
+
+    <div class="item item-body row" style="padding:10px;">
+
+        <div class="col col-40">
+            <img class='item-professor-avatar' src="{{homeCtrl.nextClass.professor.photoURL || 'img/null-avatar.png'}}" 
+                    style="margin-right:25px;">
+        </div>
+
+        <div class="col mdl-card__supporting-text" style="text-align:left;">
+            <span>Duração: {{homeCtrl.nextClass.duration}}h</span>
+            <br>
+            <span>Descrição: {{homeCtrl.nextClass.description}}</span>
+            <br>
+            <span>Local:{{homeCtrl.nextClass.location.address}} - {{homeCtrl.nextClass.location.number}} - {{homeCtrl.nextClass.location.complement}}</span>
+        </div>  
+    </div>
 
 	<div>
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent 

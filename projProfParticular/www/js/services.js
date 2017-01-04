@@ -189,6 +189,12 @@ angular.module('app.services', [])
 			myHistoryClasses: function(uid){
 				updateClasses(uid);
 				return MyScheduledClassesList.historyClasses;
+			},
+			getNextScheduledClass:function(){
+				if(MyScheduledClassesList.scheduledClasses.length == 0)
+					return null;
+				else
+					return MyScheduledClassesList.scheduledClasses[0];
 			}, 
 			reset: function(){
 				MyScheduledClassesList.allScheduledClasses = [];

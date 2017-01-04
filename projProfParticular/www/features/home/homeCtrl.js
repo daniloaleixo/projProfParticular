@@ -1,11 +1,12 @@
 angular.module('app.controllers')
 .controller('HomeCtrl', ['$scope', '$stateParams', '$location', '$q', 'UserInfos', 
-	'LoadingService', 'ToastService',
+	'LoadingService', 'ToastService', 'MyScheduledClassesList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService, allInfosUpdate) {
+function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService, 
+				MyScheduledClassesList) {
 	var homeCtrl = this;
 
 	homeCtrl.user = {
@@ -19,6 +20,8 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 				complement: ''
 			}
 	}
+
+	homeCtrl.nextClass = {};
 
 	homeCtrl.getUserInfos = function(){
 		LoadingService.showLoadingSpinner();
@@ -35,6 +38,9 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 				$location.path('/side-menu21/profile');
 
 			}
+			// Get the user next class
+			homeCtrl.nextClass = MyScheduledClassesList.getNextScheduledClass();
+			console.log(homeCtrl.nextClass);
 			LoadingService.hideLoading();
 		}, function(error){
 			console.log(error);
