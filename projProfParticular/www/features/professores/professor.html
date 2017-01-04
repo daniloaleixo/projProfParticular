@@ -14,11 +14,10 @@
                 readonly="professorCtrl.rating.readOnly"
                 style='margin-top: -20px;'></rating>
         <p style='margin-top: 10px;'>
-        	<span ng-show='professorCtrl.professor.locations.zone'>
-        	{{professorCtrl.professor.locations.zone.join(', ')}} de 
-        	</span>
-            {{professorCtrl.professor.locations.main.city}} - 
-            {{professorCtrl.professor.locations.main.state}}
+        	<span>
+                <!-- Get the city from the database -->
+                {{professorCtrl.professor.locations.main.address.split(",")[1].split("-")[0]}}
+            </span>
         </p>
         <p style="margin-top:-20px;">
             <i class='icon ion-ios-location'>10km distante de você</i>
