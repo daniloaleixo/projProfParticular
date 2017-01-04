@@ -10,6 +10,8 @@ elif [ "$1" == "unit" ]; then
 	karma start tests/unit-tests.conf.js --verbose --colors
 elif [ "$1" == "e2e" ]; then
 	protractor tests/e2e-tests.conf.js --verbose
+elif [ "$1" == "nightmare" ]; then
+	mocha tests/e2e-tests/example.js
 else
 	echo "Você tem de entrar com um parâmetro válido"
 fi
