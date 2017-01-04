@@ -190,9 +190,17 @@ angular.module('app.services', [])
 				updateClasses(uid);
 				return MyScheduledClassesList.historyClasses;
 			},
-			getNextScheduledClass:function(){
-				if(MyScheduledClassesList.scheduledClasses.length == 0)
-					return null;
+			getNextScheduledClass:function(uid){
+				if(MyScheduledClassesList.scheduledClasses.length == 0){
+					var deferred = $q.defer();
+					$timeout(function(){
+						deferred.resolve(updateClasses(uid));
+					}, 2000);
+					// Even after waiting for the server the user dont have classes scheduled
+					//  then we return null
+					if(MyScheduledClassesList.scheduledClasses.length == 0) return null;
+					else return MyScheduledClassesList.scheduledClasses[0];
+				}
 				else
 					return MyScheduledClassesList.scheduledClasses[0];
 			}, 

@@ -30,7 +30,8 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 			console.log("Esperei pelas infos do usuario");
 			homeCtrl.user = result;
 			//Verify if the user need to fill the other infos
-			if(homeCtrl.user.cellphone.length == 0 || homeCtrl.user.location.address.length == 0){
+			if( (homeCtrl.user.cellphone != undefined && homeCtrl.user.cellphone.length == 0) || 
+			(homeCtrl.user.location.address != undefined && homeCtrl.user.location.address.length == 0)){
 				console.log("O usuario nao tem celular ou address");
 
 				ToastService.showToast("Por favor preencha as informações", 
@@ -39,7 +40,7 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 
 			}
 			// Get the user next class
-			homeCtrl.nextClass = MyScheduledClassesList.getNextScheduledClass();
+			homeCtrl.nextClass = MyScheduledClassesList.getNextScheduledClass(user.uid);
 			console.log(homeCtrl.nextClass);
 			LoadingService.hideLoading();
 		}, function(error){
