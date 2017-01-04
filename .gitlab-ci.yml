@@ -9,12 +9,9 @@ before_script:
   - npm install karma-phantomjs-launcher --save-dev
   - npm install -g karma-cli
   - npm install -g phantomjs
-  - npm install selenium-webdriver
-  - npm install -g protractor
   - npm install -g mocha
   - npm install --save-dev chai
   - npm install --save-dev nightmare
-  - webdriver-manager update
   - cd projProfParticular/
   - bower install --allow-root
   
