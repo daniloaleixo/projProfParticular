@@ -11,6 +11,9 @@ before_script:
   - npm install -g phantomjs
   - npm install selenium-webdriver
   - npm install -g protractor
+  - npm install -g mocha
+  - npm install --save-dev chai
+  - npm install --save-dev nightmare
   - webdriver-manager update
   - cd projProfParticular/
   - bower install --allow-root
@@ -19,6 +22,6 @@ unit-tests:
   script:
     - ./run_tests.sh unit
     
-#e2e-tests:
-# script:
-#    - ./run_tests.sh e2e
+e2e-tests:
+ script:
+    - ./run_tests.sh nightmare
