@@ -9,10 +9,10 @@
         	<div class="item row">
 
         		<div class="col col-40">
-        			<span class='mdl-layout-title' style="font-size:45px;">
+        			<span class='mdl-layout-title' style="font-size:45px; padding-top:10px;">
                         {{class.hour.getUTCDate()}}/{{class.hour.getUTCMonth() + 1}}
                     </span>
-        			<span class='mdl-layout-title'>{{class.duration}} minutos</span>
+        			<!-- <span class='mdl-layout-title'>{{class.duration}}h de duração</span> -->
 	        	</div>
 
 	        	<div class="col mdl-card__supporting-text" >
@@ -38,11 +38,11 @@
                 </div>
 
                 <div class="col mdl-card__supporting-text" style="text-align:left;">
-                    location 
+                    <span>Duração: {{class.duration}}h</span>
                     <br>
-                    <span>
-                    	Descrição: {{class.description}}
-                    </span>
+                    <span>Descrição: {{class.description}}</span>
+                    <br>
+                    <span>Local:{{class.location.address}} - {{class.location.number}} - {{class.location.complement}}</span>
                 </div>  
             </div>            
         </span>
