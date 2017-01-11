@@ -16,7 +16,7 @@ app.controller('contactController', function($scope) {
     $scope.message = 'Contact';
 });
 
-app.controller('aboutController', function($scope) {
+app.controller('includeProfessorController', function($scope) {
 
     // create a message to display in our view
     $scope.message = 'About';
@@ -41,10 +41,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'mainController'
   })
 
-  .state('about', {
-    url: '/about',
-    templateUrl: 'pages/about.html',
-    controller: 'aboutController'
+  .state('includeProfessor', {
+    url: '/includeProfessor',
+    templateUrl: 'pages/includeProfessor.html',
+    controller: 'includeProfessorController'
   })
 
   .state('contact', {
