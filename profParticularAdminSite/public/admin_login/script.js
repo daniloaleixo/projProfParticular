@@ -28,14 +28,34 @@ app.controller('contactController', function($scope) {
 app.controller('includeProfessorController', function($scope) {
 
     // create a message to display in our view
-    $scope.message = 'About';
+    $scope.message = '';
     $scope.page = 1;
+
+    $scope.professor = {};
+
 
     $scope.register = function(){
       $scope.page = 2;
     }
     $scope.googleLogin = function(){
-      $scope.page = 2;
+      var provider = new firebase.auth.GoogleAuthProvider();
+      var tryGoogleSignIn = firebase.auth().signInWithPopup(provider);
+      tryGoogleSignIn.then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        $scope.professor.uid = result.user.uid;
+        $scope.professor.displayName = result.user.displayName;
+        $scope.professor.email = result.user.email;
+        $scope.professor.photoURL = result.user.photoURL;
+        console.log($scope.professor);
+
+    }).catch(function(error){
+      // Handle Errors here.
+        var errorCode = error.code;
+        $scope.message = error.message;
+        console.log("nao consegui");
+    });
     }
 });
 

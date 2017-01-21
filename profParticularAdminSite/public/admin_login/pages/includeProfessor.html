@@ -2,6 +2,11 @@
     <div class="jumbotron">
         <h1 class='text-center'>Incluir Professor</h1>
 
+        <!-- Error message -->
+        <div class="alert alert-danger" ng-show='message'>
+  			<strong>Erro!</strong> {{message}}
+		</div>
+
 
         <!-- Register professor -->
 		<form style="padding:40px" ng-if='page === 1'>
