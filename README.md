@@ -30,6 +30,9 @@ sudo npm install karma-jasmine --save-dev
 sudo npm install karma-phantomjs-launcher --save-dev
 sudo npm install -g karma-cli
 sudo npm install -g phantomjs
+sudo npm install -g mocha
+sudo npm install --save-dev chai
+sudo npm install --save-dev nightmare
 ```
 
 ## Rodando o sistema
