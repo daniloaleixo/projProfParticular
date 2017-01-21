@@ -1,7 +1,16 @@
-// script.js
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyDRXTIuWMxl73q9aNrAUaxR7MMtSMXq32E",
+  authDomain: "projprofparticular.firebaseapp.com",
+  databaseURL: "https://projprofparticular.firebaseio.com",
+  storageBucket: "projprofparticular.appspot.com",
+  messagingSenderId: "240797807247"
+};
+firebase.initializeApp(config);
+
 
 // create the module and name it scotchApp
-var app = angular.module('adminSite', ['ui.router', 'google.places']);
+var app = angular.module('adminSite', ['ui.router', 'google.places', 'firebase']);
 
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {
