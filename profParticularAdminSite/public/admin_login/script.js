@@ -36,7 +36,12 @@ app.controller('includeProfessorController', function($scope) {
       password2:''
     };
 
-    $scope.professor = {};
+    $scope.professor = {
+      uid:'',
+      displayName:'',
+      email:'',
+      photoURL:''
+    };
 
 
     $scope.register = function(){
@@ -65,6 +70,7 @@ app.controller('includeProfessorController', function($scope) {
       }
 
     }
+
     $scope.googleLogin = function(){
       $scope.message = '';
 

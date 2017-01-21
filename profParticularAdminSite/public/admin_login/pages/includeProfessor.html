@@ -23,7 +23,7 @@
 			<div class="form-group row">
 			  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
 			  <div class="col-10">
-			    <input class="form-control" placeholder="Digite uma senha" 
+			    <input class="form-control" type='password' placeholder="Digite uma senha" 
 			    	ng-model='input.password1' id="example-password-input">
 			  </div>
 			</div>
@@ -31,7 +31,7 @@
 			<div class="form-group row">
 			  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
 			  <div class="col-10">
-			    <input class="form-control" placeholder="Digite novamente a senha" 
+			    <input class="form-control" type='password' placeholder="Digite novamente a senha" 
 			    	ng-model='input.password2' id="example-password-input">
 			  </div>
 			</div>
@@ -40,7 +40,7 @@
 			    <button class="btn btn-large btn-danger" ng-click='googleLogin()'>
 			      Entrar com o Google
 			    </button>
-			  <button class="btn btn-large btn-primary" ng-click='register()' type="button">Cadastrar</button>
+			  	<button class="btn btn-large btn-primary" ng-click='register()' type="button">Cadastrar</button>
 			</p>
 
 		</form>        
@@ -48,7 +48,6 @@
 		<!-- Fill infos -->
 	    <form style="padding:40px" ng-if='page === 2'>
 
-	    	<!-- Endereço -->
 	    	<div class="panel panel-default">
 	    	    <div class="panel-heading">
 	    	    	<h3 class="panel-title">Informações Gerais</h3>
@@ -57,21 +56,21 @@
 	    	    <div class="panel-body" style="padding:30px;">
 
 
-			    	<!-- Nome -->
-			    	<div class="form-group row">
+			    	<!-- Display Name-->
+			    	<div class="form-group row" ng-hide='professor.displayName'>
 			    	  <label for="example-text-input" class="col-2 col-form-label">Nome do Professor</label>
 			    	  <div class="col-10">
-			    	    <input class="form-control" type="text" placeholder="Ex: João da Silva" id="example-text-input">
+			    	    <input class="form-control" type="text" placeholder="Ex: João da Silva" id="example-text-input" ng-model='professor.displayName'>
 			    	  </div>
 			    	</div>
 
 			    	<!-- Email -->
-			    	<!-- <div class="form-group row">
+			    	<div class="form-group row" ng-hide='professor.email'>
 			    	  <label for="example-email-input" class="col-2 col-form-label">Email</label>
 			    	  <div class="col-10">
-			    	    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input">
+			    	    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input" ng-model='professor.email'>
 			    	  </div>
-			    	</div> -->
+			    	</div>
 
 			    	<!-- Telefone -->
 			    	<div class="form-group row">
