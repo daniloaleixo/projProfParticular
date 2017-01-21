@@ -25,6 +25,9 @@ app.controller('includeProfessorController', function($scope) {
     $scope.register = function(){
       $scope.page = 2;
     }
+    $scope.googleLogin = function(){
+      $scope.page = 2;
+    }
 });
 
     
