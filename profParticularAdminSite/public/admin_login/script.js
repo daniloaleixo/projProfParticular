@@ -20,6 +20,11 @@ app.controller('includeProfessorController', function($scope) {
 
     // create a message to display in our view
     $scope.message = 'About';
+    $scope.page = 1;
+
+    $scope.register = function(){
+      $scope.page = 2;
+    }
 });
 
     

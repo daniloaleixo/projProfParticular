@@ -2,7 +2,41 @@
     <div class="jumbotron">
         <h1 class='text-center'>Incluir Professor</h1>
 
-	    <form style="padding:40px;">
+
+        <!-- Register professor -->
+		<form style="padding:40px" ng-if='page === 1'>
+
+			<!-- Email -->
+			<div class="form-group row">
+			  <label for="example-email-input" class="col-2 col-form-label">Email</label>
+			  <div class="col-10">
+			    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input">
+			  </div>
+			</div>
+
+			<!-- Password 1 -->
+			<div class="form-group row">
+			  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
+			  <div class="col-10">
+			    <input class="form-control" placeholder="Digite uma senha" id="example-password-input">
+			  </div>
+			</div>
+			<!-- Password 2 -->
+			<div class="form-group row">
+			  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
+			  <div class="col-10">
+			    <input class="form-control" placeholder="Digite novamente a senha" id="example-password-input">
+			  </div>
+			</div>
+
+			<p style="text-align:center">
+			  <button class="btn btn-large btn-primary" ng-click='register()' type="button">Cadastrar</button>
+			</p>
+
+		</form>        
+
+		<!-- Fill infos -->
+	    <form style="padding:40px" ng-if='page === 2'>
 
 	    	<!-- Endereço -->
 	    	<div class="panel panel-default">
@@ -22,12 +56,12 @@
 			    	</div>
 
 			    	<!-- Email -->
-			    	<div class="form-group row">
+			    	<!-- <div class="form-group row">
 			    	  <label for="example-email-input" class="col-2 col-form-label">Email</label>
 			    	  <div class="col-10">
 			    	    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input">
 			    	  </div>
-			    	</div>
+			    	</div> -->
 
 			    	<!-- Telefone -->
 			    	<div class="form-group row">
@@ -38,19 +72,19 @@
 			    	</div>
 
 			    	<!-- Password 1 -->
-			    	<div class="form-group row">
+			    	<!-- <div class="form-group row">
 			    	  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
 			    	  <div class="col-10">
 			    	    <input class="form-control" placeholder="Digite uma senha" id="example-password-input">
 			    	  </div>
-			    	</div>
+			    	</div> -->
 			    	<!-- Password 2 -->
-			    	<div class="form-group row">
+			    	<!-- <div class="form-group row">
 			    	  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
 			    	  <div class="col-10">
 			    	    <input class="form-control" placeholder="Digite novamente a senha" id="example-password-input">
 			    	  </div>
-			    	</div>
+			    	</div> -->
 
 			    	<!-- Professor Level -->
 			    	<div class="form-group row">
@@ -317,9 +351,16 @@
 	    	</div>
 
 	    	<p style="text-align:center">
-	    	  <button class="btn btn-large btn-primary" type="button">Cadastrar</button>o
+	    		<button class="btn btn-large btn-primary" ng-click='saveInfos()'
+	    	  	type="button">Voltar</button>
+	    	  	<button class="btn btn-large btn-primary" ng-click='saveInfos()'
+	    	  	type="button">Salvar informações</button>
 	    	</p>
 	    	
 	    </form>
+
+	    <div class="alert alert-success" ng-if='page === 3'>
+		    <strong>Salvo com sucesso!</strong> O professor agora faz parte do database
+		</div>
 
     </div>
