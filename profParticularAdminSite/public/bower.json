@@ -1,0 +1,17 @@
+{
+  "name": "AdminSite",
+  "authors": [
+    "Danilo Aleixo <danilo_aleixo@hotmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,7 +1,7 @@
 // script.js
 
 // create the module and name it scotchApp
-var app = angular.module('adminSite', ['ui.router']);
+var app = angular.module('adminSite', ['ui.router', 'google.places']);
 
 // create the controller and inject Angular's $scope
 app.controller('mainController', function($scope) {

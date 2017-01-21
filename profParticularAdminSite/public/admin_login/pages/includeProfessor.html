@@ -78,7 +78,9 @@
 			    	<div class="form-group row">
 			    	  <label for="example-text-input" class="col-2 col-form-label">Endereço</label>
 			    	  <div class="col-10">
-			    	    <input class="form-control" type="text" placeholder="Ex: Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil" id="example-text-input">
+			    	    <!-- <input class="form-control" type="text" placeholder="Ex: Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil" id="example-text-input"> -->
+			    	    <input class="form-control" g-places-autocomplete 
+			    	    placeholder='Av. xyz - State: ABC' ng-model="place"/>
 			    	  </div>
 			    	</div>
 
@@ -315,7 +317,7 @@
 	    	</div>
 
 	    	<p style="text-align:center">
-	    	  <button class="btn btn-large btn-primary" type="button">Cadastrar</button>
+	    	  <button class="btn btn-large btn-primary" type="button">Cadastrar</button>o
 	    	</p>
 	    	
 	    </form>
