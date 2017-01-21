@@ -55,6 +55,14 @@
 	    	    </div>
 	    	    <div class="panel-body" style="padding:30px;">
 
+	    	    	<!-- Image -->
+	    	    	<div class="form-group row" ng-hide='professor.displayName'>
+		    	    	<label class="control-label">
+		    	    		Selecione uma imagem de perfil</label>
+	        			<input id="image" type="file" class="file" ng-model='professor.photoURL'>
+	        			<!-- <button class="btn btn-large btn-primary"  ng-click='uploadImage()' type="button">Upload</button> -->
+        			</div>	
+
 
 			    	<!-- Display Name-->
 			    	<div class="form-group row" ng-hide='professor.displayName'>
@@ -360,7 +368,7 @@
 	    	</div>
 
 	    	<p style="text-align:center">
-	    		<button class="btn btn-large btn-primary" ng-click='saveInfos()'
+	    		<button class="btn btn-large btn-primary" ng-click='goBack()'
 	    	  	type="button">Voltar</button>
 	    	  	<button class="btn btn-large btn-primary" ng-click='saveInfos()'
 	    	  	type="button">Salvar informações</button>

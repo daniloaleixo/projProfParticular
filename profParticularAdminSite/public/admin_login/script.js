@@ -28,7 +28,7 @@ app.controller('contactController', function($scope) {
 app.controller('includeProfessorController', function($scope) {
 
     $scope.message = '';
-    $scope.page = 1;
+    $scope.page = 2;
 
     $scope.input = {
       email: '',
@@ -88,12 +88,30 @@ app.controller('includeProfessorController', function($scope) {
 
         $scope.page = 2;
 
-    }).catch(function(error){
-      // Handle Errors here.
-        var errorCode = error.code;
-        $scope.message = error.message;
-        console.log("nao consegui");
-    });
+      }).catch(function(error){
+        // Handle Errors here.
+          var errorCode = error.code;
+          $scope.message = error.message;
+          console.log("nao consegui");
+      });
+    }
+
+    $scope.saveInfos = function(){
+
+      // Upload the image
+      var f = document.getElementById('image').files[0],
+        r = new FileReader();
+        r.onloadend = function(e){
+          var data = e.target.result;
+          //send your binary data via $http or $resource or do anything else with it
+          console.log(data);
+      }
+      r.readAsBinaryString(f);
+
+
+
+      console.log("dsadasdasd");
+      console.log($scope.professor.photoURL);
     }
 });
 
