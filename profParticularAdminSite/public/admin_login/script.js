@@ -27,17 +27,47 @@ app.controller('contactController', function($scope) {
 
 app.controller('includeProfessorController', function($scope) {
 
-    // create a message to display in our view
     $scope.message = '';
     $scope.page = 1;
+
+    $scope.input = {
+      email: '',
+      password1: '',
+      password2:''
+    };
 
     $scope.professor = {};
 
 
     $scope.register = function(){
-      $scope.page = 2;
+      $scope.message = '';
+
+      if($scope.input.password1 == $scope.input.password2){
+        firebase.auth()
+        .createUserWithEmailAndPassword($scope.input.email, $scope.input.password1)
+        .then(function(user){
+
+          $scope.professor.uid = user.uid;
+          $scope.professor.email = user.email;
+          
+          console.log($scope.professor);
+
+        },function(error){
+          if(error.code == 'auth/email-already-in-use')
+            $scope.message = "O email escolhido já esta em uso";
+          else
+            $scope.message = "Não consegui realizar o cadastro, por favor tente novamente";
+        });
+
+        $scope.page = 2;
+      } else {
+        $scope.message = 'As senhas devem ser iguais';
+      }
+
     }
     $scope.googleLogin = function(){
+      $scope.message = '';
+
       var provider = new firebase.auth.GoogleAuthProvider();
       var tryGoogleSignIn = firebase.auth().signInWithPopup(provider);
       tryGoogleSignIn.then(function(result) {
@@ -48,7 +78,9 @@ app.controller('includeProfessorController', function($scope) {
         $scope.professor.displayName = result.user.displayName;
         $scope.professor.email = result.user.email;
         $scope.professor.photoURL = result.user.photoURL;
-        console.log($scope.professor);
+        // console.log($scope.professor);
+
+        $scope.page = 2;
 
     }).catch(function(error){
       // Handle Errors here.

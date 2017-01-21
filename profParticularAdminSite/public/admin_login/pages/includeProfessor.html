@@ -15,7 +15,7 @@
 			<div class="form-group row">
 			  <label for="example-email-input" class="col-2 col-form-label">Email</label>
 			  <div class="col-10">
-			    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input">
+			    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input" ng-model='input.email'>
 			  </div>
 			</div>
 
@@ -23,14 +23,16 @@
 			<div class="form-group row">
 			  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
 			  <div class="col-10">
-			    <input class="form-control" placeholder="Digite uma senha" id="example-password-input">
+			    <input class="form-control" placeholder="Digite uma senha" 
+			    	ng-model='input.password1' id="example-password-input">
 			  </div>
 			</div>
 			<!-- Password 2 -->
 			<div class="form-group row">
 			  <label for="example-password-input" class="col-2 col-form-label">Senha</label>
 			  <div class="col-10">
-			    <input class="form-control" placeholder="Digite novamente a senha" id="example-password-input">
+			    <input class="form-control" placeholder="Digite novamente a senha" 
+			    	ng-model='input.password2' id="example-password-input">
 			  </div>
 			</div>
 
