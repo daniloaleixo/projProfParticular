@@ -27,6 +27,8 @@ app.controller('contactController', function($scope) {
 
 app.controller('includeProfessorController', function($scope) {
 
+    var storageRef = firebase.storage().ref();
+
     $scope.message = '';
     $scope.page = 2;
 
@@ -37,7 +39,7 @@ app.controller('includeProfessorController', function($scope) {
     };
 
     $scope.professor = {
-      uid:'',
+      uid:'123456',
       displayName:'',
       email:'',
       photoURL:''
@@ -98,20 +100,29 @@ app.controller('includeProfessorController', function($scope) {
 
     $scope.saveInfos = function(){
 
-      // Upload the image
-      var f = document.getElementById('image').files[0],
-        r = new FileReader();
-        r.onloadend = function(e){
-          var data = e.target.result;
-          //send your binary data via $http or $resource or do anything else with it
-          console.log(data);
+      // Upload Profile picture
+      if($scope.professor.photoURL.length <= 0){
+        var f = document.getElementById('image').files[0];
+        console.log(f);
+        var fileRef = storageRef.child('images').child($scope.professor.uid).child('profile.jpg');
+        var uploadTask = fileRef.put(f);
+        uploadTask.on('state_changed', function(snapshot){
+          // Observe state change events such as progress, pause, and resume
+          // See below for more detail
+        }, function(error) {
+          // Handle unsuccessful uploads
+        }, function() {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+          var downloadURL = uploadTask.snapshot.downloadURL;
+          $scope.professor.photoURL = downloadURL;
+        });
       }
-      r.readAsBinaryString(f);
 
 
 
-      console.log("dsadasdasd");
-      console.log($scope.professor.photoURL);
+
+
     }
 });
 
