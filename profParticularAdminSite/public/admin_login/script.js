@@ -32,9 +32,14 @@ app.controller('includeProfessorController', function($scope) {
 
     $scope.zoneCheckBox = ['','','','','',''];
     $scope.courseStatusRadioButton = ['',''];
+    $scope.classesCheckBox = {
+      fundamental: ['','','','','','','','',''],
+      medio:['','','','','','','','',''],
+      superior:['','','','','','','','','']
+    }
     $scope.message = '';
-    // $scope.page = 1;
-    $scope.page = 2;
+    $scope.page = 1;
+    // $scope.page = 2;
 
     $scope.input = {
       email: '',
@@ -43,14 +48,20 @@ app.controller('includeProfessorController', function($scope) {
     };
 
     $scope.professor = {
-      // uid:'',
-      uid:'12345',
+      uid:'',
+      // uid:'12345',
       displayName:'',
       email:'',
-      // photoURL:'',
-      photoURL:'dsdsdff',
+      photoURL:'',
+      // photoURL:'dsdsdff',
       cellphone:'',
       professorLevel:'1',
+      courses:{
+        show:[],
+        level1:{},
+        level2:{},
+        level3:{}
+      },
       locations:{
         main:{
           address:'',
@@ -68,6 +79,12 @@ app.controller('includeProfessorController', function($scope) {
             course:''
           }
         }
+      },
+      assessments:{
+        quantity: 0,
+        teaching:5,
+        knowledge:5,
+        sympathy:5
       }
     };
 
@@ -162,8 +179,38 @@ app.controller('includeProfessorController', function($scope) {
         if($scope.courseStatusRadioButton[i].length > 0) 
           $scope.professor.curriculum.formation.college.status = $scope.courseStatusRadioButton[i];
       }
+      // Classes Fundamental
+      for(var i = 0; i < $scope.classesCheckBox.fundamental.length; i++){
+        if($scope.classesCheckBox.fundamental[i].length > 0){
+          // Put the class in the respective place
+          $scope.professor.courses.level1['1-'+ (i+1)] = $scope.classesCheckBox.fundamental[i];
+          // If this class is not in the show list, we put it in
+          if($scope.professor.courses.show.indexOf($scope.classesCheckBox.fundamental[i]) < 0)
+            $scope.professor.courses.show.push($scope.classesCheckBox.fundamental[i]);
+        }
+      }
+      // Classes Medio
+      for(var i = 0; i < $scope.classesCheckBox.medio.length; i++){
+        if($scope.classesCheckBox.medio[i].length > 0){
+          // Put the class in the respective place
+          $scope.professor.courses.level2['2-'+ (i+1)] = $scope.classesCheckBox.medio[i];
+          // If this class is not in the show list, we put it in
+          if($scope.professor.courses.show.indexOf($scope.classesCheckBox.medio[i]) < 0)
+            $scope.professor.courses.show.push($scope.classesCheckBox.medio[i]);
+        }
+      }
+      // Classes Superior
+      for(var i = 0; i < $scope.classesCheckBox.superior.length; i++){
+        if($scope.classesCheckBox.superior[i].length > 0){
+          // Put the class in the respective place
+          $scope.professor.courses.level3['3-'+ (i+1)] = $scope.classesCheckBox.superior[i];
+          // If this class is not in the show list, we put it in
+          if($scope.professor.courses.show.indexOf($scope.classesCheckBox.superior[i]) < 0)
+            $scope.professor.courses.show.push($scope.classesCheckBox.superior[i]);
+        }
+      }
+      $scope.professor.courses.show.sort();
     }
-
 });
 
     
