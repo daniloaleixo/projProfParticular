@@ -48,15 +48,36 @@ app.controller('deleteProfessorController', function($scope) {
     $scope.getProfessors();
 
     $scope.deleteProfessor = function(professorUID){
-      // firebase.database().ref().child('professors').child(professorUID).remove();
+      firebase.database().ref().child('professors').child(professorUID).remove();
+      var coursesRef = firebase.database().ref().child('courses');
+      coursesRef.once('value').then(function(snapshot){
+        // Going through levels (fundamental, medio, superior)
+        Object.keys(snapshot.val()).forEach(function(level){
+          // Going through each course
+          Object.keys(snapshot.val()[level]).forEach(function(course){
+            // Check if there's professors in this course
+            if(snapshot.val()[level][course]['professors'] != undefined){
+              // Go through each professor and now we have to find our professor
+              Object.keys(snapshot.val()[level][course]['professors']).forEach(function(professorKey){
+                // console.log(snapshot.val()[level][course]['professors'][professorKey]);
+                if(snapshot.val()[level][course]['professors'][professorKey] == professorUID)
+                {
+                  // Now we have to exclude the professor from this course
+                  coursesRef.child(level).child(course).child('professors').child(professorKey).remove();
+                }
+              });
+            }
+          });
+        });
+        $scope.message = 'Professor excluido com sucesso';
+        $scope.$digest();
+      })
     }
 });
 
 app.controller('includeProfessorController', function($scope) {
 
     var storageRef = firebase.storage().ref();
-
-
 
     $scope.isGoogleLogin = false;
     $scope.zoneCheckBox = ['','','','','',''];
