@@ -29,9 +29,12 @@ app.controller('includeProfessorController', function($scope) {
 
     var storageRef = firebase.storage().ref();
 
+
+    $scope.zoneCheckBox = ['','','','','',''];
+    $scope.courseStatusRadioButton = ['',''];
     $scope.message = '';
-    $scope.page = 1;
-    // $scope.page = 2;
+    // $scope.page = 1;
+    $scope.page = 2;
 
     $scope.input = {
       email: '',
@@ -44,7 +47,28 @@ app.controller('includeProfessorController', function($scope) {
       uid:'12345',
       displayName:'',
       email:'',
-      photoURL:''
+      // photoURL:'',
+      photoURL:'dsdsdff',
+      cellphone:'',
+      professorLevel:'1',
+      locations:{
+        main:{
+          address:'',
+          number:'',
+          complement:''
+        },
+        zone:[]
+      },
+      curriculum:{
+        about:'',
+        formation:{
+          college:{
+            institute:'',
+            status:'',
+            course:''
+          }
+        }
+      }
     };
 
 
@@ -103,7 +127,7 @@ app.controller('includeProfessorController', function($scope) {
     $scope.saveInfos = function(){
 
       // Upload Profile picture
-      if($scope.professor.photoURL.length <= 0){
+      if($scope.professor.photoURL.length <= 0 && $scope.professor.uid.length > 0){
         var f = document.getElementById('image').files[0];
         console.log(f);
         var fileRef = storageRef.child('images').child($scope.professor.uid).child('profile.jpg');
@@ -118,14 +142,28 @@ app.controller('includeProfessorController', function($scope) {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           var downloadURL = uploadTask.snapshot.downloadURL;
           $scope.professor.photoURL = downloadURL;
+          setCheckBoxInTheProfessorInfo();
         });
       }
-
-
-
-
-
+      else{
+        setCheckBoxInTheProfessorInfo();
+        console.log($scope.professor);
+      }
     }
+
+    var setCheckBoxInTheProfessorInfo = function(){
+      // Zone checkbox
+      for(var i = 0; i < $scope.zoneCheckBox.length; i++){
+        if($scope.zoneCheckBox[i].length > 0) 
+          $scope.professor.locations.zone.push($scope.zoneCheckBox[i]);
+      }
+      // Course Status
+      for(var i = 0; i < $scope.courseStatusRadioButton.length; i++){
+        if($scope.courseStatusRadioButton[i].length > 0) 
+          $scope.professor.curriculum.formation.college.status = $scope.courseStatusRadioButton[i];
+      }
+    }
+
 });
 
     

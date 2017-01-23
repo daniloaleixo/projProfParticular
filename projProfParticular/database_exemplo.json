@@ -43,7 +43,7 @@
 					"number":"1800",
 					"complement":"165A"
 				},
-				"zone":{},
+				"zone":[],
 				"others" : {}
 			},
 			"curriculum": {
@@ -89,7 +89,7 @@
 					"number":"180",
 					"complement":"142A"
 				},
-				"zone":{},
+				"zone":[],
 				"others" : {}
 			},
 			"curriculum": {

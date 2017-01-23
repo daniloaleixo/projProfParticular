@@ -84,7 +84,8 @@
 			    	<div class="form-group row">
 			    	  <label for="example-tel-input" class="col-2 col-form-label">Celular</label>
 			    	  <div class="col-10">
-			    	    <input class="form-control" type="tel" placeholder="(11) 98765-4321" id="example-tel-input">
+			    	    <input class="form-control" type="tel" placeholder="(11) 98765-4321" 
+			    	    ng-model='professor.cellphone'>
 			    	  </div>
 			    	</div>
 
@@ -106,7 +107,7 @@
 			    	<!-- Professor Level -->
 			    	<div class="form-group row">
 			    	    <label for="exampleSelect1">Nível do professor</label>
-			    	    <select class="form-control" id="exampleSelect1">
+			    	    <select class="form-control" id="exampleSelect1" ng-model='professor.level'>
 			    	      <option>1</option>
 			    	      <option>2</option>
 			    	      <option>3</option>
@@ -131,7 +132,7 @@
 			    	  <div class="col-10">
 			    	    <!-- <input class="form-control" type="text" placeholder="Ex: Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil" id="example-text-input"> -->
 			    	    <input class="form-control" g-places-autocomplete 
-			    	    placeholder='Av. xyz - State: ABC' ng-model="place"/>
+			    	    placeholder='Av. xyz - State: ABC' ng-model="professor.locations.main.address"/>
 			    	  </div>
 			    	</div>
 
@@ -139,7 +140,7 @@
 			    	<div class="form-group row">
 			    	  <label for="example-text-input" class="col-2 col-form-label">Numero</label>
 			    	  <div class="col-10">
-			    	    <input class="form-control" type="text" placeholder="Ex: 123" id="example-text-input">
+			    	    <input class="form-control" type="text" placeholder="Ex: 123" ng-model="professor.locations.main.number">
 			    	  </div>
 			    	</div>
 
@@ -147,9 +148,47 @@
 			    	<div class="form-group row">
 			    	  <label for="example-text-input" class="col-2 col-form-label">Complemento</label>
 			    	  <div class="col-10">
-			    	    <input class="form-control" type="text" placeholder="Ex: 1234 B" id="example-text-input">
+			    	    <input class="form-control" type="text" placeholder="Ex: 1234 B" ng-model="professor.locations.main.complement">
 			    	  </div>
 			    	</div>
+
+			    	<!-- Zone  -->
+			    	<div class="form-group row">
+				    	<label for="example-text-input" class="col-2 col-form-label">Zona que o professor irá atender</label>
+				    	<div style="padding-left:20px;">
+					    	<label class="form-check-label">
+					    	    <input class="form-check-input" type="checkbox" 
+					    	    ng-model='zoneCheckBox[0]' ng-true-value="'Centro'" ng-false-value="''">
+					    	    Centro
+					    	</label>
+					    	<label class="form-check-label">
+					    	    <input class="form-check-input" type="checkbox" 
+					    	    ng-model='zoneCheckBox[1]' ng-true-value="'Sul'" ng-false-value="''">
+					    	    Sul
+					    	</label>
+					    	<label class="form-check-label">
+					    	    <input class="form-check-input" type="checkbox" 
+					    	    ng-model='zoneCheckBox[2]' ng-true-value="'Norte'" ng-false-value="''">
+					    	    Norte
+					    	</label>
+					    	<label class="form-check-label">
+					    	    <input class="form-check-input" type="checkbox" 
+					    	    ng-model='zoneCheckBox[3]' ng-true-value="'Leste'" ng-false-value="''">
+					    	    Leste
+					    	</label>
+					    	<label class="form-check-label">
+					    	    <input class="form-check-input" type="checkbox" 
+					    	    ng-model='zoneCheckBox[4]' ng-true-value="'Oeste'" ng-false-value="''">
+					    	    Oeste
+					    	</label>
+					    	<label class="form-check-label">
+					    	    <input class="form-check-input" type="checkbox" 
+					    	    ng-model='zoneCheckBox[5]' ng-true-value="'ABC'" ng-false-value="''">
+					    	    ABC
+					    	</label>
+					    </div>
+			    	</div>
+
 			   	</div>
 			</div>
 
@@ -157,21 +196,21 @@
 	    	<div class="panel panel-default">
 	    	    <div class="panel-heading">
 	    	    	<h3 class="panel-title">Formação</h3>
-	    	     
 	    	    </div>
+
 	    	    <div class="panel-body" style="padding:30px;">
 
 			    	<!-- Sobre -->
 			    	<div class="form-group row">
 			    	    <label>Sobre</label>
-			    	    <textarea class="form-control" id="exampleTextarea" placeholder='Fale um pouco sobre o professor' rows="3"></textarea>
+			    	    <textarea class="form-control" id="exampleTextarea" placeholder='Fale um pouco sobre o professor' rows="3" ng-model='professor.curriculum.about'></textarea>
 			    	</div>
 
 			    	<!-- Formação -->
 			    	<div class="form-group row">
 			    	  <label for="example-text-input" class="col-2 col-form-label">Faculdade</label>
 			    	  <div class="col-10">
-			    	  	<input class="form-control" type="text" placeholder="Ex: Universidade de São Paulo" id="example-text-input">
+			    	  	<input class="form-control" type="text" placeholder="Ex: Universidade de São Paulo" ng-model='professor.curriculum.formation.college.institute'>
 			    	  </div>
 			    	</div>
 
@@ -179,7 +218,7 @@
 			    	<div class="form-group row">
 			    	  <label for="example-text-input" class="col-2 col-form-label">Curso</label>
 			    	  <div class="col-10">
-			    	  	<input class="form-control" type="text" placeholder="Ex: História" id="example-text-input">
+			    	  	<input class="form-control" type="text" placeholder="Ex: História"  ng-model='professor.curriculum.formation.college.course'>
 			    	  </div>
 			    	</div>
 
@@ -190,12 +229,12 @@
 			    		<label for="example-text-input" class="col-2 col-form-label">Status</label>
 				    	<div class="form-check form-check-inline">
 				    	  <label class="form-check-label">
-				    	    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Cursando
+				    	    <input class="form-check-input" type="checkbox" ng-model='courseStatusRadioButton[0]' ng-true-value="'Cursando'" ng-false-value="''"> Cursando
 				    	  </label>
 				    	</div>
 				    	<div class="form-check form-check-inline">
 				    	  <label class="form-check-label">
-				    	    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Finalizado
+				    	    <input class="form-check-input" type="checkbox"  ng-model='courseStatusRadioButton[1]' ng-true-value="'Finalizado'" ng-false-value="''"> Finalizado
 				    	  </label>
 				    	</div>
 				    	<br>
