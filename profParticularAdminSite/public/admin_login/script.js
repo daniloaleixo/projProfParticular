@@ -30,6 +30,8 @@ app.controller('includeProfessorController', function($scope) {
     var storageRef = firebase.storage().ref();
 
 
+
+    $scope.isGoogleLogin = false;
     $scope.zoneCheckBox = ['','','','','',''];
     $scope.courseStatusRadioButton = ['',''];
     $scope.classesCheckBox = {
@@ -132,6 +134,7 @@ app.controller('includeProfessorController', function($scope) {
         // console.log($scope.professor);
 
         $scope.page = 2;
+        $scope.isGoogleLogin = true;
 
       }).catch(function(error){
         // Handle Errors here.

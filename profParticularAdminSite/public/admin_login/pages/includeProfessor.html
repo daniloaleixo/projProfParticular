@@ -56,7 +56,7 @@
 	    	    <div class="panel-body" style="padding:30px;">
 
 	    	    	<!-- Image -->
-	    	    	<div class="form-group row" ng-hide='professor.displayName'>
+	    	    	<div class="form-group row" ng-hide='isGoogleLogin'>
 		    	    	<label class="control-label">
 		    	    		Selecione uma imagem de perfil</label>
 	        			<input id="image" type="file" class="file" ng-model='professor.photoURL'>
@@ -65,7 +65,7 @@
 
 
 			    	<!-- Display Name-->
-			    	<div class="form-group row" ng-hide='professor.displayName'>
+			    	<div class="form-group row" ng-hide='isGoogleLogin'>
 			    	  <label for="example-text-input" class="col-2 col-form-label">Nome do Professor</label>
 			    	  <div class="col-10">
 			    	    <input class="form-control" type="text" placeholder="Ex: João da Silva" id="example-text-input" ng-model='professor.displayName'>
@@ -73,7 +73,7 @@
 			    	</div>
 
 			    	<!-- Email -->
-			    	<div class="form-group row" ng-hide='professor.email'>
+			    	<div class="form-group row" ng-hide='isGoogleLogin'>
 			    	  <label for="example-email-input" class="col-2 col-form-label">Email</label>
 			    	  <div class="col-10">
 			    	    <input class="form-control" type="email" placeholder="professor@example.com" id="example-email-input" ng-model='professor.email'>
