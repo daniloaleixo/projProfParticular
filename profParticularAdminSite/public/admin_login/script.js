@@ -49,7 +49,7 @@ app.controller('includeProfessorController', function($scope) {
 
     $scope.professor = {
       uid:'',
-      // uid:'12345',
+      // uid:'32432',
       displayName:'',
       email:'',
       photoURL:'',
@@ -160,15 +160,20 @@ app.controller('includeProfessorController', function($scope) {
           var downloadURL = uploadTask.snapshot.downloadURL;
           $scope.professor.photoURL = downloadURL;
           setCheckBoxInTheProfessorInfo();
+          uploadProfessorInFirebase();
         });
       }
       else{
         setCheckBoxInTheProfessorInfo();
         console.log($scope.professor);
+        uploadProfessorInFirebase();
       }
     }
 
     var setCheckBoxInTheProfessorInfo = function(){
+      var coursesRef = firebase.database().ref().child('courses');
+      var professorUID = $scope.professor.uid;
+
       // Zone checkbox
       for(var i = 0; i < $scope.zoneCheckBox.length; i++){
         if($scope.zoneCheckBox[i].length > 0) 
@@ -180,6 +185,7 @@ app.controller('includeProfessorController', function($scope) {
           $scope.professor.curriculum.formation.college.status = $scope.courseStatusRadioButton[i];
       }
       // Classes Fundamental
+      var fundamentalLevelRef = coursesRef.child('level1');
       for(var i = 0; i < $scope.classesCheckBox.fundamental.length; i++){
         if($scope.classesCheckBox.fundamental[i].length > 0){
           // Put the class in the respective place
@@ -187,9 +193,14 @@ app.controller('includeProfessorController', function($scope) {
           // If this class is not in the show list, we put it in
           if($scope.professor.courses.show.indexOf($scope.classesCheckBox.fundamental[i]) < 0)
             $scope.professor.courses.show.push($scope.classesCheckBox.fundamental[i]);
+          // Upload the professor to the course
+          var classNumber = '1-'+ (i+1);
+          var newProfessorRef = fundamentalLevelRef.child(classNumber).child('professors').push();
+          newProfessorRef.set(professorUID);
         }
       }
       // Classes Medio
+      var medioLevelRef = coursesRef.child('level2');
       for(var i = 0; i < $scope.classesCheckBox.medio.length; i++){
         if($scope.classesCheckBox.medio[i].length > 0){
           // Put the class in the respective place
@@ -197,9 +208,14 @@ app.controller('includeProfessorController', function($scope) {
           // If this class is not in the show list, we put it in
           if($scope.professor.courses.show.indexOf($scope.classesCheckBox.medio[i]) < 0)
             $scope.professor.courses.show.push($scope.classesCheckBox.medio[i]);
+          // Upload the professor to the course
+          var classNumber = '2-'+ (i+1);
+          var newProfessorRef = medioLevelRef.child(classNumber).child('professors').push();
+          newProfessorRef.set(professorUID);
         }
       }
       // Classes Superior
+      var superiorLevelRef = coursesRef.child('level3');
       for(var i = 0; i < $scope.classesCheckBox.superior.length; i++){
         if($scope.classesCheckBox.superior[i].length > 0){
           // Put the class in the respective place
@@ -207,9 +223,19 @@ app.controller('includeProfessorController', function($scope) {
           // If this class is not in the show list, we put it in
           if($scope.professor.courses.show.indexOf($scope.classesCheckBox.superior[i]) < 0)
             $scope.professor.courses.show.push($scope.classesCheckBox.superior[i]);
+          // Upload the professor to the course
+          var classNumber = '3-'+ (i+1);
+          var newProfessorRef = superiorLevelRef.child(classNumber).child('professors').push();
+          newProfessorRef.set(professorUID);
         }
       }
       $scope.professor.courses.show.sort();
+      $scope.professor.locations.main.address = 
+          $scope.professor.locations.main.address.formatted_address;
+    }
+    var uploadProfessorInFirebase = function(){
+      var professorsRef = firebase.database().ref().child('professors');
+      professorsRef.child($scope.professor.uid).set($scope.professor);
     }
 });
 
