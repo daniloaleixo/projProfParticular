@@ -1,6 +1,16 @@
 <!-- contact.html -->
     <div class="jumbotron text-center">
-        <h1>Contact Page</h1>
+        <h1>Excluir Professores</h1>
 
         <p>{{ message }}</p>
+
+        <ul class="list-group" ng-repeat='professor in professors'>
+          <li class="list-group-item justify-content-between">
+          	<img style="max-width: 100px !important;  max-height: 100px !important; text-align: center;" 
+          	class="card-img-top" src="{{professor.photoURL}}" alt="Card image cap">
+            {{professor.displayName}}
+            <button class="btn btn-medium btn-danger pull-right">Delete</button>
+          </li>
+        </ul>
     </div>
+ 

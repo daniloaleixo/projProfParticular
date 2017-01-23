@@ -22,7 +22,30 @@ app.controller('mainController', function($scope) {
 app.controller('contactController', function($scope) {
 
     // create a message to display in our view
-    $scope.message = 'Contact';
+    $scope.message = '';
+    $scope.professors = [];
+
+
+    $scope.getProfessors = function(){
+      //get all professors
+      firebase.database().ref().child('professors')
+        .once('value').then(function(snapshot){
+
+        Object.keys(snapshot.val()).forEach(function(professor){
+          if(professor) {
+            var temp = snapshot.val()[professor];
+            $scope.professors
+              .push(temp);
+          }
+        });
+        console.log("Agora foi");
+        $scope.$digest();
+      }, function(error){
+        console.log("Deu erro");
+      }); 
+    }
+
+    $scope.getProfessors();
 });
 
 app.controller('includeProfessorController', function($scope) {
