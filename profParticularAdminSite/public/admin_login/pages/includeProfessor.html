@@ -415,8 +415,12 @@
 	    	
 	    </form>
 
-	    <div class="alert alert-success" ng-if='page === 3'>
-		    <strong>Salvo com sucesso!</strong> O professor agora faz parte do database
-		</div>
+	    <div style="text-align:center" ng-if='page === 3'>
+		    <div class="alert alert-success">
+			    <strong>Salvo com sucesso!</strong> O professor agora faz parte do database
+			</div>
+			<button class="btn btn-large btn-primary" ng-click='resetVariables()'
+	    	  	type="button">Cadastrar outro professor</button>
+	    </div>
 
     </div>

@@ -5,7 +5,8 @@
         <p>{{ message }}</p>
 
         <ul class="list-group" ng-repeat='professor in professors'>
-          <li class="list-group-item justify-content-between">
+          <li class="list-group-item justify-content-between" 
+          		ng-click='deleteProfessor(professor.uid)'>
           	<img style="max-width: 100px !important;  max-height: 100px !important; text-align: center;" 
           	class="card-img-top" src="{{professor.photoURL}}" alt="Card image cap">
             {{professor.displayName}}

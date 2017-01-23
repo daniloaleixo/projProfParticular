@@ -19,7 +19,7 @@ app.controller('mainController', function($scope) {
     $scope.message = 'Everyone come and see how good I look!';
 });
 
-app.controller('contactController', function($scope) {
+app.controller('deleteProfessorController', function($scope) {
 
     // create a message to display in our view
     $scope.message = '';
@@ -46,6 +46,10 @@ app.controller('contactController', function($scope) {
     }
 
     $scope.getProfessors();
+
+    $scope.deleteProfessor = function(professorUID){
+      // firebase.database().ref().child('professors').child(professorUID).remove();
+    }
 });
 
 app.controller('includeProfessorController', function($scope) {
@@ -63,8 +67,9 @@ app.controller('includeProfessorController', function($scope) {
       superior:['','','','','','','','','']
     }
     $scope.message = '';
-    $scope.page = 1;
+    // $scope.page = 1;
     // $scope.page = 2;
+    $scope.page = 1;
 
     $scope.input = {
       email: '',
@@ -187,13 +192,35 @@ app.controller('includeProfessorController', function($scope) {
           $scope.professor.photoURL = downloadURL;
           setCheckBoxInTheProfessorInfo();
           uploadProfessorInFirebase();
+          $scope.page = 3;
         });
       }
       else{
         setCheckBoxInTheProfessorInfo();
         console.log($scope.professor);
         uploadProfessorInFirebase();
+        $scope.page = 3;
       }
+    }
+
+    $scope.resetVariables = function(){
+      $scope.professor = {
+      uid:'',displayName:'',email:'',photoURL:'',cellphone:'',professorLevel:'1',
+      courses:{        show:[],level1:{},level2:{},level3:{} },
+      locations:{        main:{
+          address:'',number:'',complement:''}, zone:[]      },
+      curriculum:{        about:'',formation:{college:{
+            institute:'',status:'',course:''}}},
+      assessments:{quantity: 0,teaching:5,knowledge:5,sympathy:5} };
+      $scope.page = 1;
+      $scope.isGoogleLogin = false;
+      $scope.zoneCheckBox = ['','','','','',''];
+      $scope.courseStatusRadioButton = ['',''];
+      $scope.classesCheckBox = {fundamental: ['','','','','','','','',''],
+        medio:['','','','','','','','',''],
+        superior:['','','','','','','','','']}
+      $scope.message = '';
+      $scope.input = {email: '',password1: '',password2:''};
     }
 
     var setCheckBoxInTheProfessorInfo = function(){
@@ -290,10 +317,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'includeProfessorController'
   })
 
-  .state('contact', {
-    url: '/contact',
-    templateUrl: 'pages/contact.html',
-    controller: 'contactController'
+  .state('deleteProfessor', {
+    url: '/deleteProfessor',
+    templateUrl: 'pages/deleteProfessor.html',
+    controller: 'deleteProfessorController'
   })
 
 
