@@ -30,7 +30,8 @@ app.controller('includeProfessorController', function($scope) {
     var storageRef = firebase.storage().ref();
 
     $scope.message = '';
-    $scope.page = 2;
+    $scope.page = 1;
+    // $scope.page = 2;
 
     $scope.input = {
       email: '',
@@ -39,7 +40,8 @@ app.controller('includeProfessorController', function($scope) {
     };
 
     $scope.professor = {
-      uid:'123456',
+      // uid:'',
+      uid:'12345',
       displayName:'',
       email:'',
       photoURL:''
