@@ -19,6 +19,47 @@ app.controller('mainController', function($scope) {
     $scope.message = 'Everyone come and see how good I look!';
 });
 
+app.controller('classesRequestedController', function($scope) {
+
+    $scope.allScheduledClasses = [];
+    $scope.message = 'Request';
+
+    $scope.getAllClasses = function(){
+      firebase.database().ref().child('scheduledClasses').orderByKey()
+      .once('value').then(function(snapshot){
+        //Iterate through each combination user and professor
+        if(snapshot.val() != null){
+          Object.keys(snapshot.val()).forEach(function(user_prof) {
+
+            //Then iterate for every date that the user had classes 
+            // with that professor
+            Object.keys(snapshot.val()[user_prof]).forEach(function(id){
+
+              // Go through each scheduledClass in the hash
+              var scheduledClassObject = snapshot.val()[user_prof][id];
+              scheduledClassObject['hour'] = new Date(snapshot.val()[user_prof][id].date);
+              $scope.allScheduledClasses.push(scheduledClassObject);
+            });
+          });
+        }
+
+        sortByDate();
+        // separeIntoHistoryAndToCome();
+        console.log($scope.allScheduledClasses);
+    })
+  }
+
+  $scope.getAllClasses();
+
+  var sortByDate = function(){
+    //Sort by day
+    $scope.allScheduledClasses.sort(function(a,b) {
+        return a.hour - b.hour;
+    });
+  }
+
+});
+
 app.controller('deleteProfessorController', function($scope) {
 
     // create a message to display in our view
@@ -342,6 +383,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     url: '/deleteProfessor',
     templateUrl: 'pages/deleteProfessor.html',
     controller: 'deleteProfessorController'
+  })
+
+  .state('classesRequested', {
+    url: '/classesRequested',
+    templateUrl: 'pages/classesRequested.html',
+    controller: 'classesRequestedController'
   })
 
 
