@@ -47,8 +47,8 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	// Upload the request to server
 	requestClassCtrl.requestClassButton = function(){
 
-		if(checkAllFieldsFilled()){
-			if(requestClassCtrl.request.location.search("Brazil") != -1 ){
+		// if(checkAllFieldsFilled()){
+		// 	if(requestClassCtrl.request.location.search("Brazil") != -1 ){
 
 				LoadingService.showLoadingSpinner();
 
@@ -61,65 +61,71 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 				// var classDatetime = 'blablablabla';
 				var userUID = user.uid;
 
+				console.log(requestClassCtrl.request);
+				console.log(requestClassCtrl.allCourses);
+				var courseCode = getCourseSelected(requestClassCtrl.level, requestClassCtrl.course);
+				
+
 
 				// Send request to the server
-				var requestsRef = firebase.database().ref().child('requestForClasses');
-				requestsRef.once('value').then(function(snapshot){
+				var newRequestsRef = firebase.database().ref().child('requestForClasses').push();
 
-					var index = 0;
+				// Build the Object we're gonna upload in database
+				var requestJSON = {
+					status: "Pendente",
+					UIDRequested: userUID,
+					students:{},
+					date:classDatetime, 
+					duration:requestClassCtrl.request.duration,
+					location:{
+						address:requestClassCtrl.request.location,
+						number:requestClassCtrl.request.location_number,
+						complement:requestClassCtrl.request.location_compl
+					},
+					course:{
+						courseCode:requestClassCtrl.course
+					},
+					description:requestClassCtrl.request.description
+				};
+				requestJSON.students[userUID] = {
+							displayName:user.displayName,
+							photoURL:user.photoURL
+				};
 
-					//  If we dont have this user, the index will be 1 for the first class
-					if(!snapshot.hasChild(userUID)){
-						index = 1;
-					}
-					else{
-						//  If the user had already requested classes, then
-						//  we get the last key and sum 1
-						var keys = Object.keys(snapshot.val()[userUID]).sort();
-						index = parseInt(keys[keys.length - 1]) + 1;
-					}
+				// Upload at firebase
+				newRequestsRef.set(requestJSON);
+				LoadingService.hideLoading();
 
-					// Build the Object we're gonna upload in database
-					var requestJSON = {
-						status: "Pendente",
-						students:{},
-						date:classDatetime, 
-						duration:requestClassCtrl.request.duration,
-						location:{
-							address:requestClassCtrl.request.location,
-							number:requestClassCtrl.request.location_number,
-							complement:requestClassCtrl.request.location_compl
-						},
-						course:{
-							"2-7":"História"
-						},
-						description:requestClassCtrl.request.description
-					};
-					requestJSON.students[userUID] = {
-								displayName:user.displayName,
-								photoURL:user.photoURL
-					};
+				// TODO 
+				//  O que vamos fazer depois: vai mostrar uma tela dizendo que 
+				// vai entrar em contato?
+				console.log("Corretamente marcado essa aula");
+				$location.path('/side-menu21/home');
 
-					// Upload at firebase
-					requestsRef.child(userUID).child(index).set(requestJSON);
-					LoadingService.hideLoading();
-
-					// TODO 
-					//  O que vamos fazer depois: vai mostrar uma tela dizendo que 
-					// vai entrar em contato?
-					console.log("Corretamente marcado essa aula");
-					$location.path('/side-menu21/home');
-				})
-
-			} else {
-				ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
-			}
-		} else {
-			ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
-		}
+		// 	} else {
+		// 		ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
+		// 		console.log("O endereço deve ser válido");
+		// 	}
+		// } else {
+		// 	ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
+		// 	console.log("Por favor preencha todos os campos");
+		// }
 
 	}
 
+	var getCourseSelected = function(level, course){
+		if(level == "Fundamental") var realLevel = 'level1';
+		else if(level == "Médio") var realLevel = 'level2';
+		else if(level == "Superior") var realLevel = 'level3';
+		
+		Object.keys(requestClassCtrl.allCourses[realLevel]).forEach(function(actualCourse){
+			if(actualCourse != 'coursesList'){
+				if(requestClassCtrl.allCourses[realLevel][actualCourse].name == course)
+					return actualCourse;
+			}
+		});
+
+	}
 
 	// I have to bring courses from server
 	// When the users chooses the level (fundamental, medio, superior) 
