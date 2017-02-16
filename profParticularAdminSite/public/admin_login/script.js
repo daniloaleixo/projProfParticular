@@ -24,7 +24,8 @@ app.controller('classesRequestedController', function($scope) {
   $scope.allScheduledClasses = [];
   $scope.scheduledClasses = [];
   $scope.historyClasses = [];
-  $scope.message = 'Request';
+  $scope.professorUID = '';
+  $scope.showMessage = false;
 
 
 
@@ -56,6 +57,7 @@ app.controller('classesRequestedController', function($scope) {
             // Go through each scheduledClass in the hash
             var scheduledClassObject = snapshot.val()[user][id];
             scheduledClassObject['hour'] = new Date(snapshot.val()[user][id].date);
+            scheduledClassObject['wannaLinkProfessor'] = false;
             $scope.allScheduledClasses.push(scheduledClassObject);
           });
         });
@@ -70,7 +72,17 @@ app.controller('classesRequestedController', function($scope) {
 
   getAllClasses();
 
+  $scope.changeLinkProfessor = function(index){
+    $scope.scheduledClasses[index].wannaLinkProfessor = 
+      !$scope.scheduledClasses[index].wannaLinkProfessor;
+  }
 
+  $scope.linkProfessor = function(index){
+    $scope.scheduledClasses[index].wannaLinkProfessor = 
+      !$scope.scheduledClasses[index].wannaLinkProfessor;
+    $scope.professorUID = '';
+    $scope.showMessage = true;
+  }
 
   $scope.getNameOfClass = function(x){
     for(var key in x) {
