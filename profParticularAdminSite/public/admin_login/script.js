@@ -58,7 +58,10 @@ app.controller('classesRequestedController', function($scope) {
             var scheduledClassObject = snapshot.val()[user][id];
             scheduledClassObject['hour'] = new Date(snapshot.val()[user][id].date);
             scheduledClassObject['wannaLinkProfessor'] = false;
-            $scope.allScheduledClasses.push(scheduledClassObject);
+
+            // Only if its pending
+            if(scheduledClassObject.status === 'Pendente')
+              $scope.allScheduledClasses.push(scheduledClassObject);
           });
         });
       }
