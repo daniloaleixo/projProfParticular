@@ -103,12 +103,12 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 				$location.path('/side-menu21/home');
 
 			} else {
-				ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
 				console.log("O endereço deve ser válido");
+				ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
 			}
 		} else {
-			ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
 			console.log("Por favor preencha todos os campos");
+			ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
 		}
 
 	}
@@ -194,18 +194,20 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 
 	var checkAllFieldsFilled = function()
 	{
-	 	if(requestClassCtrl.request.level.length > 0 && 
-	 		requestClassCtrl.request.course.length > 0 && 
-	 		requestClassCtrl.request.day.length > 0 && 
-	 		requestClassCtrl.request.hour.length > 0 &&
-	 		requestClassCtrl.request.duration.length > 0 && 
-	 		requestClassCtrl.request.location.length > 0 && 
-	 		requestClassCtrl.request.location_number.length > 0 && 
-	 		requestClassCtrl.request.location_compl.length > 0 && 
-	 		requestClassCtrl.request.description.length > 0)
+		// TODO
+		// It's not working right now
+
+	 	// if(requestClassCtrl.request.level.length > 0 && 
+	 	// 	requestClassCtrl.request.course.length > 0 && 
+	 	// 	requestClassCtrl.request.day.length > 0 && 
+	 	// 	requestClassCtrl.request.hour.length > 0 &&
+	 	// 	requestClassCtrl.request.duration.length > 0 && 
+	 	// 	requestClassCtrl.request.location.length > 0 && 
+	 	// 	requestClassCtrl.request.location_number.length > 0 && 
+	 	// 	requestClassCtrl.request.description.length > 0)
 	 		return true;
-	 	else
-	 		return false;
+	 	// else
+	 	// 	return false;
 	}
 
 }]);
