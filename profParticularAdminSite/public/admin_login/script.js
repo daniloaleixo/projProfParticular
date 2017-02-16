@@ -72,32 +72,28 @@ app.controller('classesRequestedController', function($scope) {
     });
   }
   var getAllClasses = function(){
-    firebase.database().ref().child('requestForClasses').orderByKey()
+    firebase.database().ref().child('requestForClasses')
     .once('value').then(function(snapshot){
-      //Iterate through each combination user and professor
+      console.log(snapshot.val());
+      //Iterate through each class
       if(snapshot.val() != null){
-        Object.keys(snapshot.val()).forEach(function(user) {
+        Object.keys(snapshot.val()).forEach(function(classRequested) {
 
-          //Then iterate for every date that the user had classes 
-          // with that professor
-          Object.keys(snapshot.val()[user]).forEach(function(id){
+          // Go through each scheduledClass in the hash
+          var requestedClassObject = snapshot.val()[classRequested];
+          requestedClassObject['hour'] = new Date(snapshot.val()[classRequested].date);
+          requestedClassObject['wannaLinkProfessor'] = false;
 
-            // Go through each scheduledClass in the hash
-            var scheduledClassObject = snapshot.val()[user][id];
-            scheduledClassObject['hour'] = new Date(snapshot.val()[user][id].date);
-            scheduledClassObject['wannaLinkProfessor'] = false;
-
-            // Only if its pending
-            if(scheduledClassObject.status === 'Pendente')
-              $scope.allScheduledClasses.push(scheduledClassObject);
-          });
+          // Only if its pending
+          if(requestedClassObject.status === 'Pendente')
+            $scope.allScheduledClasses.push(requestedClassObject);
         });
       }
 
       sortByDate();
       separeIntoHistoryAndToCome();
       $scope.$digest();
-      // console.log($scope.scheduledClasses);
+      console.log($scope.scheduledClasses);
     })
   }
 
