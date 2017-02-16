@@ -3,12 +3,30 @@
 
     <p>{{ message }}</p>
 
-    <ul class="list-group" ng-repeat='class in classesRequested'>
+    <ul class="list-group" ng-repeat='class in scheduledClasses'>
       <li class="list-group-item justify-content-between" 
-      		ng-click='deleteProfessor(professor.uid)'>
-
-	      		<h3>dsdadaasdas</h3>
-	      		<p>dsaadjssjhssdffs</p>
+      		ng-click='deleteProfessor(professor.uid)' style="margin:20px;">
+  		    <div class="card">
+  			    <div class="card-block" style="text-align:left">
+  			        <h3 class="card-title">
+  			        	{{getNameOfClass(class.course)}}
+  			        </h3>
+  			        <h4>Status: {{class.status}}</h4>
+  			        <h6 class="card-subtitle mb-2 text-muted">{{class.date}}</h6>
+  			        <p class="card-text" style="font-size:14px">
+  			        	Duração: {{class.duration}}h
+  			        	<br>
+  			        	Localização: {{class.location.address}}
+  			        	<br><br>
+  			        	Estudantes:
+  			        	<ul ng-repeat='student in class.students'>
+  			        		<li>{{student.displayName}}</li>
+  			        	</ul>
+  			        </p>
+  			        <a href="#" class="card-link">Card link</a>
+  			        <a href="#" class="card-link">Another link</a>
+  			    </div>
+  		    </div>
       </li>
     </ul>
 </div>

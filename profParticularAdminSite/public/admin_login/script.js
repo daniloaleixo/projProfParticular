@@ -21,35 +21,12 @@ app.controller('mainController', function($scope) {
 
 app.controller('classesRequestedController', function($scope) {
 
-    $scope.allScheduledClasses = [];
-    $scope.message = 'Request';
+  $scope.allScheduledClasses = [];
+  $scope.scheduledClasses = [];
+  $scope.historyClasses = [];
+  $scope.message = 'Request';
 
-    $scope.getAllClasses = function(){
-      firebase.database().ref().child('scheduledClasses').orderByKey()
-      .once('value').then(function(snapshot){
-        //Iterate through each combination user and professor
-        if(snapshot.val() != null){
-          Object.keys(snapshot.val()).forEach(function(user_prof) {
 
-            //Then iterate for every date that the user had classes 
-            // with that professor
-            Object.keys(snapshot.val()[user_prof]).forEach(function(id){
-
-              // Go through each scheduledClass in the hash
-              var scheduledClassObject = snapshot.val()[user_prof][id];
-              scheduledClassObject['hour'] = new Date(snapshot.val()[user_prof][id].date);
-              $scope.allScheduledClasses.push(scheduledClassObject);
-            });
-          });
-        }
-
-        sortByDate();
-        // separeIntoHistoryAndToCome();
-        console.log($scope.allScheduledClasses);
-    })
-  }
-
-  $scope.getAllClasses();
 
   var sortByDate = function(){
     //Sort by day
@@ -57,6 +34,51 @@ app.controller('classesRequestedController', function($scope) {
         return a.hour - b.hour;
     });
   }
+  var separeIntoHistoryAndToCome = function(){
+    $scope.allScheduledClasses.forEach(function(scheduledClass){
+      if(scheduledClass.hour.valueOf() > Date.now().valueOf())
+        $scope.scheduledClasses.push(scheduledClass);
+      else
+        $scope.historyClasses.push(scheduledClass);
+    });
+  }
+  var getAllClasses = function(){
+    firebase.database().ref().child('requestForClasses').orderByKey()
+    .once('value').then(function(snapshot){
+      //Iterate through each combination user and professor
+      if(snapshot.val() != null){
+        Object.keys(snapshot.val()).forEach(function(user) {
+
+          //Then iterate for every date that the user had classes 
+          // with that professor
+          Object.keys(snapshot.val()[user]).forEach(function(id){
+
+            // Go through each scheduledClass in the hash
+            var scheduledClassObject = snapshot.val()[user][id];
+            scheduledClassObject['hour'] = new Date(snapshot.val()[user][id].date);
+            $scope.allScheduledClasses.push(scheduledClassObject);
+          });
+        });
+      }
+
+      sortByDate();
+      separeIntoHistoryAndToCome();
+      $scope.$digest();
+      console.log($scope.scheduledClasses);
+    })
+  }
+
+  getAllClasses();
+
+
+
+  $scope.getNameOfClass = function(x){
+    for(var key in x) {
+          var value = x[key];
+      }
+      return value;
+  }
+
 
 });
 
