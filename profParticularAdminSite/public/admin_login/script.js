@@ -74,7 +74,6 @@ app.controller('classesRequestedController', function($scope) {
   var getAllClasses = function(){
     firebase.database().ref().child('requestForClasses')
     .once('value').then(function(snapshot){
-      console.log(snapshot.val());
       //Iterate through each class
       if(snapshot.val() != null){
         Object.keys(snapshot.val()).forEach(function(classRequested) {
@@ -93,7 +92,6 @@ app.controller('classesRequestedController', function($scope) {
       sortByDate();
       separeIntoHistoryAndToCome();
       $scope.$digest();
-      console.log($scope.scheduledClasses);
     })
   }
 

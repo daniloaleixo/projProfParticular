@@ -26,10 +26,10 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	requestClassCtrl.request = {
 		level: 0,
 		course: '',
-		day: '01/03/2017',
-		hour: '19:00',
+		day: '',
+		hour: '',
 		duration: '',
-		location: 'Brazil',
+		location: '',
 		location_number: '',
 		location_compl: '',
 		description: ''
@@ -47,8 +47,8 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	// Upload the request to server
 	requestClassCtrl.requestClassButton = function(){
 
-		// if(checkAllFieldsFilled()){
-		// 	if(requestClassCtrl.request.location.search("Brazil") != -1 ){
+		if(checkAllFieldsFilled()){
+			if(requestClassCtrl.request.location.search("Brazil") != -1 ){
 
 				LoadingService.showLoadingSpinner();
 
@@ -58,11 +58,11 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 				var hour = requestClassCtrl.request.hour.substring(0,2);
 				var minutes = requestClassCtrl.request.hour.substring(3,5);
 				var classDatetime = new Date(year, month - 1, day, hour, minutes);
-				// var classDatetime = 'blablablabla';
+				classDatetime = classDatetime.toString();
 				var userUID = user.uid;
 
-				console.log(requestClassCtrl.request);
-				console.log(requestClassCtrl.allCourses);
+				// console.log(requestClassCtrl.request);
+				// console.log(requestClassCtrl.allCourses);
 				var courseCode = getCourseSelected(requestClassCtrl.level, requestClassCtrl.course);
 				
 
@@ -102,14 +102,14 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 				console.log("Corretamente marcado essa aula");
 				$location.path('/side-menu21/home');
 
-		// 	} else {
-		// 		ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
-		// 		console.log("O endereço deve ser válido");
-		// 	}
-		// } else {
-		// 	ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
-		// 	console.log("Por favor preencha todos os campos");
-		// }
+			} else {
+				ToastService.showToast("O endereço deve ser válido", 'long', 'bottom');
+				console.log("O endereço deve ser válido");
+			}
+		} else {
+			ToastService.showToast("Por favor preencha todos os campos", 'long', 'bottom');
+			console.log("Por favor preencha todos os campos");
+		}
 
 	}
 
