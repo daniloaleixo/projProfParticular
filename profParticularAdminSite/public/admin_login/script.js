@@ -50,7 +50,9 @@ app.controller('classesRequestedController', function($scope) {
   $scope.allScheduledClasses = [];
   $scope.scheduledClasses = [];
   $scope.historyClasses = [];
-  $scope.professorUID = '';
+  $scope.input = {
+        professorUID: ''
+      };
   $scope.showMessage = false;
 
 
@@ -95,7 +97,7 @@ app.controller('classesRequestedController', function($scope) {
       sortByDate();
       separeIntoHistoryAndToCome();
       $scope.$digest();
-      console.log($scope.scheduledClasses);
+      // console.log($scope.scheduledClasses);
     })
   }
 
@@ -107,10 +109,32 @@ app.controller('classesRequestedController', function($scope) {
   }
 
   $scope.linkProfessor = function(index){
-    $scope.scheduledClasses[index].wannaLinkProfessor = 
-      !$scope.scheduledClasses[index].wannaLinkProfessor;
-    $scope.professorUID = '';
-    $scope.showMessage = true;
+    console.log($scope.input.professorUID);
+    // Now i have to get the displayName and PhotoURL of the professor
+    firebase.database().ref().child('professors').child($scope.input.professorUID)
+    .once('value').then(function(snapshot){
+      console.log(snapshot.val());
+      $scope.scheduledClasses[index]['professor'] = {
+        UID: $scope.input.professorUID,
+        displayName: snapshot.val()['displayName'],
+        photoURL: snapshot.val()['photoURL']
+      };
+      console.log($scope.scheduledClasses[index]);
+
+
+      //  Falta subir o professor pro request e mudar o status para Aprovando aprovação do Usuário
+      //  Foda eh que vou ter que mudar o database pra fazer isso
+      
+      // var professorsRef = firebase.database().ref().child('professors');
+      // professorsRef.child($scope.professor.uid).set($scope.professor);
+
+
+      
+      // $scope.scheduledClasses[index].wannaLinkProfessor = 
+      //   !$scope.scheduledClasses[index].wannaLinkProfessor;
+      // $scope.professorUID = '';
+      // $scope.showMessage = true;
+    });
   }
 
   $scope.getNameOfClass = function(x){
