@@ -19,6 +19,32 @@ app.controller('mainController', function($scope) {
     $scope.message = 'Everyone come and see how good I look!';
 });
 
+app.controller('seeProfessorsController', function($scope) {
+  $scope.professors = [];
+
+  $scope.getProfessors = function(){
+    //get all professors
+    firebase.database().ref().child('professors')
+      .once('value').then(function(snapshot){
+
+      Object.keys(snapshot.val()).forEach(function(professor){
+        if(professor) {
+          var temp = snapshot.val()[professor];
+          temp['UID'] = professor;
+          $scope.professors
+            .push(temp);
+        }
+      });
+      console.log("Agora foi");
+      $scope.$digest();
+    }, function(error){
+      console.log("Deu erro");
+    }); 
+  }
+
+  $scope.getProfessors();
+});
+
 app.controller('classesRequestedController', function($scope) {
 
   $scope.allScheduledClasses = [];
@@ -414,6 +440,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     url: '/includeProfessor',
     templateUrl: 'pages/includeProfessor.html',
     controller: 'includeProfessorController'
+  })
+
+  .state('seeProfessors', {
+    url: '/seeProfessors',
+    templateUrl: 'pages/seeProfessors.html',
+    controller: 'seeProfessorsController'
   })
 
   .state('deleteProfessor', {

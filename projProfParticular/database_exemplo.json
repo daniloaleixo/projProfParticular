@@ -49,7 +49,7 @@
 			"curriculum": {
 				"about":"Sou muito legal",
 				"formation":{
-					"college":{
+					"last":{
 						"institute": "USP",
 						"status":"Cursando",
 						"course":"Ciencia da Computacao"
@@ -95,7 +95,7 @@
 			"curriculum": {
 				"about":"Sou muito legal",
 				"formation":{
-					"college":{
+					"last":{
 						"institute": "USP",
 						"status":"Cursando",
 						"course":"Ciencia da Computacao"

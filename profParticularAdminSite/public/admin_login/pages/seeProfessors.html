@@ -1,0 +1,43 @@
+<div class="jumbotron text-center">
+    <h1>Professors Page</h1>
+
+    <p>{{ message }}</p>
+
+    <ul class="list-group" ng-repeat='professor in professors'>
+      <li class="list-group-item justify-content-between" style="margin:20px;">
+  		    <div class="card">
+  			    <div class="card-block" style="text-align:left">
+            <img src="{{professor.photoURL}}" class='professor-avatar'>
+  			        <h3 class="card-title">
+  			        	{{professor.displayName}}
+  			        </h3>
+  			        <h4>UID: {{professor.UID}}</h4>
+  			        <h5 class="card-subtitle mb-2 text-muted">Ensina: {{professor.courses.show.join(', ')}}</h5>
+  			        <p class="card-text" style="font-size:14px">
+                  Celular: {{professor.cellphone}} 
+                  <br>
+                  Email: {{professor.email}}
+                  <br>
+  			        	Localização: {{professor.locations.main.address}}
+  			        	<br><br>
+                  Professor Level: {{professor.professorLevel}}
+                  <br>
+                  <h5>Avaliações ({{professor.assessments.quantity}}):</h5>
+                  <ul>
+                    <li>Didática: {{professor.assessments.teaching}}</li>
+                    <li>Conhecimento: {{professor.assessments.knowledge}}</li>
+                    <li>Simpatia: {{professor.assessments.sympathy}}</li>
+                  </ul>
+                  <br><br>
+                  <h5>Currículo</h5>
+                  Sobre: {{professor.curriculum.about}}
+                  <br>
+                  Formação: {{professor.curriculum.formation.last.status}} {{professor.curriculum.formation.last.course}} em {{professor.curriculum.formation.last.institute}}  
+  			        </p>
+  			        
+  			        </div>
+  			    </div>
+  		    </div>
+      </li>
+    </ul>
+</div>
