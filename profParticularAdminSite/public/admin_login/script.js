@@ -103,11 +103,9 @@ app.controller('classesRequestedController', function($scope) {
   }
 
   $scope.linkProfessor = function(index){
-    console.log($scope.input.professorUID);
     // Now i have to get the displayName and PhotoURL of the professor
     firebase.database().ref().child('professors').child($scope.input.professorUID)
     .once('value').then(function(snapshot){
-      console.log(snapshot.val());
       $scope.scheduledClasses[index]['professor'] = {
         UID: $scope.input.professorUID,
         displayName: snapshot.val()['displayName'],
@@ -115,9 +113,31 @@ app.controller('classesRequestedController', function($scope) {
       };
       console.log($scope.scheduledClasses[index]);
 
-
-      //  Falta subir o professor pro request e mudar o status para Aprovando aprovação do Usuário
-      //  Foda eh que vou ter que mudar o database pra fazer isso
+      // Now i have to upload professor info and change the status of the requested class
+      var requestForClassesRef = firebase.database().ref().child('requestForClasses');
+      requestForClassesRef.once('value').then(function(snapshot){
+        //Iterate through each class
+        if(snapshot.val() != null){
+          Object.keys(snapshot.val()).forEach(function(classRequested) {
+            // Verify if the class that I'll upload is the same that I'm looking 
+            if($scope.scheduledClasses[index].date == snapshot.val()[classRequested].date &&
+                $scope.scheduledClasses[index].UIDRequested == 
+                snapshot.val()[classRequested].UIDRequested){
+              console.log("E igual");
+              // Upload professor
+              requestForClassesRef.child(classRequested).child('professor')
+                .set($scope.scheduledClasses[index]['professor']);
+              //Change status
+              requestForClassesRef.child(classRequested).child('status')
+                .set('Aguardando confirmação do aluno');
+              $scope.scheduledClasses.splice(index, 1);
+              $scope.showMessage = true;
+              $scope.$digest();
+              return true;
+            }
+          });
+        }
+      });
       
       // var professorsRef = firebase.database().ref().child('professors');
       // professorsRef.child($scope.professor.uid).set($scope.professor);
