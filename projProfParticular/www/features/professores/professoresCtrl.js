@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('ProfessoresCtrl', ['$scope', '$stateParams', 
+.controller('ProfessoresCtrl', ['$scope', '$rootScope', '$stateParams', 
 	'ratingConfig', 'LoadingService','$ionicFilterBar','ProfessoresList', '$location',
   // The following is the constructor function for this page's controller. 
   //See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams,ratingConfig, LoadingService, 
+function ($scope, $rootScope, $stateParams,ratingConfig, LoadingService, 
 									$ionicFilterBar, ProfessoresList, $location) {
 
 	professoresCtrl = this;
@@ -22,8 +22,10 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	}
 
 	professoresCtrl.atualizaListaProfessores = function(){
+		LoadingService.showLoadingSpinner();
 		ProfessoresList.all().then(function(result){
-			professoresCtrl.professors = result;	
+			professoresCtrl.professors = result;
+			LoadingService.hideLoading();
 		})
 		// professoresCtrl.professors = ProfessoresList.all();
 	}
@@ -45,6 +47,19 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 		// console.log("ProfessoresCtrl| cliquei " + UID);
 		$location.path('/side-menu21/professores/' + UID);
 	}
+
+	// 
+	// 			EVENTS
+	// 
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		professoresCtrl.professors = new Array();
+		professoresCtrl.errorMessage = '';
+		professoresCtrl.filterBarInstance;
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		professoresCtrl.atualizaListaProfessores();
+	});
 
 
 }])

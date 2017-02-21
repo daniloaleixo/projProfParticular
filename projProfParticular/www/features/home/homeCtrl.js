@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('HomeCtrl', ['$scope', '$stateParams', '$location', '$q', 'UserInfos', 
+.controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', '$location', '$q', 'UserInfos', 
 	'LoadingService', 'ToastService', 'MyScheduledClassesList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService, 
+function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService, 
 				MyScheduledClassesList) {
 	var homeCtrl = this;
 
@@ -55,6 +55,29 @@ function ($scope, $stateParams, $location, $q, UserInfos, LoadingService, ToastS
 	homeCtrl.getUserInfos();
 
 	
+
+	// 
+	// 			EVENTS
+	// 
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		homeCtrl.user = {
+				displayName: '',
+				email: '',
+				photoURL: '',
+				cellphone: '',
+				location: {
+						address : '',
+						number: '',
+						complement: ''
+					}
+			}
+
+			homeCtrl.nextClass = {};
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		homeCtrl.getUserInfos();
+	});
 	
 
 	

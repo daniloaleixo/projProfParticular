@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('ProfileCtrl', ['$scope', '$stateParams', '$location', '$ionicPopup', 'LoadingService', 
+.controller('ProfileCtrl', ['$scope', '$rootScope', '$stateParams', '$location', '$ionicPopup', 'LoadingService', 
 		'UserInfos', '$cordovaCamera','ToastService', 'KeyboardService',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfos, $cordovaCamera, 
+function ($scope, $rootScope, $stateParams, $location, $ionicPopup, LoadingService, UserInfos, $cordovaCamera, 
 	ToastService, KeyboardService) {
 	var profileCtrl = this;
 	var storage = firebase.storage();
@@ -226,6 +226,40 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
    	  	});
    	};
 
+
+
+   	// 
+	// 			EVENTS
+	// 
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		profileCtrl.user = {
+			displayName: '',
+			photoURL: '',
+			email: '',
+			cellphone: '',
+			location: {
+				address : '',
+				number: '',
+				complement: ''
+			}
+		};
+
+		profileCtrl.oldUserInfos = {
+			displayName: '',
+			photoURL: '',
+			email: '',
+			cellphone: '',
+			location: {
+				address : '',
+				number: '',
+				complement: ''
+			}
+		};
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		profileCtrl.updateVariables();
+	});
 
 
 

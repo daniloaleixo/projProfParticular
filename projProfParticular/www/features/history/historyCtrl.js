@@ -1,10 +1,10 @@
 angular.module('app.controllers')
-.controller('HistoryCtrl', ['$scope', '$stateParams', 'LoadingService', 'MyScheduledClassesList',
+.controller('HistoryCtrl', ['$scope', '$rootScope', '$stateParams', 'LoadingService', 'MyScheduledClassesList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, LoadingService, MyScheduledClassesList) {
+function ($scope, $rootScope, $stateParams, LoadingService, MyScheduledClassesList) {
 	var historyCtrl = this;
 	historyCtrl.myHistoryClasses = [];
 
@@ -19,5 +19,16 @@ function ($scope, $stateParams, LoadingService, MyScheduledClassesList) {
 	}
 
 	historyCtrl.getHistory();
+
+	// 
+	// 			EVENTS
+	// 
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		historyCtrl.myHistoryClasses = [];
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		historyCtrl.getHistory();
+	});
 
 }])

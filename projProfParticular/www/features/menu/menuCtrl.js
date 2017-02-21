@@ -28,7 +28,6 @@ function ($scope, $rootScope, $stateParams, $location, UserInfos, $ionicSideMenu
 	// 	CoursesOfferedList.all();
 	// }
 
-	console.log("entrei no menuCtrl");
 	// menuCtrl.updateVariables();
 
 

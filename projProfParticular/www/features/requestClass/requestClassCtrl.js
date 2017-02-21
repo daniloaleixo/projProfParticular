@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('RequestClassCtrl', ['$scope', '$stateParams', 'LoadingService', 
+.controller('RequestClassCtrl', ['$scope', '$rootScope', '$stateParams', 'LoadingService', 
 	'ToastService', 'ProfessoresList','$location', '$ionicPopup', 'CoursesOfferedList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList, 
+function ($scope, $rootScope, $stateParams, LoadingService, ToastService, ProfessoresList, 
 	$location, $ionicPopup, CoursesOfferedList) {
 	var requestClassCtrl = this;
 
@@ -212,5 +212,39 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	 	// else
 	 	// 	return false;
 	}
+
+
+	// 
+	// 			EVENTS
+	// 
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		requestClassCtrl.courses = new Array();
+			requestClassCtrl.allCourses = {};
+
+			requestClassCtrl.showChoicesLevel = true;
+			requestClassCtrl.level = '';
+
+			requestClassCtrl.showCoursesChoices = false;
+			requestClassCtrl.course = '';
+
+			requestClassCtrl.errorMessage = '';
+			requestClassCtrl.filterBarInstance;
+
+			requestClassCtrl.request = {
+				level: 0,
+				course: '',
+				day: '',
+				hour: '',
+				duration: '',
+				location: '',
+				location_number: '',
+				location_compl: '',
+				description: ''
+			};
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		requestClassCtrl.updateCoursesList();
+	});
 
 }]);

@@ -12,21 +12,8 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		scheduledClassesOK = false,
 		userInfosOK = false,
 		coursesOfferedOK = false;
-
-	$rootScope.$on('LogoutEvent', function(event, args) {
-		console.log("Usuário deslogou");
-		professorsListOK = false;
-		scheduledClassesOK = false;
-		userInfosOK = false;
-		coursesOfferedOK = false;
-	});
-
-	$rootScope.$on('LogInEvent', function(event, args) {
-		console.log("Usuário logou");
-		$scope.getServerInfos();
-	});
 	
-	$scope.getServerInfos = function(){
+	loadingCtrl.getServerInfos = function(){
 		getProfessorsList();
 		getScheduledClasses();
 		getUserInfos();
@@ -85,8 +72,22 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 			$location.path('/side-menu21/home');
 		}
 	}
-	$scope.getServerInfos();
+	loadingCtrl.getServerInfos();
 
+
+	// 
+	// 			EVENTS
+	// 
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		professorsListOK = false;
+		scheduledClassesOK = false;
+		userInfosOK = false;
+		coursesOfferedOK = false;
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		loadingCtrl.getServerInfos();
+	});
 
 
 }])
