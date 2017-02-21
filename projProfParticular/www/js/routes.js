@@ -231,7 +231,24 @@ angular.module('app.routes', [])
     controller: 'LoginCtrl as loginCtrl'
   })
 
-$urlRouterProvider.otherwise('/side-menu21/home')
+  .state('loading', {
+    url: '/loading',
+    templateUrl: 'features/loading/loading.html',
+    controller: 'LoadingCtrl as loadingCtrl',
+    resolve: {
+      // controller will not be loaded until $requireSignIn resolves
+      // Auth refers to our $firebaseAuth wrapper in the factory below
+      "currentAuth": ["Auth", '$state', function(Auth, $state) {
+        // $requireSignIn returns a promise so the resolve waits for it to complete
+        // If the promise is rejected, it will throw a $stateChangeError (see above)
+        return Auth.$requireSignIn().then([], function(error){
+          return $state.go('login');
+        });
+      }]
+    }
+  })
+
+$urlRouterProvider.otherwise('/loading')
 
   
 
