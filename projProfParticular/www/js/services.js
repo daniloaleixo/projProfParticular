@@ -63,32 +63,43 @@ angular.module('app.services', [])
 		var ProfessoresList = this;
 		ProfessoresList.professors = [];
 
+		var getAllProfessors = function(){
+			if(ProfessoresList.professors.length == 0) {
+				console.log("Chamei o servico de ProfessoresList");
+				LoadingService.showLoadingSpinner();
+				//get all professors
+				firebase.database().ref().child('professors')
+					.once('value').then(function(snapshot){
+
+					Object.keys(snapshot.val()).forEach(function(professor){
+						if(professor) {
+							var temp = snapshot.val()[professor];
+							// Add UID to the hash
+							temp["UID"] = professor;
+							ProfessoresList.professors
+								.push(temp);
+						}
+					});
+					LoadingService.hideLoading();
+				}, function(error){
+					ToastService.showToast("Tive problemas para me conectar com o servidor", 
+										'long', 'bottom');
+					LoadingService.hideLoading();
+				});	
+			}
+		}
+
 		return {
 			all: function(){
-				if(ProfessoresList.professors.length == 0) {
-					console.log("Chamei o servico de ProfessoresList");
-					LoadingService.showLoadingSpinner();
-					//get all professors
-					firebase.database().ref().child('professors')
-						.once('value').then(function(snapshot){
-
-						Object.keys(snapshot.val()).forEach(function(professor){
-							if(professor) {
-								var temp = snapshot.val()[professor];
-								// Add UID to the hash
-								temp["UID"] = professor;
-								ProfessoresList.professors
-									.push(temp);
-							}
-						});
-						LoadingService.hideLoading();
-					}, function(error){
-						ToastService.showToast("Tive problemas para me conectar com o servidor", 
-											'long', 'bottom');
-						LoadingService.hideLoading();
-					});	
-				}
+				getAllProfessors();
 				return ProfessoresList.professors;
+			},
+			allProfessorsAsPromise: function(){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getAllProfessors());
+				}, 2000);
+				return deferred.promise;
 			},
 			updateProfessoresList: function(newProfessoresList){
 				ProfessoresList.professors = [];
@@ -318,8 +329,8 @@ angular.module('app.services', [])
 }])
 
 
-.factory('CoursesOfferedList', ['LoadingService','ToastService',
-	function(LoadingService, ToastService){
+.factory('CoursesOfferedList', ['LoadingService','ToastService', '$q', '$timeout',
+	function(LoadingService, ToastService, $q, $timeout){
 		var CoursesOfferedList = this;
 		CoursesOfferedList.offeredCourses = {};
 
@@ -379,6 +390,13 @@ angular.module('app.services', [])
 		return {
 			all: function(){
 				return updateCourses();
+			},
+			allAsPromise: function(){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(updateCourses());
+				}, 2000);
+				return deferred.promise;
 			},
 			reset: function(){
 				CoursesOfferedList.offeredCourses = {};
