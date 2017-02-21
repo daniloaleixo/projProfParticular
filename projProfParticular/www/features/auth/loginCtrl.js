@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('LoginCtrl', ['$scope', '$stateParams','$location', 'LoadingService', 'ToastService', 
+.controller('LoginCtrl', ['$scope', '$rootScope', '$stateParams','$location', 'LoadingService', 'ToastService', 
 				'MyScheduledClassesList', 'ProfessoresList', 'CoursesOfferedList', 'UserInfos',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $location, LoadingService, ToastService,
+function ($scope, $rootScope, $stateParams, $location, LoadingService, ToastService,
 	MyScheduledClassesList, ProfessoresList, CoursesOfferedList, UserInfos) {
 	
 	var loginCtrl = this;
@@ -48,6 +48,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 				user = auth;
 				// updateVariables();
 				LoadingService.hideLoading();
+				$rootScope.$emit("LogInEvent", {});
 				$location.path('/loading');
 			}, function(error){
 				ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
@@ -103,6 +104,7 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 		  	// updateVariables();
 
 		  	LoadingService.hideLoading();
+		  	$rootScope.$emit("LogInEvent", {});
 		  	$location.path('/loading');
 
 		}).catch(function(error){

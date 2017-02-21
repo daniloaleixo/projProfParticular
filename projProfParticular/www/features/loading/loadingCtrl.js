@@ -1,23 +1,32 @@
 angular.module('app.controllers')
-.controller('LoadingCtrl', ['$scope', '$stateParams', 'UserInfos', 'LoadingService', 'ToastService', 
+.controller('LoadingCtrl', ['$scope', '$rootScope', '$stateParams', 'UserInfos', 'LoadingService', 'ToastService', 
 				'MyScheduledClassesList', 'ProfessoresList', 'CoursesOfferedList', '$location',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, UserInfos, LoadingService, ToastService, 
+function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastService, 
 				MyScheduledClassesList, ProfessoresList, CoursesOfferedList, $location) {
 	var loadingCtrl = this;
 	var professorsListOK = false,
 		scheduledClassesOK = false,
 		userInfosOK = false,
 		coursesOfferedOK = false;
-	
-	$scope.getServerInfos = function(){
+
+	$rootScope.$on('LogoutEvent', function(event, args) {
+		console.log("Usuário deslogou");
 		professorsListOK = false;
 		scheduledClassesOK = false;
 		userInfosOK = false;
 		coursesOfferedOK = false;
+	});
+
+	$rootScope.$on('LogInEvent', function(event, args) {
+		console.log("Usuário logou");
+		$scope.getServerInfos();
+	});
+	
+	$scope.getServerInfos = function(){
 		getProfessorsList();
 		getScheduledClasses();
 		getUserInfos();
