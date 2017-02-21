@@ -28,7 +28,7 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 	}
 
 	console.log("entrei no menuCtrl");
-	menuCtrl.updateVariables();
+	// menuCtrl.updateVariables();
 
 
 	menuCtrl.logout = function(){

@@ -283,6 +283,11 @@ angular.module('app.services', [])
 			if(force == false) return servUser;
 		}
 
+		var getAllUserInfos = function()
+		{
+			return servUser;
+		}
+
 		return {
 			getDisplayName: function(){
 				updateUser();
@@ -297,7 +302,11 @@ angular.module('app.services', [])
 				return servUser.email;
 			},
 			getUserInfos: function(){
-				return updateUser();
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getAllUserInfos());
+				}, 2000);
+				return deferred.promise;
 			},
 			getUserInfosForce: function(){
 				force = true;
