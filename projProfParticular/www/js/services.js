@@ -112,14 +112,15 @@ angular.module('app.services', [])
 }])
 
 
-.factory('MyScheduledClassesList', ['LoadingService','ToastService', 
-	function(LoadingService, ToastService){
+.factory('MyScheduledClassesList', ['LoadingService','ToastService', '$q', '$timeout',
+	function(LoadingService, ToastService, $q, $timeout){
 		var MyScheduledClassesList = this;
 		MyScheduledClassesList.allScheduledClasses = [];
 		MyScheduledClassesList.scheduledClasses = [];
 		MyScheduledClassesList.historyClasses = [];
 
 		var updateClasses = function(uid){
+			// console.log("length " + MyScheduledClassesList.allScheduledClasses.length);
 			if(MyScheduledClassesList.allScheduledClasses.length == 0)
 			{
 				console.log("Chamei o servico de scheduledClasses");
@@ -180,11 +181,15 @@ angular.module('app.services', [])
 			myScheduledClasses: function(uid){
 				updateClasses(uid);
 				return MyScheduledClassesList.scheduledClasses;
-				// var deferred = $q.defer();
-				// $timeout(function(){
-				// 	deferred.resolve(updateClasses(uid));
-				// }, 2000);
-				// return deferred.promise;
+			},
+			myScheduledClassesAsPromise: function(uid){
+				var deferred = $q.defer();
+				$timeout(function(){
+					// console.log("Vou pegar agora calma");
+					deferred.resolve(updateClasses(uid));
+					// console.log("Peguei vou retornar");
+				}, 2000);
+				return deferred.promise;
 			},
 			myHistoryClasses: function(uid){
 				updateClasses(uid);

@@ -210,16 +210,13 @@ angular.module('app.routes', [])
     templateUrl: 'features/menu/menu.html',
     controller: 'MenuCtrl as menuCtrl',
     resolve: {
-      // controller will not be loaded until $waitForSignIn resolves
-      // Auth refers to our $firebaseAuth wrapper in the factory
-      'currentAuth': ['Auth', '$state', function(Auth, $state){
-        // $waitForSignIn returns a promise so the resolve waits for it to complete
-        return Auth.$waitForSignIn().then(function(auth){
-          user = auth; 
-          //if(user == null) return $state.go('login');
-        }, function(error){
-          console.log("Menu Resolve| Não consegui autenticar vou para o login");
-          return $state.go('login')
+      // controller will not be loaded until $requireSignIn resolves
+      // Auth refers to our $firebaseAuth wrapper in the factory below
+      "currentAuth": ["Auth", '$state', function(Auth, $state) {
+        // $requireSignIn returns a promise so the resolve waits for it to complete
+        // If the promise is rejected, it will throw a $stateChangeError (see above)
+        return Auth.$requireSignIn().then([], function(error){
+          return $state.go('login');
         });
       }]
     }
@@ -236,13 +233,16 @@ angular.module('app.routes', [])
     templateUrl: 'features/loading/loading.html',
     controller: 'LoadingCtrl as loadingCtrl',
     resolve: {
-      // controller will not be loaded until $requireSignIn resolves
-      // Auth refers to our $firebaseAuth wrapper in the factory below
-      "currentAuth": ["Auth", '$state', function(Auth, $state) {
-        // $requireSignIn returns a promise so the resolve waits for it to complete
-        // If the promise is rejected, it will throw a $stateChangeError (see above)
-        return Auth.$requireSignIn().then([], function(error){
-          return $state.go('login');
+      // controller will not be loaded until $waitForSignIn resolves
+      // Auth refers to our $firebaseAuth wrapper in the factory
+      'currentAuth': ['Auth', '$state', function(Auth, $state){
+        // $waitForSignIn returns a promise so the resolve waits for it to complete
+        return Auth.$waitForSignIn().then(function(auth){
+          user = auth; 
+          //if(user == null) return $state.go('login');
+        }, function(error){
+          console.log("Menu Resolve| Não consegui autenticar vou para o login");
+          return $state.go('login')
         });
       }]
     }
