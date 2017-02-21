@@ -46,9 +46,13 @@ function ($scope, $stateParams, $location, $ionicPopup, LoadingService, UserInfo
 
 	profileCtrl.updateVariables = function(){
 		LoadingService.showLoadingSpinner();
-		profileCtrl.user = UserInfos.getUserInfos();
-		profileCtrl.oldUserInfos = UserInfos.getUserInfos();
-		LoadingService.hideLoading();
+		UserInfos.getUserInfos().then(function(result){
+			profileCtrl.user = result;
+			profileCtrl.oldUserInfos = result;
+			LoadingService.hideLoading();
+		})
+		// profileCtrl.user = UserInfos.getUserInfos();
+		// profileCtrl.oldUserInfos = UserInfos.getUserInfos();
 	}
 
 	profileCtrl.updateVariables();

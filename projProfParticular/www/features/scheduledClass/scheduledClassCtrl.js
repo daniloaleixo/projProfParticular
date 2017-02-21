@@ -20,8 +20,11 @@ function ($scope, $stateParams, MyScheduledClassesList, LoadingService) {
 		// 	console.log(error);
 		// 	LoadingService.hideLoading();
 		// });
-		scheduledClassCtrl.myScheduledClasses = MyScheduledClassesList.myScheduledClasses(user.uid);
-		LoadingService.hideLoading();
+		MyScheduledClassesList.myScheduledClasses(user.uid).then(function(result){
+			scheduledClassCtrl.myScheduledClasses = result;	
+			LoadingService.hideLoading();
+		})
+		// scheduledClassCtrl.myScheduledClasses = MyScheduledClassesList.myScheduledClasses(user.uid);
 	}
 	
 	scheduledClassCtrl.getScheduledClasses();

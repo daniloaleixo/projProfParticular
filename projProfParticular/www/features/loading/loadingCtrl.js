@@ -14,6 +14,10 @@ function ($scope, $stateParams, UserInfos, LoadingService, ToastService,
 		coursesOfferedOK = false;
 	
 	$scope.getServerInfos = function(){
+		professorsListOK = false;
+		scheduledClassesOK = false;
+		userInfosOK = false;
+		coursesOfferedOK = false;
 		getProfessorsList();
 		getScheduledClasses();
 		getUserInfos();
@@ -22,7 +26,7 @@ function ($scope, $stateParams, UserInfos, LoadingService, ToastService,
 
 	var getProfessorsList = function(){
 		setTimeout(function(){
-			MyScheduledClassesList.myScheduledClassesAsPromise(user.uid).then(function(result){
+			ProfessoresList.loadProfessorsList(user.uid).then(function(result){
 				console.log("Tela do loading pegou infos do ProfessoresList");
 				professorsListOK = true;
 				checkIfItsOver();
@@ -32,7 +36,7 @@ function ($scope, $stateParams, UserInfos, LoadingService, ToastService,
 
 	var getScheduledClasses = function(){
 		setTimeout(function(){
-			MyScheduledClassesList.myScheduledClassesAsPromise(user.uid).then(function(result){
+			MyScheduledClassesList.loadScheduledClasses(user.uid).then(function(result){
 				console.log("Tela do loading pegou infos do scheduledClasses");
 				scheduledClassesOK = true;
 				checkIfItsOver();
@@ -42,7 +46,7 @@ function ($scope, $stateParams, UserInfos, LoadingService, ToastService,
 
 	var getUserInfos = function(){
 		setTimeout(function(){
-			UserInfos.getUserInfosAsPromise().then(function(result){
+			UserInfos.loadUserInfos().then(function(result){
 				console.log("Tela do loading pegou infos do UserInfos");
 				userInfosOK = true;
 				checkIfItsOver();
@@ -52,7 +56,7 @@ function ($scope, $stateParams, UserInfos, LoadingService, ToastService,
 
 	var getCoursesOffered = function(){
 		setTimeout(function(){
-			CoursesOfferedList.allAsPromise().then(function(result){
+			CoursesOfferedList.loadCoursesOffered().then(function(result){
 				console.log("Tela do loading pegou infos do CoursesOfferedList");
 				coursesOfferedOK = true;
 				checkIfItsOver();

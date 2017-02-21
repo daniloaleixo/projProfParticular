@@ -38,8 +38,11 @@ function ($scope, $stateParams, LoadingService, ToastService, ProfessoresList,
 	//Get the list of courses
 	requestClassCtrl.updateCoursesList = function(){
 		LoadingService.showLoadingSpinner();
-		requestClassCtrl.allCourses = CoursesOfferedList.all();
-		LoadingService.hideLoading();
+		CoursesOfferedList.all().then(function(result){
+			requestClassCtrl.allCourses = result;	
+			LoadingService.hideLoading();
+		})
+		// requestClassCtrl.allCourses = CoursesOfferedList.all();
 	}
 	requestClassCtrl.updateCoursesList();
 

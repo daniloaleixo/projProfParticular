@@ -22,7 +22,10 @@ function ($scope, $stateParams,ratingConfig, LoadingService,
 	}
 
 	professoresCtrl.atualizaListaProfessores = function(){
-		professoresCtrl.professors = ProfessoresList.all();
+		ProfessoresList.all().then(function(result){
+			professoresCtrl.professors = result;	
+		})
+		// professoresCtrl.professors = ProfessoresList.all();
 	}
 
 	professoresCtrl.atualizaListaProfessores();

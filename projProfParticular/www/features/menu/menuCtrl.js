@@ -16,16 +16,17 @@ function ($scope, $stateParams, $location, UserInfos, $ionicSideMenuDelegate,
 	// 	email: ''
 	// };
 
-	menuCtrl.updateVariables = function(){
-		// menuCtrl.user = UserInfos.getUserInfos();
+	// Now i'm using Loading page to get all infos
+	// menuCtrl.updateVariables = function(){
+	// 	// menuCtrl.user = UserInfos.getUserInfos();
 
-		// Agora o menu vai chamar todos os requests para o DB assim quando o usuario estiver 
-		// entrando na pagina que necessita essa info nao precisará fazer outra requisicao
-		UserInfos.getUserInfos();
-		MyScheduledClassesList.myScheduledClasses(user.uid);
-		ProfessoresList.all();
-		CoursesOfferedList.all();
-	}
+	// 	// Agora o menu vai chamar todos os requests para o DB assim quando o usuario estiver 
+	// 	// entrando na pagina que necessita essa info nao precisará fazer outra requisicao
+	// 	UserInfos.getUserInfos();
+	// 	MyScheduledClassesList.myScheduledClasses(user.uid);
+	// 	ProfessoresList.all();
+	// 	CoursesOfferedList.all();
+	// }
 
 	console.log("entrei no menuCtrl");
 	// menuCtrl.updateVariables();

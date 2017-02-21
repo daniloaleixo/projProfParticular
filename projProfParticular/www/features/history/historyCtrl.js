@@ -11,8 +11,11 @@ function ($scope, $stateParams, LoadingService, MyScheduledClassesList) {
 
 	historyCtrl.getHistory = function(){
 		LoadingService.showLoadingSpinner();
-		historyCtrl.myHistoryClasses = MyScheduledClassesList.myHistoryClasses(user.uid);
-		LoadingService.hideLoading();
+		MyScheduledClassesList.myHistoryClasses(user.uid).then(function(result){
+			historyCtrl.myHistoryClasses = result;	
+			LoadingService.hideLoading();
+		})
+		// historyCtrl.myHistoryClasses = MyScheduledClassesList.myHistoryClasses(user.uid);
 	}
 
 	historyCtrl.getHistory();

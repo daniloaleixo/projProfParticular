@@ -46,9 +46,9 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 
 			trySignIn.then(function(auth){
 				user = auth;
-				updateVariables();
+				// updateVariables();
 				LoadingService.hideLoading();
-				$location.path('/home');
+				$location.path('/loading');
 			}, function(error){
 				ToastService.showToast("Não consegui realizar o login, por favor tente novamente", 
 						  								'long', 'bottom');
@@ -100,10 +100,10 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 		  	var token = result.credential.accessToken;
 		  	// The signed-in user info.
 		  	user = result.user;
-		  	updateVariables();
+		  	// updateVariables();
 
 		  	LoadingService.hideLoading();
-		  	$location.path('/home');
+		  	$location.path('/loading');
 
 		}).catch(function(error){
 			// Handle Errors here.
@@ -117,19 +117,19 @@ function ($scope, $stateParams, $location, LoadingService, ToastService,
 		});
 	};
 
+	// Esta função esta deprecada, agora puxo as infos pela tela de Loading
+	// var updateVariables = function(){
+	// 	// menuCtrl.user = UserInfos.getUserInfos();
 
-	var updateVariables = function(){
-		// menuCtrl.user = UserInfos.getUserInfos();
+	// 	console.log("Estou no login e Vou puxar todas as infos");
 
-		console.log("Estou no login e Vou puxar todas as infos");
-
-		// Agora o menu vai chamar todos os requests para o DB assim quando o usuario estiver 
-		// entrando na pagina que necessita essa info nao precisará fazer outra requisicao
-		UserInfos.getUserInfos();
-		MyScheduledClassesList.myScheduledClasses(user.uid);
-		ProfessoresList.all();
-		CoursesOfferedList.all();
-	}
+	// 	// Agora o menu vai chamar todos os requests para o DB assim quando o usuario estiver 
+	// 	// entrando na pagina que necessita essa info nao precisará fazer outra requisicao
+	// 	UserInfos.getUserInfos();
+	// 	MyScheduledClassesList.myScheduledClasses(user.uid);
+	// 	ProfessoresList.all();
+	// 	CoursesOfferedList.all();
+	// }
 
 
 

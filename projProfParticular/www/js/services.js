@@ -58,8 +58,8 @@ angular.module('app.services', [])
 // 
 // ***************************************************************
 
-.factory('ProfessoresList', ['LoadingService','ToastService',
-	function(LoadingService, ToastService){
+.factory('ProfessoresList', ['LoadingService','ToastService', '$q', '$timeout',
+	function(LoadingService, ToastService, $q, $timeout){
 		var ProfessoresList = this;
 		ProfessoresList.professors = [];
 
@@ -89,12 +89,21 @@ angular.module('app.services', [])
 			}
 		}
 
+		//Getter of the list
+		var listOfAllProfessors = function(){
+			return ProfessoresList.professors;
+		}
+
 		return {
 			all: function(){
-				getAllProfessors();
-				return ProfessoresList.professors;
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(listOfAllProfessors());
+				}, 2000);
+				return deferred.promise;
 			},
-			allProfessorsAsPromise: function(){
+			//The function just loads the service with the list, do not return the lsit
+			loadProfessorsList: function(){
 				var deferred = $q.defer();
 				$timeout(function(){
 					deferred.resolve(getAllProfessors());
@@ -172,6 +181,15 @@ angular.module('app.services', [])
 			// return MyScheduledClassesList.allScheduledClasses;
 		}
 
+		//Getter of the list of scheduled classes
+		var getScheduledClassesList = function(){
+			return MyScheduledClassesList.scheduledClasses;
+		}
+		//Getter of the list of history classes
+		var getHistoryClassesList = function(){
+			return MyScheduledClassesList.historyClasses;
+		}
+
 		var sortByDate = function(){
 			//Sort by day
 			MyScheduledClassesList.allScheduledClasses.sort(function(a,b) {
@@ -190,21 +208,26 @@ angular.module('app.services', [])
 
 		return {
 			myScheduledClasses: function(uid){
-				updateClasses(uid);
-				return MyScheduledClassesList.scheduledClasses;
-			},
-			myScheduledClassesAsPromise: function(uid){
 				var deferred = $q.defer();
 				$timeout(function(){
-					// console.log("Vou pegar agora calma");
+					deferred.resolve(getScheduledClassesList());
+				}, 2000);
+				return deferred.promise;
+			},
+			//The function just loads the service with the list, do not return the lsit
+			loadScheduledClasses: function(uid){
+				var deferred = $q.defer();
+				$timeout(function(){
 					deferred.resolve(updateClasses(uid));
-					// console.log("Peguei vou retornar");
 				}, 2000);
 				return deferred.promise;
 			},
 			myHistoryClasses: function(uid){
-				updateClasses(uid);
-				return MyScheduledClassesList.historyClasses;
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getHistoryClassesList());
+				}, 2000);
+				return deferred.promise;
 			},
 			getNextScheduledClass:function(uid){
 				if(MyScheduledClassesList.scheduledClasses.length == 0){
@@ -312,7 +335,8 @@ angular.module('app.services', [])
 				force = true;
 				return updateUser();
 			},
-			getUserInfosAsPromise: function(){
+			//The function just loads the service with the list, do not return the lsit
+			loadUserInfos: function(){
 				force = true;
 				var deferred = $q.defer();
 				$timeout(function(){
@@ -393,14 +417,22 @@ angular.module('app.services', [])
 				});
 				
 			}
-			return CoursesOfferedList.offeredCourses;
+		}
+
+		var getCoursesOffered = function(){
+			return CoursesOfferedList.offeredCourses; 
 		}
 
 		return {
 			all: function(){
-				return updateCourses();
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getCoursesOffered());
+				}, 2000);
+				return deferred.promise;
 			},
-			allAsPromise: function(){
+			//The function just loads the service with the list, do not return the lsit
+			loadCoursesOffered: function(){
 				var deferred = $q.defer();
 				$timeout(function(){
 					deferred.resolve(updateCourses());
