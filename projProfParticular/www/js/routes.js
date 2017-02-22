@@ -239,7 +239,7 @@ angular.module('app.routes', [])
         // $waitForSignIn returns a promise so the resolve waits for it to complete
         return Auth.$waitForSignIn().then(function(auth){
           user = auth; 
-          //if(user == null) return $state.go('login');
+          if(user == null) return $state.go('login');
         }, function(error){
           console.log("Menu Resolve| Não consegui autenticar vou para o login");
           return $state.go('login')
@@ -248,7 +248,7 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/loading')
+$urlRouterProvider.otherwise('/loading');
 
   
 

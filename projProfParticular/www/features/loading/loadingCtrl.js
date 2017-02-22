@@ -24,6 +24,8 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		setTimeout(function(){
 			ProfessoresList.loadProfessorsList(user.uid).then(function(result){
 				console.log("Tela do loading pegou infos do ProfessoresList");
+				// ToastService.showToast("Tela do loading pegou infos do ProfessoresList", 
+				// 						'long', 'bottom');
 				professorsListOK = true;
 				checkIfItsOver();
 			});
@@ -34,6 +36,8 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		setTimeout(function(){
 			MyScheduledClassesList.loadScheduledClasses(user.uid).then(function(result){
 				console.log("Tela do loading pegou infos do scheduledClasses");
+				// ToastService.showToast("Tela do loading pegou infos do scheduledClasses", 
+				// 						'long', 'bottom');
 				scheduledClassesOK = true;
 				checkIfItsOver();
 			});
@@ -44,6 +48,8 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		setTimeout(function(){
 			UserInfos.loadUserInfos().then(function(result){
 				console.log("Tela do loading pegou infos do UserInfos");
+				// ToastService.showToast("Tela do loading pegou infos do UserInfos", 
+				// 						'long', 'bottom');
 				userInfosOK = true;
 				checkIfItsOver();
 			});
@@ -54,6 +60,8 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		setTimeout(function(){
 			CoursesOfferedList.loadCoursesOffered().then(function(result){
 				console.log("Tela do loading pegou infos do CoursesOfferedList");
+				// ToastService.showToast("Tela do loading pegou infos do CoursesOfferedList", 
+				// 						'long', 'bottom');
 				coursesOfferedOK = true;
 				checkIfItsOver();
 			});

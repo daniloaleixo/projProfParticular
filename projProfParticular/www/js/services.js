@@ -413,6 +413,11 @@ angular.module('app.services', [])
 					ToastService
 					.showToast("Tive problemas para me conectar com o servidor", 
 										'long', 'bottom');
+					ToastService
+					.showToast(error.message, 
+										'long', 'bottom');
+
+					console.log("Tive problemas para me conectar com o servidor coursesOffered");
 					LoadingService.hideLoading();
 				});
 				
