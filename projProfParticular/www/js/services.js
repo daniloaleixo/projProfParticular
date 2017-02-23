@@ -153,16 +153,19 @@ angular.module('app.services', [])
 					if(snapshot.val() != null){
 						Object.keys(snapshot.val()).forEach(function(user_prof) {
 
-							//Then iterate for every date that the user had classes 
-							// with that professor
-							Object.keys(snapshot.val()[user_prof]).forEach(function(id){
+							if(user_prof.indexOf(uid) == 0){
+								//Then iterate for every date that the user had classes 
+								// with that professor
+								Object.keys(snapshot.val()[user_prof]).forEach(function(id){
 
-								// Go through each scheduledClass in the hash
-								var scheduledClassObject = snapshot.val()[user_prof][id];
-								scheduledClassObject['hour'] = new Date(snapshot.val()[user_prof][id].date);
-								MyScheduledClassesList.allScheduledClasses
-									.push(scheduledClassObject);
-							});
+									// Go through each scheduledClass in the hash
+									var scheduledClassObject = snapshot.val()[user_prof][id];
+									scheduledClassObject['hour'] = new Date(snapshot.val()[user_prof][id].date);
+									MyScheduledClassesList.allScheduledClasses
+										.push(scheduledClassObject);
+								});
+							}
+
 						});
 					}
 
