@@ -42,7 +42,6 @@ function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingSer
 			}
 			// Get the user next class
 			homeCtrl.nextClass = MyScheduledClassesList.getNextScheduledClass(user.uid);
-			console.log(homeCtrl.nextClass);
 			LoadingService.hideLoading();
 		}, function(error){
 			console.log(error);

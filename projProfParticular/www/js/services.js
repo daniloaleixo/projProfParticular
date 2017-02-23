@@ -450,3 +450,81 @@ angular.module('app.services', [])
 			}
 		}
 }])
+
+
+
+.factory('RequestForClassesService', ['LoadingService','ToastService', '$q', '$timeout',
+	function(LoadingService, ToastService, $q, $timeout){
+		var RequestForClassesService = this;
+		RequestForClassesService.requestedClassesList = [];
+
+		var updateList = function(uid){
+			if(RequestForClassesService.requestedClassesList.length == 0)
+			{
+				console.log("Chamei o servico de RequestForClassesService");
+				LoadingService.showLoadingSpinner();
+
+
+				firebase.database().ref().child('requestForClasses')
+				.once('value').then(function(snapshot){
+				  //Iterate through each class
+				  if(snapshot.val() != null){
+				    Object.keys(snapshot.val()).forEach(function(classRequested) {
+
+				      // Go through each scheduledClass in the hash
+				      var requestedClassObject = snapshot.val()[classRequested];
+				      requestedClassObject['hour'] = new Date(snapshot.val()[classRequested].date);
+
+				      // Only if its pending the user confirmation
+				      if(requestedClassObject.UIDRequested ===  uid && 
+				      	requestedClassObject.status === "Aguardando confirmação do aluno")
+				        	RequestForClassesService.requestedClassesList.push(requestedClassObject);
+				    });
+				  }
+
+				  sortByDate();
+				  LoadingService.hideLoading();
+				}, function(error){
+					ToastService.showToast("Tive problemas para me conectar com o servidor", 
+										'long', 'bottom');
+					LoadingService.hideLoading();
+				});	
+			}
+
+			// return RequestForClassesService.allScheduledClasses;
+		}
+
+		//Getter of the list of requested classes
+		var getRequestedClassesList = function(){
+			return RequestForClassesService.requestedClassesList;
+		}
+
+		var sortByDate = function(){
+			//Sort by day
+			RequestForClassesService.requestedClassesList.sort(function(a,b) {
+			    return a.hour - b.hour;
+			});
+		}
+
+		return {
+			myRequestedClasses: function(uid){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getRequestedClassesList());
+				}, 2000);
+				return deferred.promise;
+			},
+			//The function just loads the service with the list, do not return the lsit
+			loadRequestedClasses: function(uid){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(updateList(uid));
+				}, 2000);
+				return deferred.promise;
+			},
+			reset: function(){
+				RequestForClassesService.requestedClassesList = [];
+				console.log("Resetando aulas " + RequestForClassesService.requestedClassesList.length);
+			}
+		}
+}])

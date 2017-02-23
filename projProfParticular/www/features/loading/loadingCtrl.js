@@ -1,23 +1,27 @@
 angular.module('app.controllers')
 .controller('LoadingCtrl', ['$scope', '$rootScope', '$stateParams', 'UserInfos', 'LoadingService', 'ToastService', 
 				'MyScheduledClassesList', 'ProfessoresList', 'CoursesOfferedList', '$location',
+				'RequestForClassesService',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastService, 
-				MyScheduledClassesList, ProfessoresList, CoursesOfferedList, $location) {
+				MyScheduledClassesList, ProfessoresList, CoursesOfferedList, $location,
+				RequestForClassesService) {
 	var loadingCtrl = this;
 	var professorsListOK = false,
 		scheduledClassesOK = false,
 		userInfosOK = false,
-		coursesOfferedOK = false;
+		coursesOfferedOK = false,
+		requestedClassesOK = false;
 	
 	loadingCtrl.getServerInfos = function(){
 		getProfessorsList();
 		getScheduledClasses();
 		getUserInfos();
 		getCoursesOffered();
+		getRequestedClasses();
 	}
 
 	var getProfessorsList = function(){
@@ -68,13 +72,24 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		}, 2000);
 	}
 
+	var getRequestedClasses = function(){
+		setTimeout(function(){
+			RequestForClassesService.loadRequestedClasses(user.uid).then(function(result){
+				console.log("Tela do loading pegou infos do RequestForClassesService");
+				requestedClassesOK = true;
+				checkIfItsOver();
+			});
+		}, 2000);
+	}
+
 
 	var checkIfItsOver = function()
 	{
 		if(professorsListOK && 
 			scheduledClassesOK &&
 			userInfosOK &&
-			coursesOfferedOK){
+			coursesOfferedOK &&
+			requestedClassesOK){
 
 			console.log("Acabou");
 			$location.path('/side-menu21/home');
@@ -90,7 +105,8 @@ function ($scope, $rootScope, $stateParams, UserInfos, LoadingService, ToastServ
 		professorsListOK = false;
 		scheduledClassesOK = false;
 		userInfosOK = false;
-		coursesOfferedOK = false;
+		coursesOfferedOK = false,
+		requestedClassesOK = false;
 	});
 
 	$rootScope.$on('LogInEvent', function(event, args) {
