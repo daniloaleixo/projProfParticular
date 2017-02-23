@@ -338,6 +338,30 @@
 				"2-7":"História"
 			},
 			"description":"Quero aprender sobre história da America"
-		}
+		},
+	    {
+	      "UIDRequested" : "MqhNsmQB69XOR8uUjGKXtvEoP002",
+	      "course" : {
+	        "courseCode" : "Física"
+	      },
+	      "date" : "Sat Apr 01 2017 16:00:00 GMT-0300 (BRT)",
+	      "description" : "dasdsaasdasda",
+	      "duration" : "2",
+	      "location" : {
+	        "address" : "Av. Senador Vergueiro - Anchieta, São Bernardo do Campo - State of São Paulo, Brazil",
+	        "number" : 32213
+	      },
+	      "professor" : {
+	        "UID" : "8B1eYE4JZ8MYTpVjYBZFlhGJBO52",
+	        "displayName" : "Danilo Aleixo",
+	        "photoURL" : "https://lh6.googleusercontent.com/-sjP2tqfdCTw/AAAAAAAAAAI/AAAAAAAADF8/pQqKYkuBcE4/photo.jpg"
+	      },
+	      "status" : "Aguardando confirmação do aluno",
+	      "students" : {
+	        "MqhNsmQB69XOR8uUjGKXtvEoP002" : {
+	          "displayName" : "blaaa1234"
+	        }
+	      }
+	    }
 	]
 }

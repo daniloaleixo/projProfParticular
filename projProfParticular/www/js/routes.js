@@ -52,6 +52,26 @@ angular.module('app.routes', [])
     }
   })
 
+
+  .state('menu.professor', {
+    url: '/professores/:professorUID',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/professores/professor.html',
+        controller: 'ProfessorCtrl as professorCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
   .state('menu.profile', {
     url: '/profile',
     views: {
@@ -128,6 +148,25 @@ angular.module('app.routes', [])
     }
   })
 
+  .state('menu.scheduledClassInfo', {
+    url: '/scheduledClass/:typeClass/:index',
+    views: {
+      'side-menu21': {
+        templateUrl: 'features/scheduledClass/scheduledClassInfo.html',
+        controller: 'ScheduledClassInfoCtrl as scheduledClassInfoCtrl',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError (see above)
+            return Auth.$requireSignIn();
+          }]
+        }
+      }
+    }
+  })
+
   .state('menu.payment', {
     url: '/payment',
     views: {
@@ -172,25 +211,6 @@ angular.module('app.routes', [])
       'side-menu21': {
         templateUrl: 'features/about/about.html',
         controller: 'AboutCtrl as aboutCtrl',
-        resolve: {
-          // controller will not be loaded until $requireSignIn resolves
-          // Auth refers to our $firebaseAuth wrapper in the factory below
-          "currentAuth": ["Auth", function(Auth) {
-            // $requireSignIn returns a promise so the resolve waits for it to complete
-            // If the promise is rejected, it will throw a $stateChangeError (see above)
-            return Auth.$requireSignIn();
-          }]
-        }
-      }
-    }
-  })
-
-  .state('menu.professor', {
-    url: '/professores/:professorUID',
-    views: {
-      'side-menu21': {
-        templateUrl: 'features/professores/professor.html',
-        controller: 'ProfessorCtrl as professorCtrl',
         resolve: {
           // controller will not be loaded until $requireSignIn resolves
           // Auth refers to our $firebaseAuth wrapper in the factory below

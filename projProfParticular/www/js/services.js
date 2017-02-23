@@ -200,6 +200,12 @@ angular.module('app.services', [])
 			});
 		}
 
+		var getScheduledClassByIndex = function(index){
+			if(index < MyScheduledClassesList.scheduledClasses.length)
+				return MyScheduledClassesList.scheduledClasses[index];
+			else return null;
+		}
+
 		var separeIntoHistoryAndToCome = function(){
 			MyScheduledClassesList.allScheduledClasses.forEach(function(scheduledClass){
 				if(scheduledClass.hour.valueOf() > Date.now().valueOf())
@@ -229,6 +235,13 @@ angular.module('app.services', [])
 				var deferred = $q.defer();
 				$timeout(function(){
 					deferred.resolve(getHistoryClassesList());
+				}, 2000);
+				return deferred.promise;
+			},
+			scheduledClassByIndex: function(index){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getScheduledClassByIndex(index));
 				}, 2000);
 				return deferred.promise;
 			},
@@ -509,6 +522,12 @@ angular.module('app.services', [])
 			});
 		}
 
+		var getClassToConfimByIndex = function(index){
+			if(index < RequestForClassesService.requestedClassesList.length)
+				return RequestForClassesService.requestedClassesList[index];
+			else return null;
+		}
+
 		return {
 			areThereClassesToConfirm: function(){
 				if(RequestForClassesService.requestedClassesList.length > 0) return true;
@@ -518,6 +537,13 @@ angular.module('app.services', [])
 				var deferred = $q.defer();
 				$timeout(function(){
 					deferred.resolve(getRequestedClassesList());
+				}, 2000);
+				return deferred.promise;
+			},
+			classToConfimByIndex: function(index){
+				var deferred = $q.defer();
+				$timeout(function(){
+					deferred.resolve(getClassToConfimByIndex(index));
 				}, 2000);
 				return deferred.promise;
 			},

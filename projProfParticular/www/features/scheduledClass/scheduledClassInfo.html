@@ -1,0 +1,56 @@
+<ion-view title="Class" id="page3">
+    <ion-content padding="true" class="has-header">
+
+    Página com as infos das aulas
+
+    <!-- Card da aula -->
+    <span>
+    	<div class="item row">
+
+    	    <div class="col col-40">
+    	        <span class='mdl-layout-title' style="font-size:45px; padding-top:10px;">
+    	            {{class.hour.getUTCDate()}}/{{class.hour.getUTCMonth() + 1}}
+    	        </span>
+    	        <!-- <span class='mdl-layout-title'>{{class.duration}}h de duração</span> -->
+    	    </div>
+
+    	    <div class="col mdl-card__supporting-text" >
+    	        <span ng-repeat='course in class.course'>
+    	            <span style="font-size:25px;">
+    	                {{course}}
+    	            </span>
+    	        </span>
+
+    	        <br>
+    	        <span style="font-size:18px;margin-top:5px;">
+    	            Prof. {{class.professor.displayName}}
+    	        </span>
+    	    </div>
+
+    	</div>
+
+    	<div class="item item-body row" style="padding:10px;">
+
+    	    <div class="col col-40">
+    	        <img class='item-professor-avatar' src="{{class.professor.photoURL || 'img/null-avatar.png'}}" 
+    	                style="margin-right:25px;">
+    	    </div>
+
+    	    <div class="col mdl-card__supporting-text" style="text-align:left;">
+    	        <span>Duração: {{class.duration}}h</span>
+    	        <br>
+    	        <!-- <span>Descrição: {{class.description}}</span>
+    	        <br> -->
+    	        <span>Local:{{class.location.address}} - {{class.location.number}} - {{class.location.complement}}</span>
+    	    </div>  
+    	</div>
+    </span>
+
+
+    <div class="button-bar" ng-show="showButtons">
+        <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancelar</a>
+        <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click='scheduledClassCtrl.buttonOne()'>Confirmar</a>
+    </div>
+
+    </ion-content>
+</ion-view>

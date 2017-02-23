@@ -12,7 +12,7 @@
 
                     <h6 style="font-family: Arial; color: red; font-weight: bold; text-align:center;"> Aguardando Confirmação</h6>
 
-                    <span ng-click='scheduledClassCtrl.moreInfoClassToConfirm()'>
+                    <span ng-click="scheduledClassCtrl.moreInfoClass('confirm', $index)">
 
                         <div class="item row">
 
@@ -61,7 +61,7 @@
                     <div class="button-bar">
                         <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancelar</a>
                         <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click='scheduledClassCtrl.buttonOne()'>Confirmar</a>
-                    </div>           
+                    </div>
                 </span>
 
             </div>
@@ -75,7 +75,7 @@
         <!-- Card da aula agendada -->
         <div class="list card mdl-shadow--2dp" ng-repeat='class in scheduledClassCtrl.myScheduledClasses'>
 
-            <span>
+            <span ng-click="scheduledClassCtrl.moreInfoClass('scheduled', $index)">
 
             	<div class="item row">
 
