@@ -1,12 +1,12 @@
 angular.module('app.controllers')
 .controller('HomeCtrl', ['$scope', '$rootScope', '$stateParams', '$location', '$q', 'UserInfos', 
-	'LoadingService', 'ToastService', 'MyScheduledClassesList',
+	'LoadingService', 'ToastService', 'MyScheduledClassesList', 'RequestForClassesService',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingService, ToastService, 
-				MyScheduledClassesList) {
+				MyScheduledClassesList, RequestForClassesService) {
 	var homeCtrl = this;
 
 	homeCtrl.user = {
@@ -22,8 +22,9 @@ function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingSer
 	}
 
 	homeCtrl.nextClass = {};
+	homeCtrl.classesToConfirm = false;
 
-	homeCtrl.getUserInfos = function(){
+	homeCtrl.init = function(){
 		LoadingService.showLoadingSpinner();
 
 		UserInfos.getUserInfos().then(function(result){
@@ -42,6 +43,8 @@ function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingSer
 			}
 			// Get the user next class
 			homeCtrl.nextClass = MyScheduledClassesList.getNextScheduledClass(user.uid);
+			homeCtrl.classesToConfirm = RequestForClassesService.areThereClassesToConfirm();
+			console.log(homeCtrl.classesToConfirm);
 			LoadingService.hideLoading();
 		}, function(error){
 			console.log(error);
@@ -51,7 +54,11 @@ function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingSer
 
 	}
 
-	homeCtrl.getUserInfos();
+	homeCtrl.init();
+
+	homeCtrl.goToScheduledClassPage = function(){
+		$location.path('/side-menu21/scheduledClass');
+	}
 
 	
 
@@ -72,10 +79,11 @@ function ($scope, $rootScope, $stateParams, $location, $q, UserInfos, LoadingSer
 			}
 
 			homeCtrl.nextClass = {};
+			homeCtrl.classesToConfirm = false;
 	});
 
 	$rootScope.$on('LogInEvent', function(event, args) {
-		homeCtrl.getUserInfos();
+		homeCtrl.init();
 	});
 	
 

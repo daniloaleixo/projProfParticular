@@ -1,6 +1,13 @@
 <ion-view title="EduCaqui" id="page1">
     <ion-content padding="true" class="has-header">
 
+    <!-- In case the user has classes to confirm -->
+    <div class='button button-full' ng-show='homeCtrl.classesToConfirm' style="font-color:red;">
+        <a class="icon ion-alert"><span style="font-size:14px;"> Você tem aulas que precisam ser confirmadas</span></a>
+        
+    </div>
+
+
     <h5>Próxima aula</h5>
 
     <!-- In case the user do not have classes scheduled -->

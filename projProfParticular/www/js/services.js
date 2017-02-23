@@ -510,6 +510,10 @@ angular.module('app.services', [])
 		}
 
 		return {
+			areThereClassesToConfirm: function(){
+				if(RequestForClassesService.requestedClassesList.length > 0) return true;
+				else return false;
+			},
 			myRequestedClasses: function(uid){
 				var deferred = $q.defer();
 				$timeout(function(){
