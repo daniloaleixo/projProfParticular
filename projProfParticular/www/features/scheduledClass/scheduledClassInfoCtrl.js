@@ -1,11 +1,11 @@
 angular.module('app.controllers')
-.controller('ScheduledClassInfoCtrl', ['$scope', '$stateParams', '$rootScope',
+.controller('ScheduledClassInfoCtrl', ['$scope', '$stateParams', '$rootScope', '$ionicHistory',
 		'LoadingService', 'RequestForClassesService', 'MyScheduledClassesList',
 // The following is the constructor function for this page's controller. 
 // See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams, $rootScope, LoadingService, RequestForClassesService,
+function ($scope, $stateParams, $rootScope, $ionicHistory, LoadingService, RequestForClassesService,
 		MyScheduledClassesList) {
 	var scheduledClassInfoCtrl = this;
 	$scope.showButtons = false;
@@ -38,6 +38,11 @@ function ($scope, $stateParams, $rootScope, LoadingService, RequestForClassesSer
 	}
 
 	$scope.class['hour'] = new Date($scope.class.date);
+
+	$scope.confirmClass = function(){
+		RequestForClassesService.confirmProfessor($stateParams.index);
+		$ionicHistory.goBack();
+	}
 	
 
 }])

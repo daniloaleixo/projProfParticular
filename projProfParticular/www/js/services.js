@@ -558,6 +558,8 @@ angular.module('app.services', [])
 						firebase.database().ref().child('requestForClasses')
 						.child(requestForClassKey).remove();
 						LoadingService.hideLoading();
+						ToastService.showToast("Aula confirmada com sucesso", 
+										'long', 'bottom');
 					}
 				});
 			})
