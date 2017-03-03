@@ -10,7 +10,7 @@
 
                 <span>
 
-                    <h6 style="font-family: Arial; color: red; font-weight: bold; text-align:center;"> Aguardando Confirmação</h6>
+                    <!-- <h6 style="font-family: Arial; color: red; font-weight: bold; text-align:center;"> Aguardando Confirmação</h6> -->
 
                     <span ng-click="scheduledClassCtrl.moreInfoClass('confirm', $index)">
 
@@ -59,8 +59,7 @@
 
                     
                     <div class="button-bar">
-                        <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Cancelar</a>
-                        <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click='scheduledClassCtrl.buttonOne()'>Confirmar</a>
+                        <a class="button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" ng-click='scheduledClassCtrl.confirmClass($index)'>Confirmar Professor</a>
                     </div>
                 </span>
 

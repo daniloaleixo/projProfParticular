@@ -258,7 +258,10 @@ angular.module('app.services', [])
 				}
 				else
 					return MyScheduledClassesList.scheduledClasses[0];
-			}, 
+			},
+			addClassToScheduledClasses: function(newClass){
+				MyScheduledClassesList.scheduledClasses.push(newClass);
+			},
 			reset: function(){
 				MyScheduledClassesList.allScheduledClasses = [];
 				MyScheduledClassesList.scheduledClasses = [];
@@ -469,8 +472,9 @@ angular.module('app.services', [])
 
 
 
-.factory('RequestForClassesService', ['LoadingService','ToastService', '$q', '$timeout',
-	function(LoadingService, ToastService, $q, $timeout){
+.factory('RequestForClassesService', ['LoadingService','ToastService', '$q', '$timeout', 
+			'MyScheduledClassesList',
+		function(LoadingService, ToastService, $q, $timeout, MyScheduledClassesList){
 		var RequestForClassesService = this;
 		RequestForClassesService.requestedClassesList = [];
 
@@ -510,6 +514,58 @@ angular.module('app.services', [])
 			// return RequestForClassesService.allScheduledClasses;
 		}
 
+		var confirmProfessorAux = function(index){
+
+			LoadingService.showLoadingSpinner();
+
+			// Remove from the to-confirm list
+			var removeElement = RequestForClassesService.requestedClassesList[index];
+			RequestForClassesService.requestedClassesList.splice(index, 1);
+
+			removeElement.status = 'Confirmado';
+
+			var scheduledClassesRef = firebase.database().ref().child('scheduledClasses');
+
+			//Iterate through every student that is going to take the class
+			//  and upload the class to the scheduledClass of that student
+			Object.keys(removeElement.students).forEach(function(student){
+
+				var hashKey = student.toString() + '-' + removeElement.professor.UID.toString();
+				
+				var newClassRef = scheduledClassesRef.child(hashKey).push();
+
+				delete removeElement["$$hashKey"]; 
+				console.log(removeElement);
+
+				newClassRef.set(removeElement);
+				
+			});
+
+			MyScheduledClassesList.addClassToScheduledClasses(removeElement);
+
+			// Delete the request from database
+			firebase.database().ref().child('requestForClasses')
+			.once('value').then(function(snapshot){
+				Object.keys(snapshot.val()).forEach(function(requestForClassKey){
+
+					var elementBeingLooked = snapshot.val()[requestForClassKey];
+					//Check to see if it is what we are looking for
+					if(elementBeingLooked.UIDRequested == removeElement.UIDRequested &&
+						elementBeingLooked.date == removeElement.date && 
+						elementBeingLooked.professor.UID == removeElement.professor.UID){
+
+						// Delete the element
+						firebase.database().ref().child('requestForClasses')
+						.child(requestForClassKey).remove();
+						LoadingService.hideLoading();
+					}
+				});
+			})
+
+
+
+		}
+
 		//Getter of the list of requested classes
 		var getRequestedClassesList = function(){
 			return RequestForClassesService.requestedClassesList;
@@ -546,6 +602,9 @@ angular.module('app.services', [])
 					deferred.resolve(getClassToConfimByIndex(index));
 				}, 2000);
 				return deferred.promise;
+			},
+			confirmProfessor: function(index){
+				confirmProfessorAux(index);
 			},
 			//The function just loads the service with the list, do not return the lsit
 			loadRequestedClasses: function(uid){
